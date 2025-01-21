@@ -1,6 +1,7 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Item.*;
+import com.natesky9.patina.Item.flasks.EternaFlask;
 import com.natesky9.patina.Item.flasks.ImpetusFlask;
 import com.natesky9.patina.Item.flasks.PotionFlaskItem;
 import com.natesky9.patina.Item.flasks.SemiVitaFlask;
@@ -347,6 +348,9 @@ public class ModItems {
             () -> new PotionFlaskItem(new Item.Properties().rarity(Rarity.UNCOMMON)
                     .component(DataComponents.UNBREAKABLE, new Unbreakable(false))
                     .durability(6)));
+    public static final RegistryObject<Item> ETERNA_FLASK = ITEMS.register("potion_flask_eterna",
+            () -> new EternaFlask(new Item.Properties().rarity(Rarity.EPIC)
+                    .component(DataComponents.UNBREAKABLE,new Unbreakable(true))));
 
     public static final RegistryObject<Item> DRAGON_SCALE = ITEMS.register("dragon_scale",
             () -> new Item(new Item.Properties().rarity(Rarity.EPIC)));
@@ -365,13 +369,6 @@ public class ModItems {
             () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(16)));
     public static final RegistryObject<Item> UMBRA = ITEMS.register("umbra",
             () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    //boots
-    static AttributeModifier speed = new AttributeModifier(name("speed"),
-            .1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
-    static ItemAttributeModifiers mod = ItemAttributeModifiers.builder().add(Attributes.MOVEMENT_SPEED, speed, EquipmentSlotGroup.FEET).build();
-    public static final RegistryObject<Item> CLOTH_BOOTS = ITEMS.register("cloth_boots",
-            () -> new ArmorItem(ArmorMaterials.LEATHER,ArmorItem.Type.BOOTS,new Item.Properties()
-                    .attributes(mod)));
     //umbra
     static ItemAttributeModifiers umbra = ItemAttributeModifiers.builder()
             .add(Attributes.GRAVITY, new AttributeModifier(name("gravity"),-.20, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),EquipmentSlotGroup.ARMOR)
@@ -452,6 +449,21 @@ public class ModItems {
 
 
     //endregion food
+    //region infusion items
+    static ItemAttributeModifiers speedMod = ItemAttributeModifiers.builder().add(Attributes.MOVEMENT_SPEED, new AttributeModifier(name("speed"),
+            .1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.FEET).build();
+    public static final RegistryObject<Item> CLOTH_BOOTS = ITEMS.register("cloth_boots",
+            () -> new ArmorItem(ArmorMaterials.LEATHER,ArmorItem.Type.BOOTS,new Item.Properties()
+                    .attributes(speedMod)));
+
+    static ItemAttributeModifiers luckMod = ItemAttributeModifiers.builder().add(Attributes.LUCK, new AttributeModifier(name("luck"),
+            .1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.HAND).build();
+    public static final RegistryObject<Item> GILDED_ROD = ITEMS.register("gilded_rod",
+            () -> new GildedRodItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)
+                    .attributes(luckMod)));
+    public static final RegistryObject<Item> ANGLER_ROD = ITEMS.register("angler_rod",
+            () -> new AnglerRodItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
+    //endregion infusion items
     //helper methods
     static ResourceLocation name(String name)
     {

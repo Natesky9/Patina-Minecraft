@@ -1,5 +1,6 @@
 package com.natesky9.patina.Item.flasks;
 
+import com.natesky9.patina.init.ModItems;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -21,27 +22,32 @@ import java.util.List;
 
 public class PotionFlaskItem extends PotionItem {
     public static final int drinking = 32;
+
     public PotionFlaskItem(Properties pProperties) {
         super(pProperties);
     }
+
     public static float percentFull(ItemStack stack)
     {//used for visual fill
+        if (stack.is(ModItems.ETERNA_FLASK.get()))
+            return 1;
         stack.getMaxDamage();
         return (float)getUses(stack)/stack.getMaxDamage();
     }
     public static int getUses(ItemStack stack)
     {
+        if (stack.is(ModItems.ETERNA_FLASK.get()))
+            return 1;
         return stack.getDamageValue();
-        //return stack.getOrCreateTag().getInt("uses");
     }
     public static void setUses(ItemStack stack, int value)
     {
+        if (stack.is(ModItems.ETERNA_FLASK.get()))
+            return;
         stack.setDamageValue(value);
-        //stack.getOrCreateTag().putInt("uses", value);
         if (getUses(stack) == 0)
         {
             stack.set(DataComponents.POTION_CONTENTS,PotionContents.EMPTY);
-            //Potion.setPotion(stack,Potions.EMPTY);
         }
     }
 
@@ -67,7 +73,6 @@ public class PotionFlaskItem extends PotionItem {
     public static void apply(LivingEntity player,ItemStack stack)
     {
         PotionContents potion = stack.get(DataComponents.POTION_CONTENTS);
-        //Potion potion = PotionUtils.getPotion(stack);
 
         potion.getAllEffects().forEach(
                 (effectInstance) -> {if (effectInstance.getEffect().get().isInstantenous()){
@@ -82,8 +87,6 @@ public class PotionFlaskItem extends PotionItem {
         if (!pOther.is(Items.POTION) && !(pOther.getItem() instanceof PotionFlaskItem)) return false;
         PotionContents contents = pStack.get(DataComponents.POTION_CONTENTS);
         PotionContents other = pOther.get(DataComponents.POTION_CONTENTS);
-        //Potion potion = PotionUtils.getPotion(pStack);
-        //Potion other = PotionUtils.getPotion(pOther);
         if (getUses(pStack) >= pStack.getMaxDamage()) return false;
         if (contents == null || contents == other || contents == PotionContents.EMPTY)
         {//if the flask is empty or it matches
@@ -93,7 +96,6 @@ public class PotionFlaskItem extends PotionItem {
                 int otherCurrent = getUses(pOther);
                 int transfer = Math.min(pStack.getMaxDamage()-current,otherCurrent);
                 pStack.set(DataComponents.POTION_CONTENTS,new PotionContents(other.potion().get()));
-                //PotionUtils.setPotion(pStack,PotionUtils.getPotion(pOther));
                 setUses(pStack,current+transfer);
                 setUses(pOther,otherCurrent-transfer);
                 pPlayer.level().playSound(null,pPlayer, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS,1,1);
@@ -102,7 +104,6 @@ public class PotionFlaskItem extends PotionItem {
             if (pOther.getItem() instanceof PotionItem)
             {//if it's a vanilla potion
                 pStack.set(DataComponents.POTION_CONTENTS,other);
-                //PotionUtils.setPotion(pStack,other);
                 setUses(pStack,getUses(pStack)+1);
                 pAccess.set(new ItemStack(Items.GLASS_BOTTLE));
                 pPlayer.level().playSound(null,pPlayer, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS,1,1);

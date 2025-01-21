@@ -157,7 +157,7 @@ public class ApplianceConsolidatorBlock extends BaseEntityBlock {
                 .expandTowards(-1,0,-1));
         if (list.isEmpty())
         {//if no one is present
-            //consolidator.fire(level, pos);moved to tick
+            //consolidator.fire(level, items);moved to tick
             //set all 4 to inactive
             for (BlockPos blockPos : Arrays.asList(pos, MultiBlockQuad.getTwo(pos, corner),
                     MultiBlockQuad.getThree(pos, corner), MultiBlockQuad.getFour(pos, corner)))
@@ -165,7 +165,7 @@ public class ApplianceConsolidatorBlock extends BaseEntityBlock {
                 if (!level.getBlockState(blockPos).is(ModBlocks.APPLIANCE_ARCANE_CONSOLIDATOR.get())) return;
                 level.setBlock(blockPos, level.getBlockState(blockPos).setValue(ACTIVE, false),3);
             }
-            //level.setBlock(pos, state.setValue(ACTIVE,false),3);
+            //level.setBlock(items, state.setValue(ACTIVE,false),3);
             level.scheduleTick(pos, this, 42);
             return;
         }
@@ -180,7 +180,7 @@ public class ApplianceConsolidatorBlock extends BaseEntityBlock {
         }
         else
         {//no one standing on it has xp
-            //consolidator.fire(level, pos);
+            //consolidator.fire(level, items);
             level.setBlock(pos, state.setValue(ACTIVE, false),3);
 
             //set all 4 back to inactive

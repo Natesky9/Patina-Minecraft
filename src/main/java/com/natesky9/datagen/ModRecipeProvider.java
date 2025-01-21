@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.Recipe.EvaporatorRecipe;
 import com.natesky9.patina.Recipe.FoundryRecipe;
+import com.natesky9.patina.Recipe.MatrixRecipe;
 import com.natesky9.patina.Recipe.MinceratorRecipe;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModItems;
@@ -13,6 +14,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.data.recipes.packs.BundleRecipeProvider;
@@ -25,6 +27,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -33,6 +37,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -50,9 +55,175 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         return List.of(one,two,three,four);
     }
 
+    void saltRecipe(RecipeOutput pWriter,int count)
+    {
+        ArrayList<Ingredient> list = new ArrayList<>();
+        list.add(Ingredient.of(Items.WITHER_ROSE));
+        list.add(Ingredient.of(Items.FERMENTED_SPIDER_EYE));
+        list.add(Ingredient.of(Items.OMINOUS_BOTTLE));
+        for (int i = 0;i < count;i++)
+            list.add(Ingredient.of(ModItems.POTION_SALT.get()));
+        pWriter.accept(name("matrix/void_salt_" + count),
+                new MatrixRecipe(new ItemStack(ModItems.VOID_SALT.get()),
+                list.stream().toList()),ModAdvancementGenerator.void_salt.id(),null);
+    }
+
     @Override
     public void buildRecipes(@NotNull RecipeOutput pWriter) {
         //TODO: add the recipes, you dummy
+        //region matrix recipes
+        pWriter.accept(name("matrix/basic_boots"),
+                new MatrixRecipe(new ItemStack(ModItems.CLOTH_BOOTS.get()),List.of(
+                        Ingredient.of(Items.LEATHER_BOOTS),
+                        Ingredient.of(Items.FEATHER),
+                        Ingredient.of(Items.FEATHER),
+                        Ingredient.of(Items.BREEZE_ROD),
+                        Ingredient.of(Items.BREEZE_ROD),
+                        Ingredient.of(ItemTags.WOOL),
+                        Ingredient.of(ItemTags.WOOL)
+                )),null);
+        pWriter.accept(name("matrix/gilded_rod"),
+                new MatrixRecipe(new ItemStack(ModItems.GILDED_ROD.get()),List.of(
+                        Ingredient.of(Items.FISHING_ROD),
+                        Ingredient.of(Items.GOLD_INGOT),
+                        Ingredient.of(Items.GOLD_INGOT),
+                        Ingredient.of(Items.GOLD_INGOT),
+                        Ingredient.of(Items.COMPASS),
+                        Ingredient.of(Items.CLOCK),
+                        Ingredient.of(Items.BAMBOO)
+                )),null);
+        pWriter.accept(name("matrix/angler_rod"),
+                new MatrixRecipe(new ItemStack(ModItems.ANGLER_ROD.get()),List.of(
+                        Ingredient.of(Items.FISHING_ROD),
+                        Ingredient.of(Items.BAMBOO),
+                        Ingredient.of(Items.PRISMARINE_CRYSTALS),
+                        Ingredient.of(Items.PRISMARINE_CRYSTALS),
+                        Ingredient.of(Items.PRISMARINE_CRYSTALS),
+                        Ingredient.of(Items.NAUTILUS_SHELL),
+                        Ingredient.of(Items.NAUTILUS_SHELL)
+                )),null);
+        pWriter.accept(name("matrix/dragon_claw"),
+                new MatrixRecipe(new ItemStack(ModItems.DRAGON_CLAW.get()),List.of(
+                        Ingredient.of(ModItems.CRYSTAL_CLAW.get()),
+                        Ingredient.of(ModItems.DRAGON_SCALE.get()),
+                        Ingredient.of(ModItems.DRAGON_SCALE.get()),
+                        Ingredient.of(ModItems.DRAGON_SCALE.get()),
+                        Ingredient.of(ModItems.NETHERITE_NUGGET.get()),
+                        Ingredient.of(ModItems.NETHERITE_NUGGET.get()),
+                        Ingredient.of(Items.DRAGON_BREATH)
+                )),null);
+        pWriter.accept(name("matrix/umbral_helmet"),
+                new MatrixRecipe(new ItemStack(ModItems.UMBRA_HAT.get()),List.of(
+                        Ingredient.of(Items.LEATHER_HELMET),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.RABBIT_HIDE),
+                        Ingredient.of(Items.RABBIT_HIDE),
+                        Ingredient.of(Items.RABBIT_HIDE),
+                        Ingredient.of(Items.WIND_CHARGE)
+                )),ModAdvancementGenerator.arcana);
+        pWriter.accept(name("matrix/umbral_chestplate"),
+                new MatrixRecipe(new ItemStack(ModItems.UMBRA_TOP.get()),List.of(
+                        Ingredient.of(Items.LEATHER_CHESTPLATE),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.LEAD),
+                        Ingredient.of(Items.LEAD),
+                        Ingredient.of(Items.WIND_CHARGE)
+                )),ModAdvancementGenerator.arcana);
+        pWriter.accept(name("matrix/umbral_leggings"),
+                new MatrixRecipe(new ItemStack(ModItems.UMBRA_BOTTOM.get()),List.of(
+                        Ingredient.of(Items.LEATHER_LEGGINGS),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.PHANTOM_MEMBRANE),
+                        Ingredient.of(Items.BRUSH),
+                        Ingredient.of(Items.BRUSH),
+                        Ingredient.of(Items.WIND_CHARGE)
+                )),ModAdvancementGenerator.arcana);
+        pWriter.accept(name("matrix/upgraded_plinth"),
+                new MatrixRecipe(new ItemStack(ModBlocks.APPLIANCE_REINFORCED_PLINTH.get()),List.of(
+                        Ingredient.of(ModBlocks.APPLIANCE_PLINTH.get()),
+                        Ingredient.of(Items.OBSIDIAN),
+                        Ingredient.of(Items.OBSIDIAN),
+                        Ingredient.of(Items.OBSIDIAN),
+                        Ingredient.of(ModItems.FORTIS_GLASS.get()),
+                        Ingredient.of(ModItems.FORTIS_GLASS.get()),
+                        Ingredient.of(Items.ENDER_PEARL)
+                )),null);
+        pWriter.accept(name("matrix/pig_axe"),
+                new MatrixRecipe(new ItemStack(ModItems.PIG_SWORD.get()),List.of(
+                        Ingredient.of(Items.GOLDEN_AXE),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.weaponPigAxe);
+        pWriter.accept(name("matrix/pig_crossbow"),
+                new MatrixRecipe(new ItemStack(ModItems.PIG_CROSSBOW.get()),List.of(
+                        Ingredient.of(Items.CROSSBOW),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.PIG_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.weaponPigAxe);
+        pWriter.accept(name("matrix/bee_sword"),
+                new MatrixRecipe(new ItemStack(ModItems.BEE_SWORD.get()),List.of(
+                        Ingredient.of(Items.GOLDEN_SWORD),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.weaponBeeSword);
+        pWriter.accept(name("matrix/bee_shield"),
+                new MatrixRecipe(new ItemStack(ModItems.BEE_SHIELD.get()),List.of(
+                        Ingredient.of(Items.SHIELD),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.weaponBeeShield);
+        pWriter.accept(name("matrix/wither_staff"),
+                new MatrixRecipe(new ItemStack(ModItems.WITHER_STAFF.get()),List.of(
+                        Ingredient.of(Items.GOLDEN_SWORD),
+                        Ingredient.of(ModItems.WITHER_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.WITHER_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.WITHER_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.WITHER_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.weaponWitherStaff);
+        pWriter.accept(name("matrix/wither_wings"),
+                new MatrixRecipe(new ItemStack(ModItems.WITHER_WINGS.get()),List.of(
+                        Ingredient.of(Items.GOLDEN_CHESTPLATE),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_1.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_2.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_3.get()),
+                        Ingredient.of(ModItems.BEE_FRAGMENT_4.get())
+                )),ModAdvancementGenerator.witherWings);
+        //region void salt
+        saltRecipe(pWriter,1);
+        //saltRecipe(pWriter,2);
+        //saltRecipe(pWriter,3);
+        //saltRecipe(pWriter,4);
+        //saltRecipe(pWriter,5);
+        //saltRecipe(pWriter,6);
+        //saltRecipe(pWriter,7);
+        //saltRecipe(pWriter,8);
+        //saltRecipe(pWriter,9);
+        //endregion void salt
+        ItemStack klein = new ItemStack(ModItems.ETERNA_FLASK.get());
+        klein.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WEAKNESS));
+        pWriter.accept(name("matrix/eterna_flask"),
+                new MatrixRecipe(klein,List.of(
+                        Ingredient.of(ModItems.POTION_FLASK.get()),
+                        Ingredient.of(ModItems.VITA_FLASK.get()),
+                        Ingredient.of(ModItems.IMPETUS_FLASK.get()),
+                        Ingredient.of(ModItems.MAGNA_FLASK.get()),
+                        Ingredient.of(Items.NETHER_WART),
+                        Ingredient.of(ModItems.BISMUTH_INGOT.get()),
+                        Ingredient.of(ModItems.BISMUTH_INGOT.get()),
+                        Ingredient.of(Items.NETHER_STAR)
+                )),null);
+        //endregion matrix recipes
         //region foundry recipes
         //alloys
         pWriter.accept(name("foundry/prime"),
@@ -202,43 +373,43 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         //        new TextilerRecipe(new ItemStack(ModItems.SILK.get()), NonNullList.withSize(9,Ingredient.of(Items.STRING))),
         //        ModAdvancementGenerator.loom);
         //region fragment weapons
-        smithingTable(ModItems.PIG_FRAGMENT_A.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_1.get(), ModItems.PIG_FRAGMENT_2.get()
-                ,pWriter);
-        smithingTable(ModItems.PIG_FRAGMENT_B.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_3.get(), ModItems.PIG_FRAGMENT_4.get()
-                ,pWriter);
-        smithingTable(ModItems.PIG_FRAGMENT_C.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_1.get(), ModItems.PIG_FRAGMENT_3.get()
-                ,pWriter);
-        smithingTable(ModItems.PIG_FRAGMENT_D.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_2.get(), ModItems.PIG_FRAGMENT_4.get()
-                ,pWriter);
-        smithingTable(ModItems.PIG_SWORD.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_A.get(), ModItems.PIG_FRAGMENT_B.get()
-                ,pWriter);
-        smithingTable(ModItems.PIG_CROSSBOW.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_C.get(), ModItems.PIG_FRAGMENT_D.get()
-                ,pWriter);
+        //smithingTable(ModItems.PIG_FRAGMENT_A.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_1.get(), ModItems.PIG_FRAGMENT_2.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.PIG_FRAGMENT_B.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_3.get(), ModItems.PIG_FRAGMENT_4.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.PIG_FRAGMENT_C.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_1.get(), ModItems.PIG_FRAGMENT_3.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.PIG_FRAGMENT_D.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_2.get(), ModItems.PIG_FRAGMENT_4.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.PIG_SWORD.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_A.get(), ModItems.PIG_FRAGMENT_B.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.PIG_CROSSBOW.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.PIG_FRAGMENT_C.get(), ModItems.PIG_FRAGMENT_D.get()
+        //        ,pWriter);
         //Bee
-        smithingTable(ModItems.BEE_FRAGMENT_A.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_1.get(), ModItems.BEE_FRAGMENT_2.get()
-                ,pWriter);
-        smithingTable(ModItems.BEE_FRAGMENT_B.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_3.get(), ModItems.BEE_FRAGMENT_4.get()
-                ,pWriter);
-        smithingTable(ModItems.BEE_FRAGMENT_C.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_1.get(), ModItems.BEE_FRAGMENT_3.get()
-                ,pWriter);
-        smithingTable(ModItems.BEE_FRAGMENT_D.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_2.get(), ModItems.BEE_FRAGMENT_4.get()
-                ,pWriter);
-        smithingTable(ModItems.BEE_SWORD.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_A.get(), ModItems.BEE_FRAGMENT_B.get()
-                ,pWriter);
-        smithingTable(ModItems.BEE_SHIELD.get(),
-                ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_C.get(), ModItems.BEE_FRAGMENT_D.get()
-                ,pWriter);
+        //smithingTable(ModItems.BEE_FRAGMENT_A.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_1.get(), ModItems.BEE_FRAGMENT_2.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.BEE_FRAGMENT_B.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_3.get(), ModItems.BEE_FRAGMENT_4.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.BEE_FRAGMENT_C.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_1.get(), ModItems.BEE_FRAGMENT_3.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.BEE_FRAGMENT_D.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_2.get(), ModItems.BEE_FRAGMENT_4.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.BEE_SWORD.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_A.get(), ModItems.BEE_FRAGMENT_B.get()
+        //        ,pWriter);
+        //smithingTable(ModItems.BEE_SHIELD.get(),
+        //        ModItems.CHARM_FRAGMENT.get(), ModItems.BEE_FRAGMENT_C.get(), ModItems.BEE_FRAGMENT_D.get()
+        //        ,pWriter);
         //
         //endregion fragment weapons
         //region charms
@@ -710,11 +881,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("CBC").pattern("BAB").pattern(" BC")
                 .unlockedBy("has_claw",has(ModItems.CLAW.get()))
                 .save(pWriter);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS,ModItems.DRAGON_CLAW.get())
-                .requires(ModItems.COPPER_CLAW.get())
-                .requires(ModItems.DRAGON_SCALE.get())
-                .unlockedBy("has_copper_claw",has(ModItems.COPPER_CLAW.get()))
-                .save(pWriter);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT,ModItems.CRYSTAL_CLAW.get())
+                .define('A',ModItems.CRYSTAL_CLAW.get())
+                .define('B',ModItems.FERUS_GLASS.get())
+                .define('C',Items.GOLD_INGOT)
+                .unlockedBy("has_ferus",has(ModItems.FERUS_GLASS.get()));
         //endregion claws
     }
 

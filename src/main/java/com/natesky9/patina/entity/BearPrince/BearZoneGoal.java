@@ -53,7 +53,7 @@ public class BearZoneGoal extends Goal {
             for (int i=0;i < 4;i++) {
                 pos = bear.blockPosition().relative(Direction.from2DDataValue(i),8);
                 AreaEffectCloud cloud = new AreaEffectCloud(EntityType.AREA_EFFECT_CLOUD,level);
-                //AreaEffectCloud cloud = EntityType.AREA_EFFECT_CLOUD.spawn(level,pos, MobSpawnType.MOB_SUMMONED);
+                //AreaEffectCloud cloud = EntityType.AREA_EFFECT_CLOUD.spawn(level,items, MobSpawnType.MOB_SUMMONED);
                 MobEffectInstance effect = bear.effectList.get((start+i) % bear.effectList.size());
                 cloud.addEffect(effect);
                 cloud.setRadius(1F);

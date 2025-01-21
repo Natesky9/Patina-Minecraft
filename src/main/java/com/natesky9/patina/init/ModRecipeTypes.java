@@ -1,10 +1,7 @@
 package com.natesky9.patina.init;
 
-import com.natesky9.patina.Recipe.EvaporatorRecipe;
-import com.natesky9.patina.Recipe.FoundryRecipe;
+import com.natesky9.patina.Recipe.*;
 import com.natesky9.patina.Patina;
-import com.natesky9.patina.Recipe.MinceratorRecipe;
-import com.natesky9.patina.Recipe.TextilerRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +15,7 @@ public class ModRecipeTypes
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Patina.MODID);
     //
+    public static final RegistryObject<RecipeType<MatrixRecipe>> MATRIX_RECIPE_TYPE = create(MatrixRecipe.name);
     public static final RegistryObject<RecipeType<EvaporatorRecipe>> EVAPORATOR_RECIPE_TYPE = create(EvaporatorRecipe.name);
     public static final RegistryObject<RecipeType<FoundryRecipe>> FOUNDRY_RECIPE_TYPE = create(FoundryRecipe.name);
     public static final RegistryObject<RecipeType<MinceratorRecipe>> MINCERATOR_RECIPE_TYPE = create(MinceratorRecipe.name);

@@ -52,6 +52,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.CHORUS_TELEPORTER.get());
 
         this.dropSelf(ModBlocks.APPLIANCE_PLINTH.get());
+        this.dropSelf(ModBlocks.APPLIANCE_REINFORCED_PLINTH.get());
         this.dropOther(ModBlocks.ESSENCE_CAULDRON.get(), Blocks.CAULDRON);
 
         this.dropSelf(ModBlocks.MACHINE_REPLICATOR.get());

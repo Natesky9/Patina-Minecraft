@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "triggered=true":
+    {
+      "model": "patina:block/machine_matrix_active"
+    },
+    "triggered=false":
+    {
+      "model": "patina:block/machine_matrix_inactive"
+    }
+  }
+}

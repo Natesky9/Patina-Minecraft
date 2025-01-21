@@ -61,10 +61,10 @@ public class ResearchMinigameCity extends AbstractButton {
         //RenderSystem.setShaderTexture(0,lamp_on);
         if (on)
         {
-            graphics.blit(lamp_on,getX(),getY(),0,0,32,32,32,32);
+            graphics.blit(lamp_on,getX(),getY(),0,0,32,32);
         }
         else
-            graphics.blit(lamp_off,getX(),getY(),0,0,32,32,32,32);
+            graphics.blit(lamp_off,getX(),getY(),0,0,32,32);
         //super.renderWidget(graphics, pMouseX, pMouseY, pPartialTick);
     }
 

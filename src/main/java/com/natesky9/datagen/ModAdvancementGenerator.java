@@ -300,6 +300,17 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
             .parent(prime_flask)
             .rewards(xp().addRecipe(name("brewing/vita_flask")))
             .build(name("flask4"));
+    public static final AdvancementHolder eterna_flask = Advancement.Builder.advancement()
+            .display(Items.NETHER_STAR,Component.literal("Max Herblore"),
+                    Component.literal("the pinnacle of alchemy"),null,
+                    AdvancementType.CHALLENGE,true,true,false)
+            .addCriterion("minecraft:story/cure_zombie_villager",research)
+            .addCriterion("minecraft:nether/brew_potion", research)
+            .addCriterion("minecraft:nether/all_effects",research)
+            .addCriterion("minecraft:end/dragon_breath",research)
+            .parent(prime_flask)
+            .rewards(xp().addRecipe(name("matrix/eterna_flask")))
+            .build(name("flask5"));
     //endregion glass
     //public static final AdvancementHolder phantom = Advancement.Builder.advancement()
     //        .display(Items.PHANTOM_MEMBRANE,Component.literal("Insomniatic"),
@@ -432,6 +443,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         saver.accept(impetus_flask);
         saver.accept(magna_flask);
         saver.accept(vita_flask);
+        saver.accept(eterna_flask);
     }
     static ResourceLocation name(String string)
     {

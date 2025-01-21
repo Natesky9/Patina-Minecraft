@@ -1,13 +1,18 @@
 package com.natesky9.patina.Block;
 
 import com.natesky9.patina.init.ModBlockEntities;
+import com.natesky9.patina.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +41,10 @@ public class AppliancePlinthEntity extends BlockEntity {
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
+                setChanged();
+                if (level instanceof ServerLevel server)
+                    if (server.getBlockState(getBlockPos().above(2)).is(ModBlocks.MACHINE_MATRIX.get()))
+                        server.blockUpdated(getBlockPos().above(2),ModBlocks.MACHINE_MATRIX.get());
                 getLevel().sendBlockUpdated(pPos,level.getBlockState(pPos),level.getBlockState(pPos),3);
             }
         };
@@ -55,8 +64,9 @@ public class AppliancePlinthEntity extends BlockEntity {
     }
     public void setStack(ItemStack pStack)
     {
-        handler.insertItem(0,pStack,false);
+        handler.setStackInSlot(0,pStack);
         setChanged();
+        level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),2);
     }
 
     @Override
@@ -74,14 +84,25 @@ public class AppliancePlinthEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        //pTag.put("inventory",handler.getStackInSlot(0).save(pRegistries));
         pTag.put("inventory",handler.serializeNBT(pRegistries));
+
+        pTag.putBoolean("empty",getStack().isEmpty());
         super.saveAdditional(pTag, pRegistries);
     }
 
     @Override
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
+
+        //NonNullList<ItemStack> items = NonNullList.withSize(1,ItemStack.EMPTY);
+        //ContainerHelper.loadAllItems(pTag,items,pRegistries);
+        //handler.setStackInSlot(0,items.getFirst());
         handler.deserializeNBT(pRegistries,pTag.getCompound("inventory"));
+        if (pTag.getBoolean("empty"))
+            handler.setStackInSlot(0,ItemStack.EMPTY);
+        //handler.setStackInSlot(0,(ItemStack) ItemStack.parse(pRegistries,pTag.getCompound("inventory"))
+        //        .orElse(ItemStack.EMPTY));
     }
 
     @Override

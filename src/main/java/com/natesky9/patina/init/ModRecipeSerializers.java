@@ -1,10 +1,8 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
-import com.natesky9.patina.Recipe.EvaporatorRecipe;
-import com.natesky9.patina.Recipe.FoundryRecipe;
-import com.natesky9.patina.Recipe.MinceratorRecipe;
-import com.natesky9.patina.Recipe.TextilerRecipe;
+import com.natesky9.patina.Recipe.*;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -23,6 +21,8 @@ public class ModRecipeSerializers {
             SERIALIZERS.register(MinceratorRecipe.name, MinceratorRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<TextilerRecipe>> TEXTILER_SERIALIZER =
             SERIALIZERS.register(TextilerRecipe.name, TextilerRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<MatrixRecipe>> MATRIX_SERIALIZER =
+            SERIALIZERS.register(MatrixRecipe.name, MatrixRecipe.Serializer::new);
     //
     public static void register(IEventBus eventBus)
     {

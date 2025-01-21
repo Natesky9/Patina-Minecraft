@@ -1,7 +1,10 @@
 package com.natesky9.patina.Block;
 
 import com.mojang.serialization.MapCodec;
+import com.natesky9.patina.init.ModBlocks;
+import com.natesky9.patina.init.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
@@ -27,7 +30,19 @@ public class AppliancePlinthBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult)
+    {
+        if (pStack.is(ModBlocks.MACHINE_MATRIX.get().asItem()))
+        {
+            BlockPos pos = pPos.relative(Direction.UP,2);
+            if (pLevel.isEmptyBlock(pos))
+            {
+                pLevel.setBlock(pos,ModBlocks.MACHINE_MATRIX.get().defaultBlockState(), 2);
+                pStack.shrink(1);
+                return ItemInteractionResult.SUCCESS;
+            }
+        }
+
         //return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
         if (!(pLevel.getBlockEntity(pPos) instanceof AppliancePlinthEntity plinth)) return ItemInteractionResult.FAIL;
         ItemStack stack = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
@@ -73,6 +88,7 @@ public class AppliancePlinthBlock extends BaseEntityBlock {
         if (entity instanceof  AppliancePlinthEntity plinth)
         {
             Containers.dropContents(pLevel,pPos,new SimpleContainer(plinth.getStack()));
+            pLevel.removeBlockEntity(pPos);
         }
     }
 }

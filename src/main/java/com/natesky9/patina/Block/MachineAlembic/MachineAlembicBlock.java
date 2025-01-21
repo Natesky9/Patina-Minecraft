@@ -51,10 +51,10 @@ public class MachineAlembicBlock extends MachineTemplateBlock {
         return super.updateShape(before, direction, after, level, pos, otherPos);
     }
     //@Override
-    //public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
-    //    super.onNeighborChange(state, level, pos, neighbor);
-    //    BlockEntity blockEntity = level.getBlockEntity(pos);
+    //public void onNeighborChange(BlockState state, LevelReader level, BlockPos items, BlockPos neighbor) {
+    //    super.onNeighborChange(state, level, items, neighbor);
+    //    BlockEntity blockEntity = level.getBlockEntity(items);
     //    if (!(blockEntity instanceof MachineAlembicEntity alembic)) return;
-    //    alembic.setNeighbors(level, pos);
+    //    alembic.setNeighbors(level, items);
     //}
 }

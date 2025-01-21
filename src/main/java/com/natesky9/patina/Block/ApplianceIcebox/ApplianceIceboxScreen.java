@@ -44,7 +44,7 @@ public class ApplianceIceboxScreen extends AbstractContainerScreen<ApplianceIceb
     @Override
     public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(graphics, pMouseX, pMouseY, pPartialTick);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        //RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1,1,1,1);
 
         imageWidth = 175;
@@ -84,7 +84,7 @@ public class ApplianceIceboxScreen extends AbstractContainerScreen<ApplianceIceb
                         graphics.blitSprite(FOOD, x + i * 4, y, 9,9);//8,8);
                 }
                 //check if food effects
-                List<FoodProperties.PossibleEffect> effects = stack.get(DataComponents.FOOD).effects();
+                List<FoodProperties.PossibleEffect> effects = ((FoodProperties)stack.get(DataComponents.FOOD)).effects();
                 //List<Pair<MobEffectInstance, Float>> effects = stack.get(DataComponents.FOOD).effects();
                 if (!effects.isEmpty()) {
                     yoffset += 8;

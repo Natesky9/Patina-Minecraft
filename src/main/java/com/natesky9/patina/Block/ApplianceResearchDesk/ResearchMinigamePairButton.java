@@ -6,11 +6,13 @@ import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.*;
 import org.joml.Quaternionf;
@@ -62,9 +64,9 @@ public class ResearchMinigamePairButton extends AbstractButton {
         {
             ResourceLocation texture = ResourceLocation.withDefaultNamespace("textures/block/spruce_trapdoor.png");
             if (isHovered)
-                graphics.blit(texture,getX(),getY(),0,0,32,30,32,30);
+                graphics.blit(texture,getX(),getY(),0,0,32,30);
             else
-                graphics.blit(texture,getX(),getY(),0,0,32,32,32,32);
+                graphics.blit(texture,getX(),getY(),0,0,32,32);
         }
     }
 
@@ -91,12 +93,11 @@ public class ResearchMinigamePairButton extends AbstractButton {
         }
         this.seen = true;
         if (this == screen.button)
-        {//we actually have to explicitly check for bees
-            SoundEvent sound = entity.getType() == EntityType.BEE ? SoundEvents.BEE_HURT:entity.getAmbientSound();
-            assert sound != null;
-            manager.play(SimpleSoundInstance.forUI(sound,(float)Math.random()/4+.75f));
-
-            ((Animal)entity).playAmbientSound();
+        {//we no longer have to explicitly check for bees
+            //SoundEvent sound = entity.getType() == EntityType.BEE ? SoundEvents.BEE_HURT:entity.getAmbientSound();
+            //assert sound != null;
+            //manager.play(SimpleSoundInstance.forUI(sound,(float)Math.random()/4+.75f));
+            entity.playAmbientSound();
             return;
         }
         int other = ((ResearchMinigamePairButton) screen.button).value;

@@ -75,7 +75,8 @@ public class EventsMod {
         event.register((pStack, pTintIndex) ->
                 pTintIndex == 1 ? pStack.get(DataComponents.POTION_CONTENTS).getColor() : -1
             ,ModItems.POTION_FLASK.get(),ModItems.IMPETUS_FLASK.get(),
-                ModItems.VITA_FLASK.get(),ModItems.MAGNA_FLASK.get());
+                ModItems.VITA_FLASK.get(),ModItems.MAGNA_FLASK.get(),
+                ModItems.ETERNA_FLASK.get());
         //salts
         event.register((pStack, pTintIndex) ->
                 pTintIndex == 0 ? pStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor() : -1,ModItems.POTION_SALT.get());
@@ -137,6 +138,7 @@ public class EventsMod {
         registerPotionCapacityProperty(ModItems.VITA_FLASK.get());
         registerPotionCapacityProperty(ModItems.IMPETUS_FLASK.get());
         registerPotionCapacityProperty(ModItems.MAGNA_FLASK.get());
+        registerPotionCapacityProperty(ModItems.ETERNA_FLASK.get());
 
         //we got rid of crude essence
         //ItemProperties.register(ModItems.ESSENCE.get(),ResourceLocation.withDefaultNamespace("crude"),
@@ -178,12 +180,6 @@ public class EventsMod {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
-        event.registerEntityRenderer(ModEntityTypes.BEE_BOSS.get(), BeePrincessRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.BEAR_BOSS.get(), BearPrinceRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.SPIDER_BOSS.get(), SpiderQueenRenderer::new);
-
-        event.registerEntityRenderer(ModEntityTypes.BEAR_STAR.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(ModEntityTypes.SPIDER_NEST.get(), SpiderNestRenderer::new);
-
+        ModEntityRenderers.register(event);
     }
 }

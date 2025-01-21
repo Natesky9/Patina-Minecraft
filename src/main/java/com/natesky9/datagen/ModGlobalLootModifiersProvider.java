@@ -35,7 +35,8 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start(HolderLookup.Provider provider) {
-        //TODO:find which fragment keeps spawning due to broken code
+        HolderLookup.RegistryLookup<Enchantment> enchantmentLookup = provider.lookupOrThrow(Registries.ENCHANTMENT);
+
         //region wither fragments
         add("add_wither_fragment_1", new AddItemModifier(new LootItemCondition[]{
                 new LootTableIdCondition(BuiltInLootTables.NETHER_BRIDGE.location())
@@ -51,7 +52,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                         EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment()
                                 .mainhand(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS,
                                         ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(
-                                                provider.lookup(Registries.ENCHANTMENT).get().get(Enchantments.SMITE).get(),
+                                                enchantmentLookup.getOrThrow(Enchantments.SMITE),
                                                 MinMaxBounds.Ints.ANY)))))))).build()
         },ModItems.WITHER_FRAGMENT_3.get()));
         add("add_wither_fragment_4",new AddSingleItemModifier(new LootItemCondition[]{
@@ -62,11 +63,11 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         },ModItems.WITHER_FRAGMENT_4.get()));
         //endregion wither fragments
         //region bee fragments
-        //TODO add an inverted silk touch predicate
         ItemEnchantmentsPredicate pred = ItemEnchantmentsPredicate.enchantments(List.of(
-                new EnchantmentPredicate(provider.lookup(Registries.ENCHANTMENT).get().get(Enchantments.SILK_TOUCH).get(),
+                new EnchantmentPredicate(enchantmentLookup.getOrThrow(Enchantments.SILK_TOUCH),
                         MinMaxBounds.Ints.ANY)
         ));
+        //TODO: fix this mess lol
         add("add_bee_fragment_1", new AddItemModifier(new LootItemCondition[]
                 {
                         new LootTableIdCondition.Builder(Blocks.BEE_NEST.getLootTable().location()).build(),
@@ -82,7 +83,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
                                 EntityPredicate.Builder.entity().equipment(EntityEquipmentPredicate.Builder.equipment()
                                         .mainhand(ItemPredicate.Builder.item().withSubPredicate(ItemSubPredicates.ENCHANTMENTS,
                                                 ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(
-                                                        provider.lookup(Registries.ENCHANTMENT).get().get(Enchantments.SMITE).get(),
+                                                        enchantmentLookup.getOrThrow(Enchantments.BANE_OF_ARTHROPODS),
                                                         MinMaxBounds.Ints.ANY))))))))
                         .build()
         },ModItems.BEE_FRAGMENT_2.get(), .1f));
