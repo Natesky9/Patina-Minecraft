@@ -2,9 +2,9 @@ package com.natesky9.patina.init;
 
 import com.natesky9.patina.Block.ApplianceConsolidator.ApplianceConsolidatorEntity;
 import com.natesky9.patina.Block.ApplianceIcebox.ApplianceIceboxEntity;
-import com.natesky9.patina.Block.AppliancePlinthEntity;
+import com.natesky9.patina.Block.Plinth.AppliancePlinthEntity;
 import com.natesky9.patina.Block.ApplianceWardrobe.ApplianceWardrobeEntity;
-import com.natesky9.patina.Block.GravestoneBlockEntity;
+import com.natesky9.patina.Block.Gravestone.GravestoneBlockEntity;
 import com.natesky9.patina.Block.MachineAlembic.MachineAlembicEntity;
 import com.natesky9.patina.Block.MachineEnchanter.MachineEnchanterEntity;
 import com.natesky9.patina.Block.MachineEvaporator.MachineEvaporatorEntity;

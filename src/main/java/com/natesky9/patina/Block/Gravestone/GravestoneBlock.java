@@ -1,4 +1,4 @@
-package com.natesky9.patina.Block;
+package com.natesky9.patina.Block.Gravestone;
 
 import com.mojang.serialization.MapCodec;
 import com.natesky9.patina.init.ModBlocks;
@@ -19,9 +19,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-public class Gravestone extends BaseEntityBlock {
-    public static final MapCodec<Gravestone> CODEC = simpleCodec(Gravestone::new);
-    public Gravestone(Properties p_49795_) {
+public class GravestoneBlock extends BaseEntityBlock {
+    public static final MapCodec<GravestoneBlock> CODEC = simpleCodec(GravestoneBlock::new);
+    public GravestoneBlock(Properties p_49795_) {
         super(p_49795_);
     }
 

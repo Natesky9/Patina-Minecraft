@@ -1,6 +1,6 @@
 package com.natesky9.patina.event;
 
-import com.natesky9.patina.Block.Gravestone;
+import com.natesky9.patina.Block.Gravestone.GravestoneBlock;
 import com.natesky9.patina.Item.BeeShieldItem;
 import com.natesky9.patina.Item.Charms;
 import com.natesky9.patina.Item.EssenceItem;
@@ -49,7 +49,7 @@ public class EventsForge {
     }
     @SubscribeEvent
     public static void LivingDropsEvent(LivingDropsEvent event) {
-        Gravestone.create(event);
+        GravestoneBlock.create(event);
         //GravestoneBlock.create(event);
         //TODO: enchantments
         //AvariceEnchantment.doEffect(event);

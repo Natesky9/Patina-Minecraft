@@ -1,4 +1,4 @@
-package com.natesky9.patina.Block;
+package com.natesky9.patina.Block.Gravestone;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class GravestoneBlock {
+public class GravestoneEvent {
     public static void create(LivingDropsEvent event)
     {
         if (!(event.getEntity() instanceof Player player)) return;

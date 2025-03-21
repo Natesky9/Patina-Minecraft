@@ -54,6 +54,7 @@ public class ModCreativeTabs {
 
                         output.accept(ModItems.CLAW.get());
                         output.accept(ModItems.COPPER_CLAW.get());
+                        output.accept(ModItems.CRYSTAL_CLAW.get());
                         output.accept(ModItems.DRAGON_CLAW.get());
 
                         output.accept(ModItems.BRONZE_HELMET.get());
@@ -151,22 +152,6 @@ public class ModCreativeTabs {
                                             .forEach(output::accept);
                                         }
                                 );
-                        //List<Potion> potions = new ArrayList<>();
-                        //for (Potion potion:BuiltInRegistries.POTION)
-                        //{
-                        //    //only potions with one effect
-                        //    if (!(potion.getEffects().size() == 1)) continue;
-                        //    //only potions whose effects aren't already considered
-                        //    if (potions.stream().anyMatch(search -> search.getEffects().contains(potion.getEffects().get(0))))
-                        //        continue;
-                        //    potions.add(potion);
-                        //}
-                        //for (Potion potion:potions)
-                        //{//add all the unique potions to salt
-                        //    ItemStack stack = ModItems.POTION_SALT.get().getDefaultInstance();
-                        //    stack.set(DataComponents.POTION_CONTENTS,holder.get(potion));
-                        //    output.accept(stack);
-                        //}
                     })
                     .build());
     //endregion
@@ -179,7 +164,7 @@ public class ModCreativeTabs {
                     .displayItems( (params, output) ->
                     {
                         List<Item> flasks = List.of(ModItems.POTION_FLASK.get(),ModItems.IMPETUS_FLASK.get(),
-                            ModItems.MAGNA_FLASK.get(),ModItems.VITA_FLASK.get());
+                            ModItems.MAGNA_FLASK.get(),ModItems.VITA_FLASK.get(),ModItems.ETERNA_FLASK.get());
                         for (Item item:flasks)
                         {
                             for (Potion potion: BuiltInRegistries.POTION)

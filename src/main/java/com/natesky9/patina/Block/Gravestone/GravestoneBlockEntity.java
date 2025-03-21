@@ -1,4 +1,4 @@
-package com.natesky9.patina.Block;
+package com.natesky9.patina.Block.Gravestone;
 
 import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;

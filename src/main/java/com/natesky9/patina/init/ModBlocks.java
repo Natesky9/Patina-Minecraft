@@ -6,6 +6,7 @@ import com.natesky9.patina.Block.*;
 import com.natesky9.patina.Block.ApplianceResearchDesk.ApplianceResearchDeskBlock;
 import com.natesky9.patina.Block.ApplianceWardrobe.ApplianceWardrobeBlock;
 import com.natesky9.patina.Block.Benchmark.ApplianceBenchmarkBlock;
+import com.natesky9.patina.Block.Gravestone.GravestoneBlock;
 import com.natesky9.patina.Block.MachineAlembic.AddonAlembicBlock;
 import com.natesky9.patina.Block.MachineAlembic.MachineAlembicBlock;
 import com.natesky9.patina.Block.MachineEnchanter.MachineEnchanterBlock;
@@ -14,6 +15,7 @@ import com.natesky9.patina.Block.MachineFoundry.AddonFoundryBlock;
 import com.natesky9.patina.Block.MachineFoundry.MachineFoundryBlock;
 import com.natesky9.patina.Block.MachineMincerator.MachineMinceratorBlock;
 import com.natesky9.patina.Block.MachineTextiler.MachineTextilerBlock;
+import com.natesky9.patina.Block.Plinth.AppliancePlinthBlock;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.world.item.BlockItem;
@@ -150,7 +152,7 @@ public class ModBlocks {
                     .strength(3F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> GRAVESTONE = BLOCKS.register("gravestone",
-            () -> new Gravestone(BlockBehaviour.Properties.of()
+            () -> new GravestoneBlock(BlockBehaviour.Properties.of()
                     .strength(1F)));
     //-----------------------//
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)

@@ -1,40 +1,28 @@
 package com.natesky9.patina.Block;
 
+import com.natesky9.patina.Block.Plinth.AppliancePlinthEntity;
 import com.natesky9.patina.Recipe.MatrixRecipe;
 import com.natesky9.patina.Recipe.MatrixRecipeInput;
-import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModRecipeTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -195,7 +183,7 @@ public class MachineArcanaMatrix extends Block {
                         if (pos.below(2).equals(plinth.getBlockPos()))
                         {
                             plinth.setStack(ItemStack.EMPTY);
-                            plinth.handler.insertItem(0,holder.value().getResultItem(level.registryAccess()),false);
+                            plinth.getHandler().insertItem(0,holder.value().getResultItem(level.registryAccess()),false);
                             level.setBlock(pos,this.defaultBlockState().setValue(TRIGGERED,false),2);
                         }
                         else

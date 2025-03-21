@@ -350,6 +350,7 @@ public class ModItems {
                     .durability(6)));
     public static final RegistryObject<Item> ETERNA_FLASK = ITEMS.register("potion_flask_eterna",
             () -> new EternaFlask(new Item.Properties().rarity(Rarity.EPIC)
+                    .stacksTo(1)
                     .component(DataComponents.UNBREAKABLE,new Unbreakable(true))));
 
     public static final RegistryObject<Item> DRAGON_SCALE = ITEMS.register("dragon_scale",

@@ -1,5 +1,6 @@
 package com.natesky9.patina.Block;
 
+import com.natesky9.patina.Block.Plinth.AppliancePlinthEntity;
 import com.natesky9.patina.init.ModBlocks;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.core.BlockPos;

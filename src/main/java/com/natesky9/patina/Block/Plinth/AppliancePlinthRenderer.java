@@ -1,4 +1,4 @@
-package com.natesky9.patina.Block;
+package com.natesky9.patina.Block.Plinth;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

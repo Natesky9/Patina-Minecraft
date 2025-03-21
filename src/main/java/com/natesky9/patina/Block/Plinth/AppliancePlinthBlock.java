@@ -1,10 +1,10 @@
-package com.natesky9.patina.Block;
+package com.natesky9.patina.Block.Plinth;
 
 import com.mojang.serialization.MapCodec;
 import com.natesky9.patina.init.ModBlocks;
-import com.natesky9.patina.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
@@ -27,6 +27,21 @@ public class AppliancePlinthBlock extends BaseEntityBlock {
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState pState) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
+        if (!(pLevel.getBlockEntity(pPos) instanceof AppliancePlinthEntity plinth)) return 0;
+        ItemStack stack = plinth.getStack();
+        if (stack.isEmpty()) return 0;
+
+        int repair = stack.getOrDefault(DataComponents.REPAIR_COST,0);
+        return Math.min(repair,15);
     }
 
     @Override
