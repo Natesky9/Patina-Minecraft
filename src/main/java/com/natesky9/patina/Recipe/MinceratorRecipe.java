@@ -96,6 +96,17 @@ public class MinceratorRecipe implements Recipe<RecipeInput> {
     {
         return ModRecipeTypes.MINCERATOR_RECIPE_TYPE.get();
     }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return null;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
+    }
+
     //TODO: Serializer
     public static class Serializer implements RecipeSerializer<MinceratorRecipe> {
 

@@ -66,6 +66,7 @@ public record EvaporatorRecipe(Either<Ingredient, Holder<Potion>> input, ItemSta
         return true;
     }
 
+
     @Override
     public ItemStack getResultItem(HolderLookup.Provider p_331967_) {
         return output.copy();
@@ -74,6 +75,16 @@ public record EvaporatorRecipe(Either<Ingredient, Holder<Potion>> input, ItemSta
     @Override
     public RecipeType<?> getType() {
         return ModRecipeTypes.EVAPORATOR_RECIPE_TYPE.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.getIngredients());
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
     }
 
     @Override

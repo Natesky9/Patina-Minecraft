@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -22,7 +24,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -31,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ApplianceIceboxBlock extends BaseEntityBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final MapCodec<ApplianceIceboxBlock> CODEC = simpleCodec(ApplianceIceboxBlock::new);
     public ApplianceIceboxBlock(Properties pProperties) {
         super(pProperties);
@@ -49,7 +50,8 @@ public class ApplianceIceboxBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pPos, Player pPlayer, BlockHitResult p_60508_) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pPos, Player pPlayer, BlockHitResult p_60508_)
+    {
         if (pPlayer instanceof ServerPlayer player)
         {
             BlockPos pos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pPos:pPos.below();
@@ -63,17 +65,16 @@ public class ApplianceIceboxBlock extends BaseEntityBlock {
                 throw new IllegalStateException("Container Provider is missing!");
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
-
-
 
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
     @Override
-    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
+    public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack)
+    {
         super.setPlacedBy(pLevel, pPos, pState, pPlacer, pStack);
         //set the top to face the same way
         BlockState blockstate = defaultBlockState().setValue(HALF,DoubleBlockHalf.UPPER).setValue(FACING,pState.getValue(FACING));
@@ -105,27 +106,31 @@ public class ApplianceIceboxBlock extends BaseEntityBlock {
                 .setValue(HALF,top ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER)
                 .setValue(FACING,pContext.getHorizontalDirection().getOpposite());
 
-        return pos.getY() < level.getMaxBuildHeight() - 1
+        return pos.getY() < level.getMaxY() - 1
                 && level.getBlockState(pos.above()).canBeReplaced(pContext)
                 ? state : null;
     }
+
     @Override
-    public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pNeighborPos) {
+    protected BlockState updateShape(BlockState pState, LevelReader pLevel, ScheduledTickAccess pScheduledTickAccess, BlockPos pPos, Direction pDirection, BlockPos pNeighborPos, BlockState pNeighborState, RandomSource pRandom)
+        {
         //maybe this is the cause of block not dropping?
         DoubleBlockHalf doubleblockhalf = pState.getValue(HALF);
         if (pDirection.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (pDirection == Direction.UP)
-                || pNeighborState.is(this) && pNeighborState.getValue(HALF) != doubleblockhalf) {
+                || pNeighborState.is(this) && pNeighborState.getValue(HALF) != doubleblockhalf)
+        {
             return doubleblockhalf == DoubleBlockHalf.LOWER && pDirection == Direction.DOWN
-                    && !pState.canSurvive(pLevel, pCurrentPos) ?
+                    && !pState.canSurvive(pLevel, pPos) ?
                     Blocks.AIR.defaultBlockState() :
-                    super.updateShape(pState, pDirection, pNeighborState, pLevel, pCurrentPos, pNeighborPos);
-        } else {
+                    super.updateShape(pState, pLevel, pScheduledTickAccess, pPos, pDirection, pNeighborPos, pNeighborState, pRandom);
+        }
+        else
             return Blocks.AIR.defaultBlockState();
         }
-    }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving)
+    {
         if (pState.getBlock() != pNewState.getBlock())
         {
             BlockPos pos = pState.getValue(HALF) == DoubleBlockHalf.LOWER ? pPos : pPos.below();
@@ -148,4 +153,5 @@ public class ApplianceIceboxBlock extends BaseEntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         pBuilder.add(HALF).add(FACING);
     }
+
 }

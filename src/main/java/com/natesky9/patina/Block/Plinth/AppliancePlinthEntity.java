@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AppliancePlinthEntity extends BlockEntity {
-    ItemStackHandler handler;
+    public ItemStackHandler handler;
 
     protected LazyOptional<IItemHandler> automationCapability = LazyOptional.empty();
 

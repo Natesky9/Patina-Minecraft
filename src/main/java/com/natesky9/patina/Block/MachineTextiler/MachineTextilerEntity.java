@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,6 +15,8 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
@@ -43,7 +46,8 @@ public class MachineTextilerEntity extends MachineTemplateEntity {
 
     @Override
     protected boolean mySlotValid(int slot, @NotNull ItemStack stack) {
-        List<RecipeHolder<TextilerRecipe>> recipes = level.getRecipeManager()
+        if (!(level instanceof ServerLevel server)) return false;
+        List<RecipeHolder<TextilerRecipe>> recipes = server.recipeAccess()
                 .getAllRecipesFor(ModRecipeTypes.TEXTILER_RECIPE_TYPE.get());
         return switch (slot)
                 {

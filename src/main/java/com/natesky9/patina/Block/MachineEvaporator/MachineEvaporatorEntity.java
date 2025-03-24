@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -121,6 +122,8 @@ public class MachineEvaporatorEntity extends MachineTemplateEntity implements Me
     @Override
     protected void myContentsChanged()
     {
+        if (!(level instanceof ServerLevel server)) return;
+
         RecipeInput container = new SingleRecipeInput(itemStackHandler.getStackInSlot(input));
         Optional<RecipeHolder<EvaporatorRecipe>> tempRecipe = recipe;
         List<RecipeHolder<EvaporatorRecipe>> recipes = level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.EVAPORATOR_RECIPE_TYPE.get());

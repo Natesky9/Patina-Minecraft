@@ -150,9 +150,9 @@ public class MachineAlembicEntity extends MachineTemplateEntity {
         if (leftover < 1 && brewing.isIngredient(ingredient))
         {//refil the reagent
             reagent = ingredient.getItem();
-            if (ingredient.hasCraftingRemainingItem())
+            if (!ingredient.getCraftingRemainder().isEmpty())
             {
-                itemStackHandler.setStackInSlot(inputIngredient, ingredient.getCraftingRemainingItem());
+                itemStackHandler.setStackInSlot(inputIngredient, ingredient.getCraftingRemainder());
                 level.playSound(null, worldPosition, SoundEvents.POINTED_DRIPSTONE_DRIP_WATER, SoundSource.BLOCKS, .5F, .5F);
                 //setChanged();
             }

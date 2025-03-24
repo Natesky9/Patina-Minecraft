@@ -1,5 +1,6 @@
 package com.natesky9.patina.Block;
 
+import com.mojang.serialization.MapCodec;
 import com.natesky9.patina.Block.Plinth.AppliancePlinthEntity;
 import com.natesky9.patina.Recipe.MatrixRecipe;
 import com.natesky9.patina.Recipe.MatrixRecipeInput;
@@ -17,18 +18,22 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MachineArcanaMatrix extends Block {
+public class MachineArcanaMatrix extends BaseEntityBlock {
+    public static final MapCodec<MachineArcanaMatrix> CODEC = simpleCodec(MachineArcanaMatrix::new);
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
 
     Map<BlockPos,List<BlockPos>> matrices = new HashMap<>();
@@ -40,7 +45,12 @@ public class MachineArcanaMatrix extends Block {
     }
 
     @Override
-    protected void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, BlockPos pNeighborPos, boolean pMovedByPiston) {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pNeighborBlock, @Nullable Orientation pOrientation, boolean pMovedByPiston) {
         if (!(pLevel instanceof ServerLevel server)) return;
         boolean powered = pLevel.hasNeighborSignal(pPos);
         boolean triggered = pState.getValue(TRIGGERED);
@@ -108,6 +118,7 @@ public class MachineArcanaMatrix extends Block {
         }
         if (canCraft(pLevel,pPos))
             return 3;//free is 3
+        Optional<RecipeHolder<MatrixRecipe>> optional = pLevel.recipeAccess()
         List<RecipeHolder<MatrixRecipe>> recipes = pLevel.getRecipeManager().getAllRecipesFor(ModRecipeTypes.MATRIX_RECIPE_TYPE.get());
         if (pLevel.getBlockEntity(pPos.below(2)) instanceof AppliancePlinthEntity plinth)
         {
@@ -218,5 +229,11 @@ public class MachineArcanaMatrix extends Block {
     @Override
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        return null;
     }
 }
