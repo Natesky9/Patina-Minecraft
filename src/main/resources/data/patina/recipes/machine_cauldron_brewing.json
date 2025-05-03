@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"minecraft:cauldron"},
-  "addition": {"item": "minecraft:brewing_stand"},
-  "result": {"item": "patina:machine_cauldron_brewing"}
-}

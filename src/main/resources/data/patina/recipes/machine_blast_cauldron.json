@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"minecraft:blast_furnace"},
-  "addition": {"item": "minecraft:cauldron"},
-  "result": {"item": "patina:machine_blast_cauldron"}
-}

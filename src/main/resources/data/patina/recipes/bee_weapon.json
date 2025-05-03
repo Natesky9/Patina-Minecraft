@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"patina:bee_fragment_a"},
-  "addition": {"item": "patina:bee_fragment_b"},
-  "result": {"item": "patina:bee_weapon"}
-}

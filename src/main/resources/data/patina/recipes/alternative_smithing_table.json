@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"minecraft:crafting_table"},
-  "addition": {"item": "minecraft:heavy_weighted_pressure_plate"},
-  "result": {"item": "minecraft:smithing_table"}
-}

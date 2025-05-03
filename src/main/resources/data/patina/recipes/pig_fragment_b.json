@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"patina:pig_fragment_3"},
-  "addition": {"item": "patina:pig_fragment_4"},
-  "result": {"item": "patina:pig_fragment_b"}
-}

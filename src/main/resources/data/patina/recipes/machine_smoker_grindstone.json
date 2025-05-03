@@ -1,6 +1,0 @@
-{
-  "type": "minecraft:smithing",
-  "base": {"item":"minecraft:smoker"},
-  "addition": {"item": "minecraft:grindstone"},
-  "result": {"item": "patina:machine_smoker_grindstone"}
-}
