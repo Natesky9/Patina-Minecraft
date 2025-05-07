@@ -1,5 +1,6 @@
 package com.natesky9.patina.init;
 
+import com.natesky9.patina.Items.CrystalFlaskItem;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -40,16 +41,13 @@ public class ModItems {
                     baseProperties("copper_helmet")));
     public static final DeferredItem<Item> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate",
             () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
-                    baseProperties("copper_helmet")));
+                    baseProperties("copper_chestplate")));
     public static final DeferredItem<Item> COPPER_LEGGINGS = ITEMS.register("copper_leggings",
             () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
-                    baseProperties("copper_helmet")));
+                    baseProperties("copper_leggings")));
     public static final DeferredItem<Item> COPPER_BOOTS = ITEMS.register("copper_boots",
             () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
-            baseProperties("copper_helmet")));
-    public static final DeferredItem<Item> COPPER_SHIELD = ITEMS.register("copper_shield",
-            () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
-            baseProperties("copper_helmet")));
+            baseProperties("copper_boots")));
     //endregion copper tools
     //region crystal
     public static final DeferredItem<Item> CRYSTAL_SWORD = ITEMS.register("crystal_sword",
@@ -150,10 +148,10 @@ public class ModItems {
 
     //region tools
     public static final DeferredItem<Item> FLASK_CRYSTAL = ITEMS.register("flask_crystal",
-            () -> new Item(baseProperties("flask_crystal").stacksTo(1)));
+            () -> new CrystalFlaskItem(baseProperties("flask_crystal").stacksTo(1)));
     public static final DeferredItem<Item> FLASK_FERUS = ITEMS.register("flask_ferus",
             () -> new Item(baseProperties("flask_ferus").stacksTo(1)));
-    public static final DeferredItem<Item> FLASK_ANIMA = ITEMS.register("flask_anima",
+    public static final DeferredItem<Item> FLASK_VITA = ITEMS.register("flask_anima",
             () -> new Item(baseProperties("flask_anima").stacksTo(1)));
     public static final DeferredItem<Item> FLASK_MAGNA = ITEMS.register("flask_fortis",
             () -> new Item(baseProperties("flask_fortis").stacksTo(1)));
@@ -179,6 +177,33 @@ public class ModItems {
     public static final DeferredItem<Item> DRAGON_CLAW = ITEMS.register("dragon_claw",
             () -> new Item(baseProperties("dragon_claw").attributes(large_claw).stacksTo(1)));
     //endregion tools
+    //region blocks
+    public static final DeferredItem<BlockItem> MACHINE_UNIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_UNIFIER);
+    public static final DeferredItem<BlockItem> MACHINE_ABSTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ABSTRACTOR);
+    public static final DeferredItem<BlockItem> MACHINE_REPLICATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_REPLICATOR);
+    public static final DeferredItem<BlockItem> MACHINE_EXTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_EXTRACTOR);
+    public static final DeferredItem<BlockItem> MACHINE_AUGMENTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_AUGMENTOR);
+    public static final DeferredItem<BlockItem> MACHINE_ARBITRATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ARBITRATOR);
+    public static final DeferredItem<BlockItem> MACHINE_MATRIX = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MATRIX);
+    public static final DeferredItem<BlockItem> APPLIANCE_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_PLINTH);
+    public static final DeferredItem<BlockItem> APPLIANCE_REINFORCED_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_REINFORCED_PLINTH);
+    public static final DeferredItem<BlockItem> MACHINE_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_FOUNDRY);
+    public static final DeferredItem<BlockItem> ADDON_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_FOUNDRY);
+    public static final DeferredItem<BlockItem> MACHINE_ALEMBIC = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ALEMBIC);
+    public static final DeferredItem<BlockItem> ADDON_ALEMBIC = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_ALEMBIC);
+    public static final DeferredItem<BlockItem> MACHINE_MINCERATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MINCERATOR);
+    public static final DeferredItem<BlockItem> MACHINE_KWERN = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_KWERN);
+    public static final DeferredItem<BlockItem> MACHINE_TEXTILER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_TEXTILER);
+    public static final DeferredItem<BlockItem> APPLIANCE_WARDROBE = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_WARDROBE);
+    public static final DeferredItem<BlockItem> APPLIANCE_ICEBOX = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_ICEBOX);
+    public static final DeferredItem<BlockItem> APPLIANCE_RESEARCH_DESK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_RESEARCH_DESK);
+    public static final DeferredItem<BlockItem> APPLIANCE_BENCHMARK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_BENCHMARK);
+    public static final DeferredItem<BlockItem> APPLIANCE_ARCANE_CONSOLIDATOR = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_ARCANE_CONSOLIDATOR);
+    public static final DeferredItem<BlockItem> APPLIANCE_CHORUS_TELEPORTER = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_CHORUS_TELEPORTER);
+    public static final DeferredItem<BlockItem> CHORUS_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.CHORUS_CABLE);
+    public static final DeferredItem<BlockItem> WYRE_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.WYRE_CABLE);
+    public static final DeferredItem<BlockItem> FLUUD_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.FLUUD_PIPE);
+    //endregion blocks
 
 
     static ResourceLocation name(String name)

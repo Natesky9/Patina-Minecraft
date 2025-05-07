@@ -50,7 +50,6 @@ public class ModCreativeTabs {
                     .displayItems(((params, output) ->
                     {
                         output.accept(ModItems.COPPER_SWORD.get());
-                        output.accept(ModItems.COPPER_SHIELD);
                         output.accept(ModItems.COPPER_HELMET);
                         output.accept(ModItems.COPPER_CHESTPLATE);
                         output.accept(ModItems.COPPER_LEGGINGS);
