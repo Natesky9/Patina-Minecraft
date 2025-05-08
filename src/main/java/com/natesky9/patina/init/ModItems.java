@@ -1,6 +1,7 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Items.CrystalFlaskItem;
+import com.natesky9.patina.Items.EternaFlaskItem;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -123,8 +124,8 @@ public class ModItems {
             () -> new Item(baseProperties("crystal_ferus")));
     public static final DeferredItem<Item> FORTIS_CRYSTAL = ITEMS.register("crystal_fortis",
             () -> new Item(baseProperties("crystal_fortis")));
-    public static final DeferredItem<Item> MALACHITE = ITEMS.register("malachite",
-            () -> new Item(baseProperties("malachite")));
+    public static final DeferredItem<Item> MALACHITE = ITEMS.register("crystal_malachite",
+            () -> new Item(baseProperties("crystal_malachite")));
     public static final DeferredItem<Item> WYRE = ITEMS.register("wyre",
             () -> new Item(baseProperties("wyre").stacksTo(96)));
 
@@ -141,22 +142,27 @@ public class ModItems {
     public static final DeferredItem<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget",
             () -> new Item(baseProperties("netherite_nugget")));
     public static final DeferredItem<Item> BRON_INGOT = ITEMS.register("bron_ingot",
-            () -> new Item(baseProperties("bronze_ingot")));
+            () -> new Item(baseProperties("bron_ingot")));
     public static final DeferredItem<Item> CHROMATIC_SCALE = ITEMS.register("chromatic_scale",
             () -> new Item(baseProperties("chromatic_scale")));
     //endregion materials
 
     //region tools
     public static final DeferredItem<Item> FLASK_CRYSTAL = ITEMS.register("flask_crystal",
-            () -> new CrystalFlaskItem(baseProperties("flask_crystal").stacksTo(1)));
-    public static final DeferredItem<Item> FLASK_FERUS = ITEMS.register("flask_ferus",
-            () -> new Item(baseProperties("flask_ferus").stacksTo(1)));
-    public static final DeferredItem<Item> FLASK_VITA = ITEMS.register("flask_anima",
-            () -> new Item(baseProperties("flask_anima").stacksTo(1)));
-    public static final DeferredItem<Item> FLASK_MAGNA = ITEMS.register("flask_fortis",
-            () -> new Item(baseProperties("flask_fortis").stacksTo(1)));
+            () -> new CrystalFlaskItem(baseProperties("flask_crystal")
+                    .stacksTo(1).durability(3)));
+    public static final DeferredItem<Item> FLASK_PUGNA = ITEMS.register("flask_pugna",
+            () -> new CrystalFlaskItem(baseProperties("flask_pugna")
+                    .stacksTo(1).durability(4)));
+    public static final DeferredItem<Item> FLASK_VITA = ITEMS.register("flask_vita",
+            () -> new CrystalFlaskItem(baseProperties("flask_vita")
+                    .stacksTo(1).durability(4)));
+    public static final DeferredItem<Item> FLASK_MAGNA = ITEMS.register("flask_magna",
+            () -> new CrystalFlaskItem(baseProperties("flask_magna")
+                    .stacksTo(1).durability(6)));
     public static final DeferredItem<Item> FLASK_ETERNA = ITEMS.register("flask_eterna",
-            () -> new Item(baseProperties("flask_eterna").stacksTo(1)));
+            () -> new EternaFlaskItem(baseProperties("flask_eterna")
+                    .stacksTo(1).durability(Integer.MAX_VALUE)));
 
     static ItemAttributeModifiers small_claw = ItemAttributeModifiers.builder()
             .add(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(name("reach"),1, AttributeModifier.Operation.ADD_VALUE),

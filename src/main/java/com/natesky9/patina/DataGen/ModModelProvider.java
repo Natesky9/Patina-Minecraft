@@ -3,11 +3,16 @@ package com.natesky9.patina.DataGen;
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModItems;
+import net.minecraft.client.color.item.Potion;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.item.*;
+import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
+import net.minecraft.client.renderer.item.properties.numeric.Damage;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -15,15 +20,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class ModModelProvider extends ModelProvider {
+    ItemModelGenerators gen;
     public ModModelProvider(PackOutput output) {
         super(output, Patina.MODID);
     }
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        gen = itemModels;
         itemModels.generateFlatItem(ModItems.COPPER_AXE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.COPPER_SWORD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.COPPER_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
@@ -72,14 +82,46 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.DRAGON_CLAW.get(), ModelTemplates.FLAT_ITEM);
 
-        ResourceLocation location = itemModels.generateLayeredItem(ModItems.FLASK_CRYSTAL.get(),
-                ModelLocationUtils.getModelLocation(ModItems.FLASK_CRYSTAL.get(),"_bottle"),
-                ModelLocationUtils.getModelLocation(ModItems.FLASK_CRYSTAL.get(),"_fluid_1"));
-        itemModels.addPotionTint(ModItems.FLASK_CRYSTAL.get(), location);
+        //this is done better below
+        //ResourceLocation location = itemModels.generateLayeredItem(ModItems.FLASK_CRYSTAL.get(),
+        //        ModelLocationUtils.getModelLocation(ModItems.FLASK_CRYSTAL.get(),"_fluid_1"),
+        //        ModelLocationUtils.getModelLocation(ModItems.FLASK_CRYSTAL.get(),"_bottle"));
+        //itemModels.addPotionTint(ModItems.FLASK_CRYSTAL.get(), location);
 
-        itemModels.generateFlatItem(ModItems.FLASK_VITA.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.FLASK_FERUS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.FLASK_MAGNA.get(), ModelTemplates.FLAT_ITEM);
+        Item prime = ModItems.FLASK_CRYSTAL.get();
+        itemModels.itemModelOutput.accept(prime, ItemModelUtils.rangeSelect(new Damage(true), 1,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(prime, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(prime, "_fluid_1"),.33F),
+                ItemModelUtils.override(generateFlaskBottle(prime, "_fluid_2"),.66F),
+                ItemModelUtils.override(generateFlaskBottle(prime, "_fluid_3"),1F)));
+        Item vita = ModItems.FLASK_VITA.get();
+        itemModels.itemModelOutput.accept(vita, ItemModelUtils.rangeSelect(new Damage(true), 1,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(vita, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(vita, "_fluid_1"),.25F),
+                ItemModelUtils.override(generateFlaskBottle(vita, "_fluid_2"),.5F),
+                ItemModelUtils.override(generateFlaskBottle(vita, "_fluid_3"),.75F),
+                ItemModelUtils.override(generateFlaskBottle(vita, "_fluid_4"),1F)));
+        Item pugna = ModItems.FLASK_PUGNA.get();
+        itemModels.itemModelOutput.accept(pugna, ItemModelUtils.rangeSelect(new Damage(true), 1,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(pugna, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(pugna, "_fluid_1"),.25F),
+                ItemModelUtils.override(generateFlaskBottle(pugna, "_fluid_2"),.5F),
+                ItemModelUtils.override(generateFlaskBottle(pugna, "_fluid_3"),.75F),
+                ItemModelUtils.override(generateFlaskBottle(pugna, "_fluid_4"),1F)));
+        Item magna = ModItems.FLASK_MAGNA.get();
+        itemModels.itemModelOutput.accept(magna, ItemModelUtils.rangeSelect(new Damage(true), 1,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(magna, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_1"),.16F),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_2"),.33F),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_3"),.5F),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_4"),.66F),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_5"),.83F),
+                ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_6"),1F)));
+
+
+        //itemModels.generateFlatItem(ModItems.FLASK_VITA.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.FLASK_PUGNA.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.FLASK_MAGNA.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FLASK_ETERNA.get(), ModelTemplates.FLAT_ITEM);
 
 
@@ -87,6 +129,13 @@ public class ModModelProvider extends ModelProvider {
         {//lazy solution to get blockstates in place
             blockModels.createTrivialCube(block.get());
         }
+    }
+
+    ItemModel.Unbaked generateFlaskBottle(Item item, String suffix)
+    {
+        ResourceLocation flask = ModelLocationUtils.getModelLocation(item);
+        ResourceLocation fluid = flask.withSuffix(suffix);
+        return ItemModelUtils.tintedModel(gen.generateLayeredItem(fluid, fluid, flask),new Potion(-13083194));
     }
 
     @Override
