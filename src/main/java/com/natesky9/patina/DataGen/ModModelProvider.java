@@ -127,7 +127,8 @@ public class ModModelProvider extends ModelProvider {
 
         for (DeferredHolder<Block, ? extends Block> block: ModBlocks.BLOCKS.getEntries())
         {//lazy solution to get blockstates in place
-            blockModels.createTrivialCube(block.get());
+            if (block != ModBlocks.APPLIANCE_PLINTH)
+                blockModels.createTrivialCube(block.get());
         }
     }
 
@@ -141,7 +142,7 @@ public class ModModelProvider extends ModelProvider {
     @Override
     protected Stream<? extends Holder<Block>> getKnownBlocks()
     {
-        return ModBlocks.BLOCKS.getEntries().stream();
+        return ModBlocks.BLOCKS.getEntries().stream().filter(entry -> !entry.is(ModBlocks.APPLIANCE_PLINTH));
     }
 
     @Override

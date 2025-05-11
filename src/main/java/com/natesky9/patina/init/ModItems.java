@@ -184,6 +184,8 @@ public class ModItems {
             () -> new Item(baseProperties("dragon_claw").attributes(large_claw).stacksTo(1)));
     //endregion tools
     //region blocks
+    //comment these out as needed as the blockentities are added
+    //since this is done via the new register method
     public static final DeferredItem<BlockItem> MACHINE_UNIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_UNIFIER);
     public static final DeferredItem<BlockItem> MACHINE_ABSTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ABSTRACTOR);
     public static final DeferredItem<BlockItem> MACHINE_REPLICATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_REPLICATOR);
@@ -191,7 +193,7 @@ public class ModItems {
     public static final DeferredItem<BlockItem> MACHINE_AUGMENTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_AUGMENTOR);
     public static final DeferredItem<BlockItem> MACHINE_ARBITRATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ARBITRATOR);
     public static final DeferredItem<BlockItem> MACHINE_MATRIX = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MATRIX);
-    public static final DeferredItem<BlockItem> APPLIANCE_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_PLINTH);
+    //public static final DeferredItem<BlockItem> APPLIANCE_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_PLINTH);
     public static final DeferredItem<BlockItem> APPLIANCE_REINFORCED_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_REINFORCED_PLINTH);
     public static final DeferredItem<BlockItem> MACHINE_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_FOUNDRY);
     public static final DeferredItem<BlockItem> ADDON_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_FOUNDRY);

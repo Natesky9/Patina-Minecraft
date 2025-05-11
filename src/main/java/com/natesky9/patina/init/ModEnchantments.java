@@ -55,14 +55,14 @@ public class ModEnchantments {
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
         //
         register(context, CURSE_GLUTTONY,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1,Enchantment.dynamicCost(1,1),
                                 Enchantment.constantCost(1),
                                 1, EquipmentSlotGroup.ARMOR))
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
         //
         register(context, CURSE_GREED,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1,Enchantment.constantCost(1),
                                 Enchantment.constantCost(1),
                                 1,EquipmentSlotGroup.ARMOR))
@@ -75,13 +75,13 @@ public class ModEnchantments {
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
         //
         register(context, CURSE_LUST,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1,Enchantment.constantCost(1),
                                 Enchantment.constantCost(1),
                                 1,EquipmentSlotGroup.ARMOR))
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
         register(context, CURSE_SLOTH,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1,Enchantment.constantCost(1),
                                 Enchantment.constantCost(1),
                                 1,EquipmentSlotGroup.ARMOR))
@@ -93,7 +93,7 @@ public class ModEnchantments {
                                 1,EquipmentSlotGroup.ARMOR))
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
         register(context, CURSE_PRIDE,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.LEG_ARMOR_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1,Enchantment.constantCost(1),
                                 Enchantment.constantCost(1),
                                 1,EquipmentSlotGroup.ARMOR))

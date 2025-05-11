@@ -1,6 +1,7 @@
 package com.natesky9.patina;
 
 import com.natesky9.patina.Event.EventsMod;
+import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModCreativeTabs;
 import com.natesky9.patina.init.ModItems;
@@ -33,6 +34,7 @@ public class Patina
 
         ModItems.register(modEventBus);//:)
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
 
         modEventBus.addListener(EventsMod::Creative);

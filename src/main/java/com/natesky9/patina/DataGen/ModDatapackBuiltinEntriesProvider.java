@@ -1,5 +1,6 @@
-package com.natesky9.patina;
+package com.natesky9.patina.DataGen;
 
+import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModEnchantments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
