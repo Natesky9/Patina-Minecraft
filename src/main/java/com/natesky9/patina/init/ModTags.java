@@ -7,7 +7,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ModTags {
-    static TagKey<Enchantment> CURSE_EXCLUSIVE = tagEnchantment("exclusive_set/curse");
+    public static TagKey<Enchantment> CURSE_EXCLUSIVE = tagEnchantment("exclusive_set/curse");
 
 
     //

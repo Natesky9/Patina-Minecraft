@@ -30,9 +30,9 @@ public class ModItems {
     public static final DeferredItem<Item> COPPER_SHOVEL = ITEMS.register("copper_shovel",
             () -> new ShovelItem(ModTiers.COPPER, 1.5F, -3F,
                     baseProperties("copper_shovel")));
-    public static final DeferredItem<Item> COPPER_PICK = ITEMS.register("copper_pick",
+    public static final DeferredItem<Item> COPPER_PICK = ITEMS.register("copper_pickaxe",
             () -> new PickaxeItem(ModTiers.COPPER, 1.0F, -2.8F,
-                    baseProperties("copper_pick")));
+                    baseProperties("copper_pickaxe")));
     public static final DeferredItem<Item> COPPER_HOE = ITEMS.register("copper_hoe",
             (properties) -> new HoeItem(ModTiers.COPPER,-1F, -1F,
                     baseProperties("copper_hoe")));
@@ -60,9 +60,9 @@ public class ModItems {
     public static final DeferredItem<Item> CRYSTAL_SHOVEL = ITEMS.register("crystal_shovel",
             () -> new SwordItem(ModTiers.CRYSTAL,3,-1.8F,
                     baseProperties("crystal_shovel")));
-    public static final DeferredItem<Item> CRYSTAL_PICK = ITEMS.register("crystal_pick",
+    public static final DeferredItem<Item> CRYSTAL_PICK = ITEMS.register("crystal_pickaxe",
             () -> new SwordItem(ModTiers.CRYSTAL,3,-1.8F,
-                    baseProperties("crystal_pick")));
+                    baseProperties("crystal_pickaxe")));
     public static final DeferredItem<Item> CRYSTAL_HOE = ITEMS.register("crystal_hoe",
             () -> new SwordItem(ModTiers.CRYSTAL,3,-1.8F,
                     baseProperties("crystal_hoe")));

@@ -21,8 +21,14 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new AdvancementProvider(packOutput, lookupProvider, List.of(new ModAdvancementProvider())));
-        generator.addProvider(true, new ModRecipeProvider.Runner(packOutput, lookupProvider));
-        generator.addProvider(true, new ModModelProvider(packOutput));
+        event.createBlockAndItemTags(ModBlockTagsProvider::new,ModItemTagsProvider::new);
+        event.createProvider(ModEntityTypeTagsProvider::new);
+        event.createProvider(ModFluidTagsProvider::new);
+        event.createProvider(ModEnchantmentTagsProvider::new);
+        event.createProvider(ModRecipeProvider.Runner::new);
+        event.createProvider(ModModelProvider::new);
+        event.createProvider(ModGlobalLootModifiersProvider::new);
+        event.createProvider(ModDatapackBuiltinEntriesProvider::Make);
         generator.addProvider(true, new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(ModBlockLootTableProvider::new, LootContextParamSets.BLOCK)),
                 lookupProvider));

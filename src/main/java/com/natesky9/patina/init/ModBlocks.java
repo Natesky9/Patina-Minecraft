@@ -1,6 +1,6 @@
 package com.natesky9.patina.init;
 
-import com.natesky9.patina.Blocks.PlinthBlock;
+import com.natesky9.patina.Blocks.*;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -53,39 +53,50 @@ public class ModBlocks {
                     .strength(3f).noOcclusion());
 
     //region tech machines
-    public static final DeferredBlock<Block> MACHINE_FOUNDRY = BLOCKS.registerSimpleBlock("machine_foundry",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
+    public static final DeferredBlock<Block> MACHINE_FOUNDRY = registerBlock("machine_foundry",
+            () -> new MachineFoundryBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_foundry"))));
+    //public static final DeferredBlock<Block> MACHINE_FOUNDRY = BLOCKS.registerSimpleBlock("machine_foundry",
+    //        BlockBehaviour.Properties.of()
+    //                .strength(3F));
     public static final DeferredBlock<Block> ADDON_FOUNDRY = BLOCKS.registerSimpleBlock("addon_foundry",
             BlockBehaviour.Properties.of()
                     .strength(3F));
-    public static final DeferredBlock<Block> MACHINE_ALEMBIC = BLOCKS.registerSimpleBlock("machine_alembic",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
+    public static final DeferredBlock<Block> MACHINE_ALEMBIC = registerBlock("machine_alembic",
+            () -> new MachineAlembicBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_alembic"))));
     public static final DeferredBlock<Block> ADDON_ALEMBIC = BLOCKS.registerSimpleBlock("addon_alembic",
             BlockBehaviour.Properties.of()
                     .strength(3F));
-    public static final DeferredBlock<Block> MACHINE_MINCERATOR = BLOCKS.registerSimpleBlock("machine_mixer",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
-    public static final DeferredBlock<Block> MACHINE_KWERN = BLOCKS.registerSimpleBlock("machine_grinder",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
-    public static final DeferredBlock<Block> MACHINE_TEXTILER = BLOCKS.registerSimpleBlock("machine_textiler",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
-    public static final DeferredBlock<Block> MACHINE_EVAPORATOR = BLOCKS.registerSimpleBlock("machine_evaporator",
-            BlockBehaviour.Properties.of()
-                    .strength(3F));
+    public static final DeferredBlock<Block> MACHINE_MINCERATOR = registerBlock("machine_mincerator",
+            () -> new MachineMinceratorBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_mincerator"))));
+    public static final DeferredBlock<Block> MACHINE_KWERN = registerBlock("machine_kwern",
+            () -> new MachineKwernBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_kwern"))));
+    public static final DeferredBlock<Block> MACHINE_TEXTILER = registerBlock("machine_textiler",
+            () -> new MachineTextilerBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_textiler"))));
+    public static final DeferredBlock<Block> MACHINE_EVAPORATOR = registerBlock("machine_evaporator",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_evaporator"))));
     //endregion tech machines
 
     //region appliances
-    public static final DeferredBlock<Block> APPLIANCE_WARDROBE = BLOCKS.registerSimpleBlock("appliance_wardrobe",
-            BlockBehaviour.Properties.of()
-                    .strength(2F));
-    public static final DeferredBlock<Block> APPLIANCE_ICEBOX = BLOCKS.registerSimpleBlock("appliance_icebox",
-            BlockBehaviour.Properties.of()
-                    .strength(2F));
+    public static final DeferredBlock<Block> APPLIANCE_WARDROBE = registerBlock("appliance_wardrobe",
+            () -> new ApplianceWardrobeBlock(BlockBehaviour.Properties.of()
+                    .strength(2F)
+                    .setId(createBlockKey("appliance_wardrobe"))));
+    public static final DeferredBlock<Block> APPLIANCE_ICEBOX = registerBlock("appliance_icebox",
+            () -> new ApplianceIceboxBlock(BlockBehaviour.Properties.of()
+                    .strength(2F)
+                    .setId(createBlockKey("appliance_icebox"))));
     public static final DeferredBlock<Block> APPLIANCE_RESEARCH_DESK = BLOCKS.registerSimpleBlock("appliance_research_desk",
             BlockBehaviour.Properties.of()
                     .strength(2F));

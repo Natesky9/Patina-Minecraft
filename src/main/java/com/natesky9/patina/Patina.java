@@ -1,6 +1,8 @@
 package com.natesky9.patina;
 
 import com.natesky9.patina.Event.EventsMod;
+import com.natesky9.patina.Recipe.ModRecipeSerializers;
+import com.natesky9.patina.Recipe.ModRecipeTypes;
 import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModCreativeTabs;
@@ -36,6 +38,8 @@ public class Patina
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
 
         modEventBus.addListener(EventsMod::Creative);
 
