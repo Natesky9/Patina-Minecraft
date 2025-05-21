@@ -85,5 +85,6 @@
   "block.patina.cable_chorus": "Chorus Cable",
   "block.patina.cable_wyre": "Wyre Cable",
   "block.patina.pipe_fluud": "Fluud Pipe",
-  "menu.patina.icebox": "Icebox"
+  "menu.patina.icebox": "Icebox",
+  "block.patina.machine_evaporator": "Evaporator"
 }

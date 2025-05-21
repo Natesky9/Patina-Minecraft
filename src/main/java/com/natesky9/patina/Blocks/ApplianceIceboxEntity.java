@@ -1,5 +1,6 @@
 package com.natesky9.patina.Blocks;
 
+import com.natesky9.patina.Menu.IceboxMenu;
 import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
@@ -17,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class ApplianceIceboxEntity extends BlockEntity {
+public class ApplianceIceboxEntity extends BlockEntity implements MenuProvider {
     public final ItemStackHandler handler;
     public ApplianceIceboxEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.ICEBOX_ENTITY.get(), pos, blockState);
@@ -31,15 +32,16 @@ public class ApplianceIceboxEntity extends BlockEntity {
             }
         };
     }
-    //TODO: add menu and implement
-    /*@Override
+
+    @Override
     public Component getDisplayName() {
-        return Component.translatable("menu.patina.icebox");
+        return Component.translatable("block.patina.appliance_icebox");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return null;
-    }*/
+        return new IceboxMenu(i, inventory, this);
+    }
+
 }

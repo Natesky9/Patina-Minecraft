@@ -1,7 +1,7 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Blocks.*;
-import com.natesky9.patina.Blocks.Renderer.MachineAlembicEntity;
+import com.natesky9.patina.Blocks.MachineAlembicEntity;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,6 +29,14 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("evaporator",
                     () -> new BlockEntityType<>(MachineEvaporatorEntity::new,
                             ModBlocks.MACHINE_EVAPORATOR.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineMinceratorEntity>> MINCERATOR_ENTITY =
+            BLOCK_ENTITIES.register("mincerator",
+                    () -> new BlockEntityType<>(MachineMinceratorEntity::new,
+                            ModBlocks.MACHINE_MINCERATOR.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineKwernEntity>> KWERN_ENTITY =
+            BLOCK_ENTITIES.register("kwern",
+                    () -> new BlockEntityType<>(MachineKwernEntity::new,
+                            ModBlocks.MACHINE_KWERN.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineFoundryEntity>> FOUNDRY_ENTITY =
             BLOCK_ENTITIES.register("foundry",
                     () -> new BlockEntityType<>(MachineFoundryEntity::new,

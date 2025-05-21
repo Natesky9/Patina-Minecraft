@@ -1,15 +1,24 @@
 package com.natesky9.patina.Blocks;
 
 import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-public class MachineFoundryBlock extends Block {
+public class MachineFoundryBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     public static final MapCodec<MachineFoundryBlock> CODEC = simpleCodec(MachineFoundryBlock::new);
     public MachineFoundryBlock(Properties p_49795_) {
@@ -17,7 +26,7 @@ public class MachineFoundryBlock extends Block {
     }
 
     @Override
-    protected MapCodec<? extends Block> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
@@ -29,5 +38,24 @@ public class MachineFoundryBlock extends Block {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (player instanceof ServerPlayer server)
+        {
+            BlockEntity entity = level.getBlockEntity(pos);
+            if (entity instanceof MachineFoundryEntity machine)
+                server.openMenu(machine, pos);
+            else
+                throw new IllegalStateException("Container Provider missing, fool!");
+        }
+        return super.useWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new MachineFoundryEntity(blockPos, blockState);
     }
 }

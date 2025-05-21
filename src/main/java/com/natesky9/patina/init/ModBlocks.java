@@ -57,9 +57,6 @@ public class ModBlocks {
             () -> new MachineFoundryBlock(BlockBehaviour.Properties.of()
                     .strength(3F)
                     .setId(createBlockKey("machine_foundry"))));
-    //public static final DeferredBlock<Block> MACHINE_FOUNDRY = BLOCKS.registerSimpleBlock("machine_foundry",
-    //        BlockBehaviour.Properties.of()
-    //                .strength(3F));
     public static final DeferredBlock<Block> ADDON_FOUNDRY = BLOCKS.registerSimpleBlock("addon_foundry",
             BlockBehaviour.Properties.of()
                     .strength(3F));
@@ -83,7 +80,7 @@ public class ModBlocks {
                     .strength(3F)
                     .setId(createBlockKey("machine_textiler"))));
     public static final DeferredBlock<Block> MACHINE_EVAPORATOR = registerBlock("machine_evaporator",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new MachineEvaporatorBlock(BlockBehaviour.Properties.of()
                     .strength(3F)
                     .setId(createBlockKey("machine_evaporator"))));
     //endregion tech machines

@@ -3,10 +3,7 @@ package com.natesky9.patina;
 import com.natesky9.patina.Event.EventsMod;
 import com.natesky9.patina.Recipe.ModRecipeSerializers;
 import com.natesky9.patina.Recipe.ModRecipeTypes;
-import com.natesky9.patina.init.ModBlockEntities;
-import com.natesky9.patina.init.ModBlocks;
-import com.natesky9.patina.init.ModCreativeTabs;
-import com.natesky9.patina.init.ModItems;
+import com.natesky9.patina.init.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -40,6 +37,7 @@ public class Patina
         ModCreativeTabs.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(EventsMod::Creative);
 

@@ -1,12 +1,19 @@
-package com.natesky9.patina.Blocks.Renderer;
+package com.natesky9.patina.Blocks;
 
+import com.natesky9.patina.Menu.AlembicMenu;
 import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -15,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class MachineAlembicEntity extends BlockEntity {
+public class MachineAlembicEntity extends BlockEntity implements MenuProvider {
     private ItemStackHandler itemHandler = new ItemStackHandler(2)
     {
         @Override
@@ -46,8 +53,7 @@ public class MachineAlembicEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("inventory", itemHandler.serializeNBT(registries));
-        ItemStack stack = new ItemStack(reagent);
-        tag.put("reagent", stack.save(registries));
+        tag.putInt("reagent", BuiltInRegistries.ITEM.getId(reagent));
         tag.putInt("reagentCount", leftover);
         tag.putInt("progress", progress);
     }
@@ -56,7 +62,7 @@ public class MachineAlembicEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         itemHandler.deserializeNBT(registries, tag);
-        reagent = ItemStack.parse(registries, tag).get().getItem();
+        reagent = BuiltInRegistries.ITEM.byId(tag.getInt("reagent"));
         leftover = tag.getInt("reagentCount");
         progress = tag.getInt("progress");
     }
@@ -70,5 +76,16 @@ public class MachineAlembicEntity extends BlockEntity {
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("block.patina.machine_alembic");
+    }
+
+    @Nullable
+    @Override
+    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+        return new AlembicMenu(i, inventory, this);
     }
 }

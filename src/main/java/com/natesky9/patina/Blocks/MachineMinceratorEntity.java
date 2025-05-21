@@ -1,6 +1,6 @@
 package com.natesky9.patina.Blocks;
 
-import com.natesky9.patina.Menu.EvaporatorMenu;
+import com.natesky9.patina.Menu.MinceratorMenu;
 import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -13,19 +13,19 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class MachineEvaporatorEntity extends BlockEntity implements MenuProvider {
-    public MachineEvaporatorEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.EVAPORATOR_ENTITY.get(), pos, blockState);
+public class MachineMinceratorEntity extends BlockEntity implements MenuProvider {
+    public MachineMinceratorEntity(BlockPos pos, BlockState blockState) {
+        super(ModBlockEntities.MINCERATOR_ENTITY.get(), pos, blockState);
     }
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.patina.machine_evaporator");
+        return Component.translatable("block.patina.machine_mixer");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new EvaporatorMenu(i, inventory, this);
+        return new MinceratorMenu(i, inventory, this);
     }
 }
