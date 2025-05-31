@@ -1,5 +1,6 @@
 package com.natesky9.patina.Recipe;
 
+import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -23,16 +24,16 @@ public class TextilerRecipe implements Recipe<RecipeInput> {
 
     @Override
     public RecipeType<? extends Recipe<RecipeInput>> getType() {
-        return null;
+        return ModRecipeTypes.TEXTILER_RECIPE.get();
     }
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 }

@@ -1,15 +1,23 @@
 package com.natesky9.patina.Recipe;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.natesky9.patina.init.ModRecipeSerializers;
+import com.natesky9.patina.init.ModRecipeTypes;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public record FoundryRecipe(ItemStack input, ItemStack output) implements Recipe<RecipeInput> {
+
+public record FoundryRecipe(Holder<Item> input, Holder<Item> output, int count) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
         return false;
@@ -27,17 +35,17 @@ public record FoundryRecipe(ItemStack input, ItemStack output) implements Recipe
 
     @Override
     public RecipeType<? extends Recipe<RecipeInput>> getType() {
-        return null;
+        return ModRecipeTypes.FOUNDRY_RECIPE.get();
     }
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
     //serializer stuff
     public static class Serializer implements RecipeSerializer<FoundryRecipe>
@@ -45,11 +53,14 @@ public record FoundryRecipe(ItemStack input, ItemStack output) implements Recipe
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<FoundryRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(FoundryRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(FoundryRecipe::output)
+                        Item.CODEC.fieldOf("input").forGetter(FoundryRecipe::input),
+                        Item.CODEC.fieldOf("output").forGetter(FoundryRecipe::output),
+                        Codec.INT.fieldOf("count").forGetter(FoundryRecipe::count)
                 ).apply(builder, FoundryRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, FoundryRecipe> STREAM_CODEC =
-                StreamCodec.composite(ItemStack.STREAM_CODEC,FoundryRecipe::input,ItemStack.STREAM_CODEC, FoundryRecipe::output,
+                StreamCodec.composite(ByteBufCodecs.holderRegistry(Registries.ITEM),FoundryRecipe::input,
+                        ByteBufCodecs.holderRegistry(Registries.ITEM), FoundryRecipe::output,
+                        ByteBufCodecs.INT, FoundryRecipe::count,
                         FoundryRecipe::new);
         @Override
         public MapCodec<FoundryRecipe> codec() {

@@ -2,6 +2,8 @@ package com.natesky9.patina.Recipe;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.natesky9.patina.init.ModRecipeSerializers;
+import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -27,17 +29,17 @@ public record MinceratorRecipe(ItemStack input, ItemStack output) implements Rec
 
     @Override
     public RecipeType<? extends Recipe<RecipeInput>> getType() {
-        return null;
+        return ModRecipeTypes.MINCERATOR_RECIPE.get();
     }
 
     @Override
     public PlacementInfo placementInfo() {
-        return null;
+        return PlacementInfo.NOT_PLACEABLE;
     }
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
-        return null;
+        return RecipeBookCategories.CRAFTING_MISC;
     }
     //serializer stuff
     public static class Serializer implements RecipeSerializer<MinceratorRecipe>

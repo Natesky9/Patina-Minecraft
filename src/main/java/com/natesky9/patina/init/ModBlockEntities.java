@@ -33,6 +33,10 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("mincerator",
                     () -> new BlockEntityType<>(MachineMinceratorEntity::new,
                             ModBlocks.MACHINE_MINCERATOR.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineTextilerEntity>> TEXTILER_ENTITY =
+            BLOCK_ENTITIES.register("textiler",
+                    () -> new BlockEntityType<>(MachineTextilerEntity::new,
+                            ModBlocks.MACHINE_MINCERATOR.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineKwernEntity>> KWERN_ENTITY =
             BLOCK_ENTITIES.register("kwern",
                     () -> new BlockEntityType<>(MachineKwernEntity::new,

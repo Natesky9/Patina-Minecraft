@@ -1,12 +1,12 @@
-package com.natesky9.patina.Recipe;
+package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
+import com.natesky9.patina.Recipe.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ModRecipeSerializers {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =

@@ -60,7 +60,7 @@ public class ApplianceWardrobeBlock extends BaseEntityBlock {
         super.setPlacedBy(level, pos, state, placer, stack);
         BlockState other = defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER)
                 .setValue(FACING, state.getValue(FACING));
-        level.setBlock(pos.above(), state, 3);
+        level.setBlock(pos.above(), other, 3);
     }
 
     @Override
@@ -78,13 +78,13 @@ public class ApplianceWardrobeBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        //placement conditions
+        //seems to only be the initial block
+        //so put your checks here
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        BlockState below = level.getBlockState(pos.below());
-        boolean top = below.is(this) && below.getValue(HALF) == DoubleBlockHalf.LOWER;
-        BlockState state = defaultBlockState()
-                .setValue(HALF, top ? DoubleBlockHalf.UPPER : DoubleBlockHalf.LOWER)
-                .setValue(FACING, context.getHorizontalDirection().getOpposite());
+        BlockState state = defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(HALF, DoubleBlockHalf.LOWER);
 
         return pos.getY() < level.getMaxY() - 1
                 && level.getBlockState(pos.above()).canBeReplaced() ? state : null;
@@ -92,24 +92,28 @@ public class ApplianceWardrobeBlock extends BaseEntityBlock {
 
     @Override
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
-        //copied over, ensure everything is fine
+        //breaks adjacent when invalid
         DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
-        if (direction.getAxis() != Direction.Axis.Y || doubleblockhalf == DoubleBlockHalf.LOWER != (direction == Direction.UP)
-                || neighborState.is(this) && neighborState.getValue(HALF) != doubleblockhalf) {
-            return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN
-                    && !state.canSurvive(level, pos) ?
-                    Blocks.AIR.defaultBlockState() :
-                    super.updateShape(state, level, scheduledTickAccess, pos,direction,neighborPos, neighborState, random);
-        } else {
-            return Blocks.AIR.defaultBlockState();
+
+        if (doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.UP)
+        {
+            return neighborState.is(this) && neighborState.getValue(HALF) == DoubleBlockHalf.UPPER
+                    ? state : Blocks.AIR.defaultBlockState();
         }
+        if (doubleblockhalf == DoubleBlockHalf.UPPER && direction == Direction.DOWN)
+        {
+
+            return neighborState.is(this) && neighborState.getValue(HALF) == DoubleBlockHalf.LOWER
+                    ? state : Blocks.AIR.defaultBlockState();
+        }
+        //if neither, we good
+        return state;
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() != newState.getBlock())
         {
-            BlockPos test = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos : pos.below();
             BlockEntity entity = level.getBlockEntity(pos);
             if (entity instanceof ApplianceWardrobeEntity wardrobe)
             {

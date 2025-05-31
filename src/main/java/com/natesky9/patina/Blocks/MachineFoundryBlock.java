@@ -50,7 +50,7 @@ public class MachineFoundryBlock extends BaseEntityBlock {
             else
                 throw new IllegalStateException("Container Provider missing, fool!");
         }
-        return super.useWithoutItem(state, level, pos, player, hitResult);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

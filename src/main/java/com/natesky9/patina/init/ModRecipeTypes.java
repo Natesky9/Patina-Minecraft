@@ -1,13 +1,16 @@
-package com.natesky9.patina.Recipe;
+package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
+import com.natesky9.patina.Recipe.EvaporatorRecipe;
+import com.natesky9.patina.Recipe.FoundryRecipe;
+import com.natesky9.patina.Recipe.MinceratorRecipe;
+import com.natesky9.patina.Recipe.TextilerRecipe;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ModRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =

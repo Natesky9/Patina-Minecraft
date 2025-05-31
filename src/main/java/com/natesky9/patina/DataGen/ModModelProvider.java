@@ -10,6 +10,7 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.client.renderer.item.properties.numeric.Damage;
@@ -24,6 +25,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static net.minecraft.client.data.models.BlockModelGenerators.createSimpleBlock;
 
 public class ModModelProvider extends ModelProvider {
     ItemModelGenerators gen;
@@ -60,6 +63,9 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.FORTIS_HELMET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FORTIS_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FORTIS_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.IMPERIUM_HELMET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.IMPERIUM_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.IMPERIUM_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(ModItems.BISMUTH_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
@@ -67,6 +73,8 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.ANIMA_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FERUS_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FORTIS_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.PERPETUUM_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.REGIMA_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.NETHERITE_NUGGET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.SILK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.UMBRA.get(), ModelTemplates.FLAT_ITEM);
@@ -117,12 +125,28 @@ public class ModModelProvider extends ModelProvider {
                 ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_4"),.66F),
                 ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_5"),.83F),
                 ItemModelUtils.override(generateFlaskBottle(magna, "_fluid_6"),1F)));
+        Item eterna = ModItems.FLASK_ETERNA.get();
+        itemModels.itemModelOutput.accept(eterna, ItemModelUtils.rangeSelect(new Damage(false), 1,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(eterna, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(eterna, "_fluid_0"),0),
+                ItemModelUtils.override(generateFlaskBottle(eterna, "_fluid_1"),1)));
+        Item pluvia = ModItems.FLASK_PLUVIA.get();
+        itemModels.itemModelOutput.accept(pluvia, ItemModelUtils.rangeSelect(new Damage(false), 0.5F,
+                ItemModelUtils.plainModel(itemModels.createFlatItemModel(pluvia, ModelTemplates.FLAT_HANDHELD_ITEM)),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_1"),1),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_2"),2),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_3"),3),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_4"),4),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_5"),5),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_6"),6),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_7"),7),
+                ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_8"),8)));
 
 
         //itemModels.generateFlatItem(ModItems.FLASK_VITA.get(), ModelTemplates.FLAT_ITEM);
         //itemModels.generateFlatItem(ModItems.FLASK_PUGNA.get(), ModelTemplates.FLAT_ITEM);
         //itemModels.generateFlatItem(ModItems.FLASK_MAGNA.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.FLASK_ETERNA.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.FLASK_ETERNA.get(), ModelTemplates.FLAT_ITEM);
 
 
         for (DeferredHolder<Block, ? extends Block> block: ModBlocks.BLOCKS.getEntries())

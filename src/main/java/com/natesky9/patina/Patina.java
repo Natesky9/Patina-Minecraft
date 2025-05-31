@@ -1,15 +1,13 @@
 package com.natesky9.patina;
 
 import com.natesky9.patina.Event.EventsMod;
-import com.natesky9.patina.Recipe.ModRecipeSerializers;
-import com.natesky9.patina.Recipe.ModRecipeTypes;
+import com.natesky9.patina.init.ModRecipeSerializers;
+import com.natesky9.patina.init.ModRecipeTypes;
 import com.natesky9.patina.init.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;

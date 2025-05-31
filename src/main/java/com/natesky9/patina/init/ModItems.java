@@ -2,6 +2,8 @@ package com.natesky9.patina.init;
 
 import com.natesky9.patina.Items.CrystalFlaskItem;
 import com.natesky9.patina.Items.EternaFlaskItem;
+import com.natesky9.patina.Items.MagnaFlaskItem;
+import com.natesky9.patina.Items.PluviaFlaskItem;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -106,6 +108,15 @@ public class ModItems {
     public static final DeferredItem<Item> FORTIS_LEGGINGS = ITEMS.register("crystal_fortis_leggings",
             () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.LEGGINGS,
                     baseProperties("crystal_fortis_leggings")));
+    public static final DeferredItem<Item> IMPERIUM_HELMET = ITEMS.register("crystal_imperium_helmet",
+            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+                    baseProperties("crystal_imperium_helmet")));
+    public static final DeferredItem<Item> IMPERIUM_CHESTPLATE = ITEMS.register("crystal_imperium_chestplate",
+            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
+                    baseProperties("crystal_imperium_helmet")));
+    public static final DeferredItem<Item> IMPERIUM_LEGGINGS = ITEMS.register("crystal_imperium_leggings",
+            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+                    baseProperties("crystal_imperium_leggings")));
     //endregion crystal
 
     //region materials
@@ -124,6 +135,10 @@ public class ModItems {
             () -> new Item(baseProperties("crystal_ferus")));
     public static final DeferredItem<Item> FORTIS_CRYSTAL = ITEMS.register("crystal_fortis",
             () -> new Item(baseProperties("crystal_fortis")));
+    public static final DeferredItem<Item> PERPETUUM_CRYSTAL = ITEMS.register("crystal_perpetuum",
+            () -> new Item(baseProperties("crystal_perpetuum")));
+    public static final DeferredItem<Item> REGIMA_CRYSTAL = ITEMS.register("crystal_regima",
+            () -> new Item(baseProperties("crystal_regima")));
     public static final DeferredItem<Item> MALACHITE = ITEMS.register("crystal_malachite",
             () -> new Item(baseProperties("crystal_malachite")));
     public static final DeferredItem<Item> WYRE = ITEMS.register("wyre",
@@ -158,8 +173,11 @@ public class ModItems {
             () -> new CrystalFlaskItem(baseProperties("flask_vita")
                     .stacksTo(1).durability(4)));
     public static final DeferredItem<Item> FLASK_MAGNA = ITEMS.register("flask_magna",
-            () -> new CrystalFlaskItem(baseProperties("flask_magna")
+            () -> new MagnaFlaskItem(baseProperties("flask_magna")
                     .stacksTo(1).durability(6)));
+    public static final DeferredItem<Item> FLASK_PLUVIA = ITEMS.register("flask_pluvia",
+            () -> new PluviaFlaskItem(baseProperties("flask_pluvia")
+                    .stacksTo(1).durability(16)));
     public static final DeferredItem<Item> FLASK_ETERNA = ITEMS.register("flask_eterna",
             () -> new EternaFlaskItem(baseProperties("flask_eterna")
                     .stacksTo(1).durability(Integer.MAX_VALUE)));
@@ -186,31 +204,31 @@ public class ModItems {
     //region blocks
     //comment these out as needed as the blockentities are added
     //since this is done via the new register method
-    public static final DeferredItem<BlockItem> MACHINE_UNIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_UNIFIER);
-    public static final DeferredItem<BlockItem> MACHINE_ABSTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ABSTRACTOR);
-    public static final DeferredItem<BlockItem> MACHINE_REPLICATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_REPLICATOR);
-    public static final DeferredItem<BlockItem> MACHINE_EXTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_EXTRACTOR);
-    public static final DeferredItem<BlockItem> MACHINE_AUGMENTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_AUGMENTOR);
-    public static final DeferredItem<BlockItem> MACHINE_ARBITRATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ARBITRATOR);
-    public static final DeferredItem<BlockItem> MACHINE_MATRIX = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MATRIX);
+    //public static final DeferredItem<BlockItem> MACHINE_UNIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_UNIFIER);
+    //public static final DeferredItem<BlockItem> MACHINE_ABSTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ABSTRACTOR);
+    //public static final DeferredItem<BlockItem> MACHINE_REPLICATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_REPLICATOR);
+    //public static final DeferredItem<BlockItem> MACHINE_EXTRACTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_EXTRACTOR);
+    //public static final DeferredItem<BlockItem> MACHINE_AUGMENTOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_AUGMENTOR);
+    //public static final DeferredItem<BlockItem> MACHINE_ARBITRATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ARBITRATOR);
+    //public static final DeferredItem<BlockItem> MACHINE_MATRIX = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MATRIX);
     //public static final DeferredItem<BlockItem> APPLIANCE_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_PLINTH);
-    public static final DeferredItem<BlockItem> APPLIANCE_REINFORCED_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_REINFORCED_PLINTH);
+    //public static final DeferredItem<BlockItem> APPLIANCE_REINFORCED_PLINTH = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_REINFORCED_PLINTH);
     //public static final DeferredItem<BlockItem> MACHINE_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_FOUNDRY);
-    public static final DeferredItem<BlockItem> ADDON_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_FOUNDRY);
+    //public static final DeferredItem<BlockItem> ADDON_FOUNDRY = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_FOUNDRY);
     //public static final DeferredItem<BlockItem> MACHINE_ALEMBIC = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_ALEMBIC);
-    public static final DeferredItem<BlockItem> ADDON_ALEMBIC = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_ALEMBIC);
+    //public static final DeferredItem<BlockItem> ADDON_ALEMBIC = ITEMS.registerSimpleBlockItem(ModBlocks.ADDON_ALEMBIC);
     //public static final DeferredItem<BlockItem> MACHINE_MINCERATOR = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_MINCERATOR);
     //public static final DeferredItem<BlockItem> MACHINE_KWERN = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_KWERN);
     //public static final DeferredItem<BlockItem> MACHINE_TEXTILER = ITEMS.registerSimpleBlockItem(ModBlocks.MACHINE_TEXTILER);
     //public static final DeferredItem<BlockItem> APPLIANCE_WARDROBE = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_WARDROBE);
     //public static final DeferredItem<BlockItem> APPLIANCE_ICEBOX = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_ICEBOX);
-    public static final DeferredItem<BlockItem> APPLIANCE_RESEARCH_DESK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_RESEARCH_DESK);
-    public static final DeferredItem<BlockItem> APPLIANCE_BENCHMARK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_BENCHMARK);
-    public static final DeferredItem<BlockItem> APPLIANCE_ARCANE_CONSOLIDATOR = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_ARCANE_CONSOLIDATOR);
-    public static final DeferredItem<BlockItem> APPLIANCE_CHORUS_TELEPORTER = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_CHORUS_TELEPORTER);
-    public static final DeferredItem<BlockItem> CHORUS_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.CHORUS_CABLE);
-    public static final DeferredItem<BlockItem> WYRE_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.WYRE_CABLE);
-    public static final DeferredItem<BlockItem> FLUUD_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.FLUUD_PIPE);
+    //public static final DeferredItem<BlockItem> APPLIANCE_RESEARCH_DESK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_RESEARCH_DESK);
+    //public static final DeferredItem<BlockItem> APPLIANCE_BENCHMARK = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_BENCHMARK);
+    //public static final DeferredItem<BlockItem> APPLIANCE_ARCANE_CONSOLIDATOR = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_ARCANE_CONSOLIDATOR);
+    //public static final DeferredItem<BlockItem> APPLIANCE_CHORUS_TELEPORTER = ITEMS.registerSimpleBlockItem(ModBlocks.APPLIANCE_CHORUS_TELEPORTER);
+    //public static final DeferredItem<BlockItem> CHORUS_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.CHORUS_CABLE);
+    //public static final DeferredItem<BlockItem> WYRE_CABLE = ITEMS.registerSimpleBlockItem(ModBlocks.WYRE_CABLE);
+    //public static final DeferredItem<BlockItem> FLUUD_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.FLUUD_PIPE);
     //endregion blocks
 
 

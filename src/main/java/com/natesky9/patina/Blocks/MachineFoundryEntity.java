@@ -13,6 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
+    public static final int dataSlots = 2;
+    public static final int slots = 4;
     public MachineFoundryEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FOUNDRY_ENTITY.get(), pos, blockState);
     }
