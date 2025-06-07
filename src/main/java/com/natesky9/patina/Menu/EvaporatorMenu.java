@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class EvaporatorMenu extends ModContainerMenu {
@@ -24,6 +25,10 @@ public class EvaporatorMenu extends ModContainerMenu {
         super(ModMenuTypes.EVAPORATOR_MENU.get(), containerId);
         inventory = inv;
         evaporator = (MachineEvaporatorEntity) entity;
+        //add slots
+        addSlot(new SlotItemHandler(evaporator.handler, 0, 80, 8));
+        addSlot(new SlotItemHandler(evaporator.handler, 1, 96, 8));
+        addSlot(new SlotItemHandler(evaporator.handler, 2, 96+18, 8));
         addPlayerInventory(inv);
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,5 +44,15 @@ public class ApplianceWardrobeEntity extends BlockEntity implements MenuProvider
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new WardrobeMenu(i, inventory, this);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, ApplianceWardrobeEntity applianceWardrobeEntity) {
+        for (int i=0; i<20; i++)
+        {
+            ItemStack stack = applianceWardrobeEntity.handler.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            if (stack.getPopTime() == 0) continue;
+            stack.setPopTime(stack.getPopTime()-1);
+        }
     }
 }

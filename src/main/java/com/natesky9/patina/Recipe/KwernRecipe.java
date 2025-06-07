@@ -6,20 +6,23 @@ import com.natesky9.patina.init.ModRecipeSerializers;
 import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
-public record KwernRecipe(ItemStack input, ItemStack output) implements Recipe<RecipeInput> {
+public record KwernRecipe(ItemStack input, ItemStack output, int every) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
-        return false;
+        return input.is(recipeInput.getItem(0).getItem());
     }
 
     @Override
     public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
-        return null;
+        return output.copy();
     }
 
     @Override
@@ -48,10 +51,14 @@ public record KwernRecipe(ItemStack input, ItemStack output) implements Recipe<R
         public static final MapCodec<KwernRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
                         ItemStack.CODEC.fieldOf("input").forGetter(KwernRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(KwernRecipe::output)
+                        ItemStack.CODEC.fieldOf("output").forGetter(KwernRecipe::output),
+                        ExtraCodecs.POSITIVE_INT.fieldOf("every").forGetter(KwernRecipe::every)
                 ).apply(builder, KwernRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, KwernRecipe> STREAM_CODEC =
-                StreamCodec.composite(ItemStack.STREAM_CODEC,KwernRecipe::input,ItemStack.STREAM_CODEC, KwernRecipe::output,
+                StreamCodec.composite(
+                        ItemStack.STREAM_CODEC,KwernRecipe::input,
+                        ItemStack.STREAM_CODEC, KwernRecipe::output,
+                        ByteBufCodecs.INT, KwernRecipe::every,
                         KwernRecipe::new);
         @Override
         public MapCodec<KwernRecipe> codec() {

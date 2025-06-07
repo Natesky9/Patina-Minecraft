@@ -51,6 +51,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.APPLIANCE_ARCANE_CONSOLIDATOR.get());
         dropSelf(ModBlocks.MACHINE_ABSTRACTOR.get());
         dropSelf(ModBlocks.MACHINE_EVAPORATOR.get());
+        dropSelf(ModBlocks.MACHINE_SIEVE.get());
+        dropSelf(ModBlocks.ADDON_SIEVE.get());
     }
 
     @Override

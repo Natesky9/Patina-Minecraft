@@ -16,6 +16,8 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryMenu> {
             ResourceLocation.fromNamespaceAndPath(Patina.MODID, "textures/gui/foundry.png");
     public FoundryScreen(FoundryMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+        imageWidth = 176;
+        imageHeight = 176;
     }
 
     @Override

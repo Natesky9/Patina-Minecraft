@@ -12,6 +12,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,5 +44,14 @@ public class ApplianceIceboxEntity extends BlockEntity implements MenuProvider {
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return new IceboxMenu(i, inventory, this);
     }
-
+    public static void tick(Level level, BlockPos pos, BlockState state, ApplianceIceboxEntity entity)
+    {
+        for (int i=0; i<20; i++)
+        {
+            ItemStack stack = entity.handler.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            if (stack.getPopTime() == 0) continue;
+            stack.setPopTime(stack.getPopTime()-1);
+        }
+    }
 }

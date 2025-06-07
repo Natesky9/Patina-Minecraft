@@ -1,10 +1,7 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
-import com.natesky9.patina.Recipe.EvaporatorRecipe;
-import com.natesky9.patina.Recipe.FoundryRecipe;
-import com.natesky9.patina.Recipe.MinceratorRecipe;
-import com.natesky9.patina.Recipe.TextilerRecipe;
+import com.natesky9.patina.Recipe.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -20,7 +17,8 @@ public class ModRecipeTypes {
     public static final DeferredHolder<RecipeType<?>,RecipeType<FoundryRecipe>> FOUNDRY_RECIPE = create("foundry");
     public static final DeferredHolder<RecipeType<?>,RecipeType<MinceratorRecipe>> MINCERATOR_RECIPE = create("mincerator");
     public static final DeferredHolder<RecipeType<?>,RecipeType<TextilerRecipe>> TEXTILER_RECIPE = create("textiler");
-    public static final DeferredHolder<RecipeType<?>,RecipeType<MinceratorRecipe>> KWERN_RECIPE = create("kwern");
+    public static final DeferredHolder<RecipeType<?>,RecipeType<KwernRecipe>> KWERN_RECIPE = create("kwern");
+    public static final DeferredHolder<RecipeType<?>,RecipeType<SieveRecipe>> SIEVE_RECIPE = create("sieve");
     public static final DeferredHolder<RecipeType<?>,RecipeType<MinceratorRecipe>> MATRIX_RECIPE = create("matrix");
     //
     static <T extends Recipe<?>> DeferredHolder<RecipeType<?>,RecipeType<T>> create(String id)

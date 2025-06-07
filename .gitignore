@@ -12,6 +12,7 @@ out
 *.iws
 *.iml
 .idea
+*.pdn
 
 # gradle
 build
@@ -24,3 +25,4 @@ runs
 run-data
 
 repo
+/src/generated/resources/.cache/*

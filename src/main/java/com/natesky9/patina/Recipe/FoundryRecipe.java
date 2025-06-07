@@ -17,15 +17,15 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 
-public record FoundryRecipe(Holder<Item> input, Holder<Item> output, int count) implements Recipe<RecipeInput> {
+public record FoundryRecipe(ItemStack input, ItemStack output, int count) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
-        return false;
+        return input.is(recipeInput.getItem(0).getItem());
     }
 
     @Override
     public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
-        return null;
+        return output.copy();
     }
 
     @Override
@@ -53,13 +53,13 @@ public record FoundryRecipe(Holder<Item> input, Holder<Item> output, int count) 
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<FoundryRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        Item.CODEC.fieldOf("input").forGetter(FoundryRecipe::input),
-                        Item.CODEC.fieldOf("output").forGetter(FoundryRecipe::output),
+                        ItemStack.CODEC.fieldOf("input").forGetter(FoundryRecipe::input),
+                        ItemStack.CODEC.fieldOf("output").forGetter(FoundryRecipe::output),
                         Codec.INT.fieldOf("count").forGetter(FoundryRecipe::count)
                 ).apply(builder, FoundryRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, FoundryRecipe> STREAM_CODEC =
-                StreamCodec.composite(ByteBufCodecs.holderRegistry(Registries.ITEM),FoundryRecipe::input,
-                        ByteBufCodecs.holderRegistry(Registries.ITEM), FoundryRecipe::output,
+                StreamCodec.composite(ItemStack.STREAM_CODEC,FoundryRecipe::input,
+                        ItemStack.STREAM_CODEC, FoundryRecipe::output,
                         ByteBufCodecs.INT, FoundryRecipe::count,
                         FoundryRecipe::new);
         @Override

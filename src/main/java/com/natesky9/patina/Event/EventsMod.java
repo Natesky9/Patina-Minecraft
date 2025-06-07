@@ -41,6 +41,7 @@ public class EventsMod {
         event.register(ModMenuTypes.TEXTILER_MENU.get(), TextilerScreen::new);
         event.register(ModMenuTypes.KWERN_MENU.get(), KwernScreen::new);
         event.register(ModMenuTypes.EVAPORATOR_MENU.get(), EvaporatorScreen::new);
+        event.register(ModMenuTypes.SIEVE_MENU.get(), SieveScreen::new);
 
         event.register(ModMenuTypes.ICEBOX_MENU.get(), IceboxScreen::new);
         event.register(ModMenuTypes.WARDROBE_MENU.get(), WardrobeScreen::new);

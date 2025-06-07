@@ -1,6 +1,7 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Blocks.*;
+import com.natesky9.patina.Blocks.Renderer.MachineSieveBlock;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -94,6 +95,14 @@ public class ModBlocks {
             () -> new MachineEvaporatorBlock(BlockBehaviour.Properties.of()
                     .strength(3F)
                     .setId(createBlockKey("machine_evaporator"))));
+    public static final DeferredBlock<Block> MACHINE_SIEVE = registerBlock("machine_sieve",
+            () -> new MachineSieveBlock(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("machine_sieve"))));
+    public static final DeferredBlock<Block> ADDON_SIEVE = registerBlock("addon_sieve",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(3F)
+                    .setId(createBlockKey("addon_sieve"))));
     //endregion tech machines
 
     //region appliances
@@ -112,11 +121,11 @@ public class ModBlocks {
     public static final DeferredBlock<Block> APPLIANCE_BENCHMARK = registerBlock("appliance_benchmark",
             () -> new Block(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey(""))));
+                    .setId(createBlockKey("appliance_benchmark"))));
     public static final DeferredBlock<Block> APPLIANCE_ARCANE_CONSOLIDATOR = registerBlock("appliance_arcane_consolidator",
             () -> new Block(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey(""))));
+                    .setId(createBlockKey("appliance_arcane_consolidator"))));
     public static final DeferredBlock<Block> APPLIANCE_CHORUS_TELEPORTER = registerBlock("appliance_chorus_teleporter",
             () -> new Block(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)

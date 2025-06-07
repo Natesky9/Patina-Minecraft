@@ -14,12 +14,12 @@ import net.minecraft.world.level.Level;
 public record MinceratorRecipe(ItemStack input, ItemStack output) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
-        return false;
+        return input.is(recipeInput.getItem(0).getItem());
     }
 
     @Override
     public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
-        return null;
+        return output.copy();
     }
 
     @Override
@@ -53,6 +53,7 @@ public record MinceratorRecipe(ItemStack input, ItemStack output) implements Rec
         public static final StreamCodec<RegistryFriendlyByteBuf, MinceratorRecipe> STREAM_CODEC =
                 StreamCodec.composite(ItemStack.STREAM_CODEC,MinceratorRecipe::input,ItemStack.STREAM_CODEC, MinceratorRecipe::output,
                         MinceratorRecipe::new);
+
         @Override
         public MapCodec<MinceratorRecipe> codec() {
             return CODEC;

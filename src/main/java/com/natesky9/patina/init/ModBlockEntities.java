@@ -36,7 +36,7 @@ public class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineTextilerEntity>> TEXTILER_ENTITY =
             BLOCK_ENTITIES.register("textiler",
                     () -> new BlockEntityType<>(MachineTextilerEntity::new,
-                            ModBlocks.MACHINE_MINCERATOR.get()));
+                            ModBlocks.MACHINE_TEXTILER.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineKwernEntity>> KWERN_ENTITY =
             BLOCK_ENTITIES.register("kwern",
                     () -> new BlockEntityType<>(MachineKwernEntity::new,
@@ -45,6 +45,12 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("foundry",
                     () -> new BlockEntityType<>(MachineFoundryEntity::new,
                             ModBlocks.MACHINE_FOUNDRY.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<MachineSieveEntity>> SIEVE_ENTITY =
+            BLOCK_ENTITIES.register("sieve",
+                    () -> new BlockEntityType<>(MachineSieveEntity::new,
+                            ModBlocks.MACHINE_SIEVE.get()));
+
+
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ApplianceIceboxEntity>> ICEBOX_ENTITY =
             BLOCK_ENTITIES.register("icebox",
                     () -> new BlockEntityType<>(ApplianceIceboxEntity::new,

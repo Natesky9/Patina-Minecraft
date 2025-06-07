@@ -27,6 +27,8 @@ public class ModMenuTypes {
             () -> IMenuTypeExtension.create(AlembicMenu::new));
     public static final Supplier<MenuType<KwernMenu>> KWERN_MENU = MENU_TYPES.register("kwern",
             () -> IMenuTypeExtension.create(KwernMenu::new));
+    public static final Supplier<MenuType<SieveMenu>> SIEVE_MENU = MENU_TYPES.register("sieve",
+            () -> IMenuTypeExtension.create(SieveMenu::new));
 
     public static final Supplier<MenuType<IceboxMenu>> ICEBOX_MENU = MENU_TYPES.register("icebox",
             () -> IMenuTypeExtension.create(IceboxMenu::new));

@@ -10,9 +10,7 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.renderer.item.*;
-import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.client.renderer.item.properties.numeric.Damage;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
@@ -21,12 +19,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
-
-import static net.minecraft.client.data.models.BlockModelGenerators.createSimpleBlock;
 
 public class ModModelProvider extends ModelProvider {
     ItemModelGenerators gen;
@@ -89,6 +82,19 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.CRAB_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.DRAGON_CLAW.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModels.generateFlatItem(ModItems.ORE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_CLUMP.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_LUMP.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_HUNK.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_FLAKE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_COBBLE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_GRAVEL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_PEBBLE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_BLEND.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_SLAG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_MIX.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ORE_GRIT.get(), ModelTemplates.FLAT_ITEM);
 
         //this is done better below
         //ResourceLocation location = itemModels.generateLayeredItem(ModItems.FLASK_CRYSTAL.get(),

@@ -22,6 +22,10 @@ public class ModRecipeSerializers {
             RECIPE_SERIALIZERS.register("matrix", MatrixRecipe.Serializer::new);
     public static final DeferredHolder<RecipeSerializer<?>,RecipeSerializer<MinceratorRecipe>> MINCERATOR_SERIALIZER =
             RECIPE_SERIALIZERS.register("mincerator", MinceratorRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeSerializer<?>,RecipeSerializer<TextilerRecipe>> TEXTILER_SERIALIZER =
+            RECIPE_SERIALIZERS.register("textiler", TextilerRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeSerializer<?>,RecipeSerializer<SieveRecipe>> SIEVE_SERIALIZER =
+            RECIPE_SERIALIZERS.register("sieve", SieveRecipe.Serializer::new);
     //
     public static void register(IEventBus eventBus)
     {

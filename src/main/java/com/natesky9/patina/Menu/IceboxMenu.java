@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
@@ -26,13 +27,41 @@ public class IceboxMenu extends ModContainerMenu {
         //add slots
         for (int i=0; i<20; i++)
         {
-            addSlot(new SlotItemHandler(icebox.handler, i, 80+i%5*18, 8+i/5*18));
+            addSlot(new IceboxSlot(icebox.handler, i, 80+i%5*18, 8+i/5*18));
         }
         addPlayerInventory(inv);
     }
     @Override
-    public ItemStack quickMoveStack(Player player, int i) {
+    public ItemStack quickMoveStack(Player player, int index) {
+        if (index < 0)
+            System.out.println("clicked outside!");
+        if (index >= 0 && index < 20)
+        {
+            //clicked in icebox
+            ItemStack stack = getSlot(index).getItem();
+            //we have to set this here because move doesn't trigger our slot
+            stack.setPopTime(5);
+            moveItemStackTo(stack,20,20+36,false);
+
+            //inventory.add(stack);
+        }
+        if (index >= 20)
+        {
+            //clicked in inventory
+            ItemStack stack = getSlot(index).getItem();
+            stack.setPopTime(5);
+            moveItemStackTo(stack, 0, 20, false);
+            //stack.setPopTime(5);
+            //inventory.removeItem(stack);
+//
+            //for (int i=0; i<20; i++)
+            //{
+            //    stack = icebox.handler.insertItem(i, stack, false);
+            //}
+            //inventory.add(stack);
+        }
         return ItemStack.EMPTY;
+
     }
 
     @Override

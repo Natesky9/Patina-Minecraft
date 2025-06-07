@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class FoundryMenu extends ModContainerMenu {
     MachineFoundryEntity foundry;
@@ -21,14 +22,26 @@ public class FoundryMenu extends ModContainerMenu {
         super(ModMenuTypes.FOUNDRY_MENU.get(), containerId);
         inventory = inv;
         foundry = (MachineFoundryEntity) entity;
+        addSlot(new SlotItemHandler(foundry.handler, 0, 80, 8));
+        addSlot(new SlotItemHandler(foundry.handler, 1, 96, 8));
         addPlayerInventory(inventory);
     }
-
     @Override
-    public ItemStack quickMoveStack(Player player, int i) {
+    public ItemStack quickMoveStack(Player player, int index) {
+        if (index>=0 && index<2)
+        {
+            //click in foundry
+            ItemStack stack = getSlot(index).getItem();
+            moveItemStackTo(stack, 2, 2+36,false);
+        }
+        if (index>=3)
+        {
+            //click in inventory
+            ItemStack stack = getSlot(index).getItem();
+            moveItemStackTo(stack,0,1,false);
+        }
         return ItemStack.EMPTY;
     }
-
     @Override
     public boolean stillValid(Player player) {
         return player.canInteractWithBlock(foundry.getBlockPos(), 4);

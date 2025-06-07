@@ -161,6 +161,37 @@ public class ModItems {
     public static final DeferredItem<Item> CHROMATIC_SCALE = ITEMS.register("chromatic_scale",
             () -> new Item(baseProperties("chromatic_scale")));
     //endregion materials
+    //region ore processing
+    public static final DeferredItem<Item> ORE_CHUNK = ITEMS.register("ore_chunk",
+            () -> new Item(baseProperties("ore_chunk")));//1.3x
+    public static final DeferredItem<Item> ORE_CLUMP = ITEMS.register("ore_clump",
+            () -> new Item(baseProperties("ore_clump")));//1.6x
+    public static final DeferredItem<Item> ORE_LUMP = ITEMS.register("ore_lump",
+            () -> new Item(baseProperties("ore_lump")));
+    public static final DeferredItem<Item> ORE_HUNK = ITEMS.register("ore_hunk",
+            () -> new Item(baseProperties("ore_hunk")));
+    public static final DeferredItem<Item> ORE_FLAKE = ITEMS.register("ore_flake",
+            () -> new Item(baseProperties("ore_flake")));
+    //transit items
+    public static final DeferredItem<Item> ORE_COBBLE = ITEMS.register("ore_cobble",
+            () -> new Item(baseProperties("ore_cobble")));
+
+    public static final DeferredItem<Item> ORE_GRAVEL = ITEMS.register("ore_gravel",
+            () -> new Item(baseProperties("ore_gravel")));
+    public static final DeferredItem<Item> ORE_PEBBLE = ITEMS.register("ore_pebble",
+            () -> new Item(baseProperties("ore_pebble")));
+
+    public static final DeferredItem<Item> ORE_BLEND = ITEMS.register("ore_blend",
+            () -> new Item(baseProperties("ore_blend")));
+    public static final DeferredItem<Item> ORE_SLAG = ITEMS.register("ore_slag",
+            () -> new Item(baseProperties("ore_slag")));
+    public static final DeferredItem<Item> ORE_MIX = ITEMS.register("ore_mix",
+            () -> new Item(baseProperties("ore_mix")));
+
+    public static final DeferredItem<Item> ORE_GRIT = ITEMS.register("ore_grit",
+            () -> new Item(baseProperties("ore_grit")));
+
+    //endregion ore processing
 
     //region tools
     public static final DeferredItem<Item> FLASK_CRYSTAL = ITEMS.register("flask_crystal",
