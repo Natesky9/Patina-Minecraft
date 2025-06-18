@@ -1,7 +1,6 @@
-package com.natesky9.patina.Blocks.Renderer;
+package com.natesky9.patina.Blocks;
 
 import com.mojang.serialization.MapCodec;
-import com.natesky9.patina.Blocks.MachineSieveEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

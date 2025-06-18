@@ -1,17 +1,28 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
+import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
+import net.minecraft.world.item.enchantment.effects.RemoveBinomial;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModEnchantments {
@@ -47,6 +58,8 @@ public class ModEnchantments {
         HolderGetter<Enchantment> holderEnchantment = context.lookup(Registries.ENCHANTMENT);
         HolderGetter<Item> holderItem = context.lookup(Registries.ITEM);
         HolderGetter<Block> holderBlock = context.lookup(Registries.BLOCK);
+        HolderGetter<DataComponentType<?>> holderType = context.lookup(Registries.DATA_COMPONENT_TYPE);
+        //
         register(context, CURSE_ENVY,
                 Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                                 10,1, Enchantment.constantCost(1),
@@ -92,12 +105,54 @@ public class ModEnchantments {
                                 Enchantment.constantCost(1),
                                 1,EquipmentSlotGroup.ARMOR))
                         .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
+        //curse of pride causes equipment to take extra durability damage
         register(context, CURSE_PRIDE,
-                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(Tags.Items.ENCHANTABLES),
                                 10,1,Enchantment.constantCost(1),
                                 Enchantment.constantCost(1),
-                                1,EquipmentSlotGroup.ARMOR))
-                        .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE)));
+                                1,EquipmentSlotGroup.ANY))
+                        .exclusiveWith(holderEnchantment.getOrThrow(ModTags.CURSE_EXCLUSIVE))
+                        .withEffect(//apply to armor
+                                EnchantmentEffectComponents.ITEM_DAMAGE,
+                                new RemoveBinomial(new LevelBasedValue.Constant(-1)),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(holderItem, ItemTags.ARMOR_ENCHANTABLE))
+                        )
+                        .withEffect(//apply to items
+                                EnchantmentEffectComponents.ITEM_DAMAGE,
+                                new RemoveBinomial(new LevelBasedValue.Constant(-1)),
+                                InvertedLootItemCondition.invert(MatchTool.toolMatches(ItemPredicate.Builder.item().of(holderItem, ItemTags.ARMOR_ENCHANTABLE)))
+                        ));
+        register(context, BLESSING_PRIDE,
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(Tags.Items.ENCHANTABLES),
+                        10,100,Enchantment.constantCost(60),
+                        Enchantment.constantCost(60),
+                        60,EquipmentSlotGroup.ANY))
+                        .withEffect(
+                                EnchantmentEffectComponents.ITEM_DAMAGE,
+                                new RemoveBinomial(new LevelBasedValue.Fraction(LevelBasedValue.perLevel(100,1),LevelBasedValue.constant(100))),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(holderItem, Tags.Items.ENCHANTABLES))
+                        ));
+        register(context, BLESSING_VANISHING,
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(Tags.Items.ENCHANTABLES),
+                        1,1,Enchantment.constantCost(10),
+                        Enchantment.constantCost(1),
+                        30,EquipmentSlotGroup.ANY))
+                        //.withEffect(ModDataComponents.KEEP_INVENTORY_ITEM.value())
+                        .exclusiveWith(holderEnchantment.getOrThrow(ModTags.VANISHING_EXCLUSIVE)));
+        register(context, BLESSING_GLUTTONY,
+                Enchantment.enchantment(Enchantment.definition(holderItem.getOrThrow(Tags.Items.ENCHANTABLES),
+                                1,1,Enchantment.constantCost(60),
+                                Enchantment.constantCost(60),
+                                60,EquipmentSlotGroup.ARMOR))
+                        .withEffect(
+                                EnchantmentEffectComponents.ATTRIBUTES,
+                                new EnchantmentAttributeEffect(
+                                        ResourceLocation.fromNamespaceAndPath(Patina.MODID,"enchantment.gluttony"),
+                                        ModAttributes.GLUTTONY_BLESSING,
+                                        LevelBasedValue.perLevel(1),
+                                        AttributeModifier.Operation.ADD_VALUE
+                                )
+                        ));
     }
     //
 

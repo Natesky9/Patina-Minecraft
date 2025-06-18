@@ -1,5 +1,7 @@
 package com.natesky9.patina.DataGen;
 
+import com.natesky9.patina.Blocks.ApplianceEssenceCauldronBlock;
+import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModItems;
@@ -7,9 +9,8 @@ import net.minecraft.client.color.item.Potion;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
-import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.blockstates.*;
+import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.client.renderer.item.properties.numeric.Damage;
 import net.minecraft.core.Holder;
@@ -17,18 +18,65 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.neoforged.neoforge.client.extensions.ITexturedModelExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.stream.Stream;
 
 public class ModModelProvider extends ModelProvider {
     ItemModelGenerators gen;
+    public static final ModelTemplate CAULDRON_LEVEL1 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level1", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL2 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level2", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL3 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level3", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL4 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level4", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL5 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level5", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL6 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level6", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL7 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level7", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL8 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level8", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_LEVEL9 = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_level9", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    public static final ModelTemplate CAULDRON_FULL = ModelTemplates.create(
+            Patina.MODID + ":" +
+                    "template_cauldron_full", TextureSlot.CONTENT, TextureSlot.INSIDE,
+            TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+
     public ModModelProvider(PackOutput output) {
         super(output, Patina.MODID);
     }
 
+
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        //region items
         gen = itemModels;
         itemModels.generateFlatItem(ModItems.COPPER_AXE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.COPPER_SWORD.get(), ModelTemplates.FLAT_ITEM);
@@ -78,6 +126,7 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.VOID_SALT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.WYRE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BISMUTH_NUGGET.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.ESSENCE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(ModItems.CRAB_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_ITEM);
@@ -147,19 +196,66 @@ public class ModModelProvider extends ModelProvider {
                 ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_6"),6),
                 ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_7"),7),
                 ItemModelUtils.override(generateFlaskBottle(pluvia, "_fluid_8"),8)));
+        //endregion items
 
 
-        //itemModels.generateFlatItem(ModItems.FLASK_VITA.get(), ModelTemplates.FLAT_ITEM);
-        //itemModels.generateFlatItem(ModItems.FLASK_PUGNA.get(), ModelTemplates.FLAT_ITEM);
-        //itemModels.generateFlatItem(ModItems.FLASK_MAGNA.get(), ModelTemplates.FLAT_ITEM);
-        //itemModels.generateFlatItem(ModItems.FLASK_ETERNA.get(), ModelTemplates.FLAT_ITEM);
-
+        //ITexturedModelExtension.Provider provider = TexturedModel.createDefault(
+        //        block -> new TextureMapping().put(TextureSlot.TOP, TextureMapping.getBlockTexture(block)),ModelTemplates.CUBE_BOTTOM_TOP);
 
         for (DeferredHolder<Block, ? extends Block> block: ModBlocks.BLOCKS.getEntries())
         {//lazy solution to get blockstates in place
-            if (block != ModBlocks.APPLIANCE_PLINTH)
+            if (block != ModBlocks.APPLIANCE_PLINTH
+            && block != ModBlocks.APPLIANCE_PEDESTAL
+            && block != ModBlocks.APPLIANCE_ESSENCE_CAULDRON
+            && block != ModBlocks.APPLIANCE_FLUID_TANK)
                 blockModels.createTrivialCube(block.get());
+            //cauldron is done via datagen
+            //plinth is done via blockbench
+            //tank is done via blockbench
         }
+        itemModels.itemModelOutput.accept(ModBlocks.APPLIANCE_FLUID_TANK.asItem(),ItemModelUtils.plainModel(path("item/appliance_fluid_tank")));
+        //Block block = ModBlocks.APPLIANCE_FLUID_TANK.get();
+        //TextureMapping column = TextureMapping.column(TextureMapping.getBlockTexture(block, "_side"),
+        //        TextureMapping.getBlockTexture(block));
+        //ResourceLocation resourceLocation = ModelTemplates.CUBE_COLUMN.create(block, column, this.gen.modelOutput);
+        //BlockStateGenerator generator = MultiVariantGenerator.multiVariant(block, Variant.variant()
+        //        .with(VariantProperties.MODEL, resourceLocation));
+        //blockModels.blockStateOutput.accept(generator);
+
+        //blockModels.createCauldrons();
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(ModBlocks.APPLIANCE_FLUID_TANK.get())
+                .with(PropertyDispatch.property(ApplianceFluidTank.HALF)
+                        .select(DoubleBlockHalf.LOWER, Variant.variant()
+                                .with(VariantProperties.MODEL, path("block/appliance_fluid_tank_bottom")))
+                        .select(DoubleBlockHalf.UPPER, Variant.variant()
+                                .with(VariantProperties.MODEL, path("block/appliance_fluid_tank_top")))));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get())
+                .with(PropertyDispatch.property(ApplianceEssenceCauldronBlock.LEVEL).select(1, Variant.variant()
+                .with(VariantProperties.MODEL, CAULDRON_LEVEL1.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level1",
+                        TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(2, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL2.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level2",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(3, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL3.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level3",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(4, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL4.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level4",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(5, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL5.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level5",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(6, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL6.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level6",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(7, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL7.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level7",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(8, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL8.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level8",
+                                TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(9, Variant.variant()
+                        .with(VariantProperties.MODEL, CAULDRON_LEVEL9.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_level9",
+                        TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput))).select(10, Variant.variant()
+                .with(VariantProperties.MODEL, ModelTemplates.CAULDRON_FULL.createWithSuffix(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), "_full",
+                        TextureMapping.cauldron(TextureMapping.getBlockTexture(Blocks.LIME_CONCRETE)), blockModels.modelOutput)))));
+
+    }
+    ResourceLocation path(String path)
+    {
+        return ResourceLocation.fromNamespaceAndPath(Patina.MODID, path);
     }
 
     ItemModel.Unbaked generateFlaskBottle(Item item, String suffix)
@@ -172,7 +268,9 @@ public class ModModelProvider extends ModelProvider {
     @Override
     protected Stream<? extends Holder<Block>> getKnownBlocks()
     {
-        return ModBlocks.BLOCKS.getEntries().stream().filter(entry -> !entry.is(ModBlocks.APPLIANCE_PLINTH));
+        return ModBlocks.BLOCKS.getEntries().stream().filter(entry ->
+                !entry.is(ModBlocks.APPLIANCE_PLINTH)
+         && !entry.is(ModBlocks.APPLIANCE_PEDESTAL));
     }
 
     @Override

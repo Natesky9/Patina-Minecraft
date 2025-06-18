@@ -8,6 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ModTags {
     public static TagKey<Enchantment> CURSE_EXCLUSIVE = tagEnchantment("exclusive_set/curse");
+    public static TagKey<Enchantment> VANISHING_EXCLUSIVE = tagEnchantment("exclusive_set/vanishing");
 
 
     //

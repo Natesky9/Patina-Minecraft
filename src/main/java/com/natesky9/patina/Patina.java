@@ -1,9 +1,11 @@
 package com.natesky9.patina;
 
+import com.natesky9.patina.Blocks.ApplianceEssenceCauldronBlock;
 import com.natesky9.patina.Event.EventsMod;
 import com.natesky9.patina.init.ModRecipeSerializers;
 import com.natesky9.patina.init.ModRecipeTypes;
 import com.natesky9.patina.init.*;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -27,8 +29,12 @@ public class Patina
 
     public Patina(IEventBus modEventBus, ModContainer modContainer)
     {
+        NeoForgeMod.enableMilkFluid();
         modEventBus.addListener(this::commonSetup);
 
+        ModAttributes.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
+        ModFluids.register(modEventBus);
         ModItems.register(modEventBus);//:)
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
@@ -36,6 +42,7 @@ public class Patina
         ModRecipeSerializers.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModDataComponents.register(modEventBus);
 
         modEventBus.addListener(EventsMod::Creative);
 

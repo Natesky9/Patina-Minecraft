@@ -26,5 +26,9 @@ public class ModEnchantmentTagsProvider extends EnchantmentTagsProvider {
                 .add(ModEnchantments.CURSE_WRATH)
                 .add(Enchantments.BINDING_CURSE)
                 .add(Enchantments.VANISHING_CURSE);
+
+        tag(ModTags.VANISHING_EXCLUSIVE)
+                .add(Enchantments.VANISHING_CURSE)
+                .add(ModEnchantments.BLESSING_VANISHING);
     }
 }

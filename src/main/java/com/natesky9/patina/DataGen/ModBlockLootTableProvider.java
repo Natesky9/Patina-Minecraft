@@ -1,13 +1,23 @@
 package com.natesky9.patina.DataGen;
 
+import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Blocks.ApplianceWardrobeBlock;
 import com.natesky9.patina.init.ModBlocks;
+import com.natesky9.patina.init.ModDataComponents;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.Set;
 
@@ -20,6 +30,17 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     public void generate() {
         //dropself adds the item version of the block to the loot table
         //any new block added has to have a loot table or else
+        //
+        //dropSelf(ModBlocks.APPLIANCE_FLUID_TANK.get());
+        add(ModBlocks.APPLIANCE_FLUID_TANK.get(),LootTable.lootTable().withPool(LootPool.lootPool()
+                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(
+                ModBlocks.APPLIANCE_FLUID_TANK.get()).setProperties(StatePropertiesPredicate.Builder.properties()
+                        .hasProperty(ApplianceFluidTank.HALF, DoubleBlockHalf.LOWER)))
+                .setRolls(ConstantValue.exactly(1))
+                .add(LootItem.lootTableItem(ModBlocks.APPLIANCE_FLUID_TANK.get())
+                        .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                                .include(ModDataComponents.FLUID.get())))));
+
         add(ModBlocks.APPLIANCE_WARDROBE.get(), createSinglePropConditionTable(ModBlocks.APPLIANCE_WARDROBE.get(),
                 ApplianceWardrobeBlock.HALF, DoubleBlockHalf.LOWER));
         add(ModBlocks.APPLIANCE_ICEBOX.get(), createSinglePropConditionTable(ModBlocks.APPLIANCE_ICEBOX.get(),
@@ -30,8 +51,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.APPLIANCE_BENCHMARK.get());
         dropSelf(ModBlocks.APPLIANCE_CHORUS_TELEPORTER.get());
         dropSelf(ModBlocks.APPLIANCE_PLINTH.get());
-        dropSelf(ModBlocks.APPLIANCE_REINFORCED_PLINTH.get());
+        dropSelf(ModBlocks.APPLIANCE_PEDESTAL.get());
         dropSelf(ModBlocks.APPLIANCE_RESEARCH_DESK.get());
+        dropOther(ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get(), Items.CAULDRON);
         dropSelf(ModBlocks.CHORUS_CABLE.get());
         dropSelf(ModBlocks.FLUUD_PIPE.get());
         dropSelf(ModBlocks.WYRE_CABLE.get());
@@ -53,6 +75,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MACHINE_EVAPORATOR.get());
         dropSelf(ModBlocks.MACHINE_SIEVE.get());
         dropSelf(ModBlocks.ADDON_SIEVE.get());
+        add(ModBlocks.DEBUG_BARREL.get(), noDrop());
     }
 
     @Override

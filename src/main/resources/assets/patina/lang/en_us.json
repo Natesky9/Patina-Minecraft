@@ -66,7 +66,7 @@
   "item.patina.dragon_claw": "Dragon Claw",
 
   "item.patina.appliance_plinth": "Item Plinth",
-  "item.patina.appliance_upgraded_plinth": "Item Pedestal",
+  "item.patina.appliance_pedestal": "Item Pedestal",
   "item.patina.arcane_matrix": "Arcane Matrix",
   "item.patina.arcane_unifier": "Arcane Unifier",
   "item.patina.arcane_abstractor": "Arcane Abstractor",
@@ -75,6 +75,8 @@
   "item.patina.arcane_augmentor": "Arcane Augmentor",
   "item.patina.arcane_arbitrator": "Arcane Arbitrator",
   "item.patina.appliance_arcane_consolidator": "Arcane Consolidator",
+  "item.patina.appliance_fluid_tank": "Fluid Tank",
+  "item.patina.essence_bucket": "Bucket of Essence",
 
   "item.patina.machine_foundry": "Basic Foundry",
   "item.patina.addon_foundry": "Foundry Addon",
@@ -92,6 +94,15 @@
   "item.patina.cable_wyre": "Wyre Cable",
   "item.patina.pipe_fluud": "Fluud Pipe",
   "item.patina.machine_evaporator": "Evaporator",
+
+  "enchantment.patina.pride": "Pride",
+  "enchantment.patina.envy": "Envy",
+  "enchantment.patina.gluttony": "Gluttony",
+  "enchantment.patina.sloth": "Sloth",
+  "enchantment.patina.wrath": "Wrath",
+  "enchantment.patina.greed": "Greed",
+  "enchantment.patina.lust": "Lust",
+
 
   "menu.patina.icebox": "Icebox",
   "block.patina.kwern": "Kwern",

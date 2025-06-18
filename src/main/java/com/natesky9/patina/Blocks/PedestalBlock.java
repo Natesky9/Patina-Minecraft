@@ -20,11 +20,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class PlinthBlock extends BaseEntityBlock {
+public class PedestalBlock extends PlinthBlock {
     private static VoxelShape SHAPE = Block.box(2,0,2,14,13,14);
-    private static final MapCodec<PlinthBlock> CODEC = simpleCodec(PlinthBlock::new);
+    private static final MapCodec<PedestalBlock> CODEC = simpleCodec(PedestalBlock::new);
 
-    public PlinthBlock(Properties p_49224_) {
+    public PedestalBlock(Properties p_49224_) {
         super(p_49224_);
     }
 
@@ -47,49 +47,19 @@ public class PlinthBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new PlinthEntity(blockPos, blockState);
+        return new PedestalEntity(blockPos, blockState);
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() != newState.getBlock())
         {
-            if (level.getBlockEntity(pos) instanceof PlinthEntity entity)
+            if (level.getBlockEntity(pos) instanceof PedestalEntity entity)
             {
                 entity.drops();
                 level.updateNeighbourForOutputSignal(pos, this);
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
-    }
-
-    @Override
-    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (!(level.getBlockEntity(pos) instanceof PlinthEntity entity)) return InteractionResult.CONSUME;
-
-        if (entity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty())
-        {
-            //if nothing in block and nothing in hand
-            entity.inventory.insertItem(0,stack.copy(),false);
-            stack.shrink(1);
-            level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
-            return InteractionResult.SUCCESS;
-        }
-        if (!entity.inventory.getStackInSlot(0).isEmpty() && !stack.isEmpty())
-        {
-            //if something in block and something in hand
-            ItemStack on = entity.inventory.extractItem(0,1,false);
-            player.addItem(on);
-            level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, .8f);
-        }
-        if (!entity.inventory.getStackInSlot(0).isEmpty() && stack.isEmpty())
-        {
-            //if something in block and nothing in hand
-            ItemStack on = entity.inventory.extractItem(0, 1, false);
-            player.setItemInHand(InteractionHand.MAIN_HAND, on);
-            level.playSound(player, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, .8f);
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.SUCCESS;
     }
 }

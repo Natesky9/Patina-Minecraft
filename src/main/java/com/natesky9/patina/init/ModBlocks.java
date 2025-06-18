@@ -1,7 +1,8 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Blocks.*;
-import com.natesky9.patina.Blocks.Renderer.MachineSieveBlock;
+import com.natesky9.patina.Blocks.Enchanting.*;
+import com.natesky9.patina.Blocks.MachineSieveBlock;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -9,6 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -22,45 +25,66 @@ public class ModBlocks {
             DeferredRegister.createBlocks(Patina.MODID);
     //TODO: add in blockitems
     //TODO: add loot tables
+    public static final DeferredBlock<Block> DEBUG_BARREL = BLOCKS.register("debug_barrel",
+            () -> new DebugBarrelBlock(BlockBehaviour.Properties.of()
+                    .setId(createBlockKey("debug_barrel"))));
+    //region fluids
+    public static final DeferredBlock<LiquidBlock> ESSENCE_FLUID = BLOCKS.register("essence_block",
+            () -> new LiquidBlock(ModFluids.ESSENCE_SOURCE.get(), BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+                    .noOcclusion()
+                    .lightLevel((state) -> state.getValue(LiquidBlock.LEVEL))
+                    .setId(createBlockKey("essence_fluid"))));
+    //endregion fluids
     //region arcane machines
     public static final DeferredBlock<Block> MACHINE_UNIFIER =registerBlock("arcane_unifier",
             () -> new ArcaneAdditionBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_unifier"))));
+                    .setId(createBlockKey("arcane_unifier"))));//adding
     public static final DeferredBlock<Block> MACHINE_ABSTRACTOR = registerBlock("arcane_abstractor",
             () -> new ArcaneSubtractionBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_abstractor"))));
-    public static final DeferredBlock<Block> MACHINE_REPLICATOR = registerBlock("arcane_replicator",
+                    .setId(createBlockKey("arcane_abstractor"))));//subtracting
+    public static final DeferredBlock<Block> MACHINE_AUGMENTOR = registerBlock("arcane_augmentor",
             () -> new ArcaneMultiplicationBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_replicator"))));
+                    .setId(createBlockKey("arcane_augmentor"))));//upgrading
     public static final DeferredBlock<Block> MACHINE_EXTRACTOR = registerBlock("arcane_extractor",
             () -> new ArcaneDivisionBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_extractor"))));
-    public static final DeferredBlock<Block> MACHINE_AUGMENTOR = registerBlock("arcane_augmentor",
+                    .setId(createBlockKey("arcane_extractor"))));//extracting
+    public static final DeferredBlock<Block> MACHINE_REPLICATOR = registerBlock("arcane_replicator",
             () -> new ArcaneExponentBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_augmentor"))));
+                    .setId(createBlockKey("arcane_replicator"))));//copying
     public static final DeferredBlock<Block> MACHINE_ARBITRATOR = registerBlock("arcane_arbitrator",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new ArcaneRadicalBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("arcane_arbitrator"))));
+                    .setId(createBlockKey("arcane_arbitrator"))));//reducing
     public static final DeferredBlock<Block> MACHINE_MATRIX = registerBlock("arcane_matrix",
             () -> new ArcaneMatrixBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
                     .setId(createBlockKey("arcane_matrix"))));
     //endregion arcane machines
-
+    public static final DeferredBlock<Block> APPLIANCE_FLUID_TANK = registerBlock("appliance_fluid_tank",
+            () -> new ApplianceFluidTank(BlockBehaviour.Properties.of()
+                    .noOcclusion().strength(3F)
+                    .setId(createBlockKey("appliance_fluid_tank"))));
     public static final DeferredBlock<Block> APPLIANCE_PLINTH = registerBlock("appliance_plinth",
             () -> new PlinthBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
                     .setId(createBlockKey("appliance_plinth"))));
-    public static final DeferredBlock<Block> APPLIANCE_REINFORCED_PLINTH = registerBlock("appliance_upgraded_plinth",
-            () -> new PlinthBlock(BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> APPLIANCE_PEDESTAL = registerBlock("appliance_pedestal",
+            () -> new PedestalBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
-                    .setId(createBlockKey("appliance_upgraded_plinth"))));
+                    .setId(createBlockKey("appliance_pedestal"))));
+    public static final DeferredBlock<Block> APPLIANCE_ESSENCE_CAULDRON = BLOCKS.register("appliance_essence_cauldron",
+            () -> new ApplianceEssenceCauldronBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
+                    .setId(createBlockKey("appliance_essence_cauldron"))));
+    //replaced by block and blockitem
+    //public static final DeferredBlock<Block> APPLIANCE_FLUID_TANK = registerBlock("appliance_fluid_tank",
+    //        () -> new ApplianceFluidTank(BlockBehaviour.Properties.of()
+    //                .noOcclusion().strength(4F)
+    //                .setId(createBlockKey("appliance_fluid_tank"))));
 
     //region tech machines
     public static final DeferredBlock<Block> MACHINE_FOUNDRY = registerBlock("machine_foundry",

@@ -1,9 +1,6 @@
 package com.natesky9.patina.init;
 
-import com.natesky9.patina.Items.CrystalFlaskItem;
-import com.natesky9.patina.Items.EternaFlaskItem;
-import com.natesky9.patina.Items.MagnaFlaskItem;
-import com.natesky9.patina.Items.PluviaFlaskItem;
+import com.natesky9.patina.Items.*;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -21,6 +18,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Patina.MODID);
+    //
+    public static final DeferredItem<Item> ESSENCE_BUCKET = ITEMS.register("essence_bucket",
+            () -> new BucketItem(ModFluids.ESSENCE_SOURCE.get(),
+                    baseProperties("essence_bucket").stacksTo(1)));
 
     //region copper
     public static final DeferredItem<Item> COPPER_SWORD = ITEMS.register("copper_sword",

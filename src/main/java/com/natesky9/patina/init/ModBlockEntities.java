@@ -13,10 +13,28 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Patina.MODID);
     //
+    //blockentity solution for cauldron
+    //public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ApplianceEssenceCauldronEntity>> ESSENCE_CAULDRON_ENTITY =
+    //        BLOCK_ENTITIES.register("essence_cauldron",
+    //                () -> new BlockEntityType<>(ApplianceEssenceCauldronEntity::new,
+    //                        ModBlocks.APPLIANCE_ESSENCE_CAULDRON.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<DebugBarrelEntity>> DEBUG_BARREL =
+            BLOCK_ENTITIES.register("debug_barrel",
+                    () -> new BlockEntityType<>(DebugBarrelEntity::new,
+                            ModBlocks.DEBUG_BARREL.get()));
+
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ApplianceFluidTankEntity>> FLUID_TANK_ENTITY =
+            BLOCK_ENTITIES.register("fluid_tank",
+                    () -> new BlockEntityType<>(ApplianceFluidTankEntity::new,
+                            ModBlocks.APPLIANCE_FLUID_TANK.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<PlinthEntity>> PLINTH_ENTITY =
             BLOCK_ENTITIES.register("plinth",
                     () -> new BlockEntityType<>(PlinthEntity::new,
                             ModBlocks.APPLIANCE_PLINTH.get()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<PlinthEntity>> PEDESTAL_ENTITY =
+            BLOCK_ENTITIES.register("pedestal",
+                    () -> new BlockEntityType<>(PlinthEntity::new,
+                            ModBlocks.APPLIANCE_PEDESTAL.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ArcaneMatrixEntity>> MATRIX_ENTITY =
             BLOCK_ENTITIES.register("matrix",
                     () -> new BlockEntityType<>(ArcaneMatrixEntity::new,

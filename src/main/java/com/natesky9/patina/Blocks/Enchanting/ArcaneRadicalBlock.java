@@ -1,4 +1,4 @@
-package com.natesky9.patina.Blocks;
+package com.natesky9.patina.Blocks.Enchanting;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
@@ -9,10 +9,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
-public class ArcaneDivisionBlock extends Block {
+public class ArcaneRadicalBlock extends Block {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    public static final MapCodec<ArcaneDivisionBlock> CODEC = simpleCodec(ArcaneDivisionBlock::new);
-    public ArcaneDivisionBlock(Properties p_49795_) {
+    public static final MapCodec<ArcaneRadicalBlock> CODEC = simpleCodec(ArcaneRadicalBlock::new);
+    public ArcaneRadicalBlock(Properties p_49795_) {
         super(p_49795_);
     }
 

@@ -11,11 +11,13 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class PlinthEntity extends BlockEntity {
+    protected boolean active;
     public final ItemStackHandler inventory = new ItemStackHandler(1)
     {
         @Override
@@ -29,25 +31,43 @@ public class PlinthEntity extends BlockEntity {
             if (!level.isClientSide)
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
         }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            active = false;
+            return super.extractItem(slot, amount, simulate);
+        }
     };
+
     public PlinthEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.PLINTH_ENTITY.get(), pos, blockState);
     }
-    public void clearContents()
+    public PlinthEntity(BlockEntityType type, BlockPos pos, BlockState state)
     {
-        inventory.setStackInSlot(0, ItemStack.EMPTY);
+        //constructor for future blocks as a passthrough
+        super(type, pos, state);
+    }
+
+    public void setActive(boolean active) {
+        //basic plinth does not have automation
+    }
+    public boolean getActive()
+    {
+        return false;
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("inventory", inventory.serializeNBT(registries));
+        tag.putBoolean("active",active);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         inventory.deserializeNBT(registries, tag.getCompound("inventory"));
+        active = tag.getBoolean("active");
     }
 
     public void drops()
