@@ -1,6 +1,5 @@
 package com.natesky9.patina.Screen;
 
-import com.natesky9.patina.Menu.AlembicMenu;
 import com.natesky9.patina.Menu.MinceratorMenu;
 import com.natesky9.patina.Patina;
 import net.minecraft.client.gui.GuiGraphics;

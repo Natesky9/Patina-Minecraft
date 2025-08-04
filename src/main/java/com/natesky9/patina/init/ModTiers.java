@@ -12,7 +12,7 @@ public record ModTiers(TagKey<Block> incorrectBlocksForDrops, int durability, fl
     public static final ToolMaterial CRYSTAL;
     static
     {
-        COPPER = new ToolMaterial(BlockTags.INCORRECT_FOR_STONE_TOOL,
+        COPPER = new ToolMaterial(BlockTags.INCORRECT_FOR_GOLD_TOOL,
                 200, 5.0F, 1.0F,
                 1, ItemTags.IRON_TOOL_MATERIALS);
     }

@@ -5,6 +5,7 @@ import com.natesky9.patina.init.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 
@@ -33,5 +34,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.CHROMATIC_ORE.get())
                 .add(ModBlocks.PRISMATIC_ORE.get())
                 .add(ModBlocks.DELTITE_ORE.get());
+
+        tag(BlockTags.NEEDS_STONE_TOOL).remove(Blocks.IRON_ORE);
+        tag(BlockTags.INCORRECT_FOR_STONE_TOOL).add(Blocks.IRON_ORE);
+        tag(Tags.Blocks.NEEDS_GOLD_TOOL).add(Blocks.IRON_ORE);
     }
 }

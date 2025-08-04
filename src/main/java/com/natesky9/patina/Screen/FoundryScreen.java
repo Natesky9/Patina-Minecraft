@@ -1,7 +1,5 @@
 package com.natesky9.patina.Screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.natesky9.patina.Menu.AlembicMenu;
 import com.natesky9.patina.Menu.FoundryMenu;
 import com.natesky9.patina.Patina;
 import net.minecraft.client.gui.GuiGraphics;
