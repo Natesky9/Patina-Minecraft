@@ -1,14 +1,20 @@
 package com.natesky9.patina.Blocks.Enchanting;
 
 import com.mojang.serialization.MapCodec;
+import com.natesky9.patina.Blocks.PlinthBlock;
 import com.natesky9.patina.Blocks.PlinthEntity;
+import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -65,22 +71,22 @@ public class ArcaneDivisionBlock extends Block {
         BlockPos inputPos = pos.relative(direction.getOpposite());
         BlockPos outputPos = pos.relative(direction);
 
-        boolean inputValid = level.getBlockState(inputPos).is(ModBlocks.APPLIANCE_PLINTH.get());
+        boolean inputValid = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
         boolean outputValid = level.getBlockState(outputPos).is(Blocks.CHISELED_BOOKSHELF);
         if (!inputValid || !outputValid) return;
 
         if (!(level.getBlockEntity(inputPos) instanceof PlinthEntity plinth)) return;
+        ItemStack inputStack = plinth.inventory.getStackInSlot(0);
+        if (inputStack.isEmpty() || !EnchantmentHelper.hasAnyEnchantments(inputStack)) return;
 
         if (powered && !triggered)
         {
-            ItemStack inputStack = plinth.inventory.getStackInSlot(0);
-            if (inputStack.isEmpty() || !EnchantmentHelper.hasAnyEnchantments(inputStack)) return;
-
-            level.setBlock(pos, state.setValue(TRIGGERED, true), 2);
+            level.setBlockAndUpdate(pos, state.setValue(TRIGGERED, true));
+            level.scheduleTick(pos, this, 60);
         }
         if (powered && triggered)
         {
-            level.scheduleTick(pos, this, 8);
+            //level.scheduleTick(pos, this, 60);
         }
         if (!powered && triggered)
         {
@@ -93,8 +99,9 @@ public class ArcaneDivisionBlock extends Block {
         Direction direction = state.getValue(FACING);
         BlockPos inputPos = pos.relative(direction.getOpposite());
         BlockPos outputPos = pos.relative(direction);
+        level.setBlockAndUpdate(pos,state.setValue(TRIGGERED,false));
 
-        boolean inputValid = level.getBlockState(inputPos).is(ModBlocks.APPLIANCE_PLINTH.get());
+        boolean inputValid = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
         boolean outputValid = level.getBlockState(outputPos).is(Blocks.CHISELED_BOOKSHELF);
         if (!inputValid || !outputValid) return;
         if (!(level.getBlockEntity(inputPos) instanceof PlinthEntity plinth)) return;
@@ -118,7 +125,11 @@ public class ArcaneDivisionBlock extends Block {
                     ItemStack book = Items.ENCHANTED_BOOK.getDefaultInstance();
                     book.enchant(entry, mutable.getLevel(entry));
 
-                    book.set(DataComponents.REPAIR_COST,entry.value().getAnvilCost());
+                    //subtract the repair cost onto the book
+                    book.set(DataComponents.REPAIR_COST,mutable.getLevel(entry)*3);
+                    int repair = inputStack.getOrDefault(DataComponents.REPAIR_COST,0);
+                    int subtracted = Mth.clamp(repair - mutable.getLevel(entry)*3,0,repair);
+                    inputStack.set(DataComponents.REPAIR_COST,subtracted);
 
                     mutable.removeIf(key -> key == entry);
                     setBookInShelf(outputShelf, book);
@@ -133,6 +144,7 @@ public class ArcaneDivisionBlock extends Block {
 
         plinth.setActive(true);
         level.sendBlockUpdated(inputPos, plinth.getBlockState(), plinth.getBlockState(), 3);
+        level.playSound(null,pos,SoundEvents.ENCHANTMENT_TABLE_USE,SoundSource.BLOCKS,1,.1f);
     }
     void setBookInShelf(ChiseledBookShelfBlockEntity entity, ItemStack stack)
     {
@@ -145,6 +157,35 @@ public class ArcaneDivisionBlock extends Block {
             }
         }
     }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        boolean triggered = state.getValue(TRIGGERED);
+        if (!triggered) return;
+
+        Direction direction = state.getValue(FACING);
+        BlockPos inputPos = pos.relative(direction.getOpposite());
+        BlockPos outputPos = pos.relative(direction);
+
+        boolean outputValid = level.getBlockState(outputPos).is(Blocks.CHISELED_BOOKSHELF);
+        boolean inputValid = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
+        if (!inputValid || !outputValid) return;
+        if (!(level.getBlockEntity(inputPos) instanceof PlinthEntity)) return;
+        if (!(level.getBlockEntity(outputPos) instanceof ChiseledBookShelfBlockEntity)) return;
+
+
+        //visual stuff
+        float xrand = random.nextFloat()-.5f;
+        float zrand = random.nextFloat()-.5f;
+        float xSpeed = inputPos.getX() - outputPos.getX()+xrand;
+        float zSpeed = inputPos.getZ() - outputPos.getZ()+zrand;
+        float x1 = outputPos.getX()  -xrand+.5f;
+        float z1 = outputPos.getZ()  -zrand+.5f;
+        for (int i=0; i<6; i++)
+            level.addParticle(ParticleTypes.ENCHANT,x1,outputPos.getY()+2+ i*.05, z1,xSpeed,-.5,zSpeed);
+        level.playLocalSound(pos, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS,.5f,.1f,false);
+    }
+
     boolean shelfHasRoom(ChiseledBookShelfBlockEntity shelf)
     {
         for (int i=0; i<shelf.getContainerSize();i++)

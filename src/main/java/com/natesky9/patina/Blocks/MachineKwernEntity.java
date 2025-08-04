@@ -47,7 +47,7 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
-                if (slot > 0) return;//only apply to input
+                if (slot > 0) return;//only apply to item1
 
                 if (!(level instanceof ServerLevel server)) return;
                 ItemStack input = handler.getStackInSlot(0);
@@ -100,7 +100,7 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
 
             if (secondaryReady
                     && secondaryFits)
-            {//push secondary to output
+            {//push secondary to item3
                 kwern.handler.insertItem(1, result, false);
                 kwern.secondaryCount -= kwern.secondaryMax;
             }

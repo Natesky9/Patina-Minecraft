@@ -47,8 +47,8 @@ public record TextilerRecipe(ItemStack input, ItemStack output) implements Recip
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<TextilerRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(TextilerRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(TextilerRecipe::output)
+                        ItemStack.CODEC.fieldOf("item1").forGetter(TextilerRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(TextilerRecipe::output)
                 ).apply(builder, TextilerRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, TextilerRecipe> STREAM_CODEC =
                 StreamCodec.composite(ItemStack.STREAM_CODEC,TextilerRecipe::input,ItemStack.STREAM_CODEC, TextilerRecipe::output,

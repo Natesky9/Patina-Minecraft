@@ -14,7 +14,9 @@ public class IceboxSlot extends SlotItemHandler {
     @Override
     public boolean mayPlace(ItemStack stack) {
         //only allow food or potions
-        return stack.has(DataComponents.FOOD) || stack.has(DataComponents.POTION_CONTENTS);
+        return stack.has(DataComponents.FOOD)
+                || stack.has(DataComponents.CONSUMABLE)
+                || stack.has(DataComponents.POTION_CONTENTS);
     }
 
     @Override

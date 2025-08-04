@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class PlinthEntityRenderer implements BlockEntityRenderer<PlinthEntity> {
     public PlinthEntityRenderer(BlockEntityRendererProvider.Context context)
@@ -33,5 +34,6 @@ public class PlinthEntityRenderer implements BlockEntityRenderer<PlinthEntity> {
 
         renderer.renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay,
                 poseStack, multiBufferSource, entity.getLevel(), 0);
+
     }
 }

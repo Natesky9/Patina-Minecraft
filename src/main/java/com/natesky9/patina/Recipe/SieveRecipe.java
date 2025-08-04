@@ -49,8 +49,8 @@ public record SieveRecipe(ItemStack input, ItemStack output, ItemStack secondary
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<SieveRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(SieveRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(SieveRecipe::output),
+                        ItemStack.CODEC.fieldOf("item1").forGetter(SieveRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(SieveRecipe::output),
                         ItemStack.CODEC.fieldOf("secondary").forGetter(SieveRecipe::secondary),
                         ExtraCodecs.POSITIVE_INT.fieldOf("every").forGetter(SieveRecipe::every)
                 ).apply(builder, SieveRecipe::new));

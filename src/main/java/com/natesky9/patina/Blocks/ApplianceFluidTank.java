@@ -80,6 +80,11 @@ public class ApplianceFluidTank extends BaseEntityBlock {
         BlockEntity entity = level.getBlockEntity(pos);
         if (entity instanceof ApplianceFluidTankEntity tank)
         {
+            if (other.getValue(HALF) == DoubleBlockHalf.UPPER)
+            {
+                if (level.getBlockEntity(pos.below()) instanceof ApplianceFluidTankEntity bottom)
+                    tank.fluidHandler = bottom.fluidHandler;
+            }
             FluidHandlerItemStack fluidFilledItemstack = new FluidHandlerItemStack(ModDataComponents.FLUID, stack, 4000);
             tank.fluidHandler.setFluid(fluidFilledItemstack.getFluid());
         }
@@ -104,7 +109,7 @@ public class ApplianceFluidTank extends BaseEntityBlock {
         BlockPos pos = context.getClickedPos();
         BlockState state = defaultBlockState().setValue(HALF, DoubleBlockHalf.LOWER);
 
-        return pos.getY() < level.getMaxY()-1
+        return !level.isOutsideBuildHeight(pos.above())
                 && level.getBlockState(pos.above()).canBeReplaced() ? state : null;
     }
 
@@ -159,7 +164,6 @@ public class ApplianceFluidTank extends BaseEntityBlock {
         if (containedFluid.isPresent())
         {
             int input = containedFluid.get().getAmount();
-            FluidType inputType = containedFluid.get().getFluidType();
             boolean room = tank.fluidHandler.getSpace() >= input;
             boolean same = tank.fluidHandler.isFluidValid(containedFluid.get());
             //boolean same = tank.fluidHandler.getFluid().is(inputType)
@@ -167,7 +171,8 @@ public class ApplianceFluidTank extends BaseEntityBlock {
             if (room && same)
             {
                 tank.fluidHandler.fill(containedFluid.get(), IFluidHandler.FluidAction.EXECUTE);
-                player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
+                if (!player.isCreative())
+                    player.setItemInHand(hand, Items.BUCKET.getDefaultInstance());
                 level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
             }
         }
@@ -178,7 +183,8 @@ public class ApplianceFluidTank extends BaseEntityBlock {
 
             ItemStack output = FluidUtil.getFilledBucket(tank.fluidHandler.getFluid());
             tank.fluidHandler.drain(1000, IFluidHandler.FluidAction.EXECUTE);
-            player.setItemInHand(hand, output);
+            if (!player.isCreative())
+                player.setItemInHand(hand, output);
             level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1, 1);
         }
         return InteractionResult.SUCCESS;
@@ -187,9 +193,13 @@ public class ApplianceFluidTank extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        if (blockState.getValue(HALF) == DoubleBlockHalf.LOWER)
-            return new ApplianceFluidTankEntity(blockPos, blockState);
+        return new ApplianceFluidTankEntity(blockPos, blockState);
+        //depreciated, as we can't point handlers to this blockentity anymore,
+        //each half has to have its own, now just pointing to
+        //the true blockentity
+        //if (blockState.getValue(HALF) == DoubleBlockHalf.LOWER)
+        //    return new ApplianceFluidTankEntity(blockPos, blockState);
         //don't create an entity for the top
-        return null;
+        //return null;
     }
 }

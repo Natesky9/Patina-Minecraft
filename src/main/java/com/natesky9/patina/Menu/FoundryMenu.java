@@ -22,23 +22,25 @@ public class FoundryMenu extends ModContainerMenu {
         super(ModMenuTypes.FOUNDRY_MENU.get(), containerId);
         inventory = inv;
         foundry = (MachineFoundryEntity) entity;
-        addSlot(new SlotItemHandler(foundry.handler, 0, 80, 8));
-        addSlot(new SlotItemHandler(foundry.handler, 1, 96, 8));
+        addSlot(new SlotItemHandler(foundry.handler, 0, 80, 30));
+        addSlot(new SlotItemHandler(foundry.handler, 1, 96, 30));
+        addSlot(new SlotItemHandler(foundry.handler,2,112,30));
+        addSlot(new SlotItemHandler(foundry.handler,3,8,60));
         addPlayerInventory(inventory);
     }
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        if (index>=0 && index<2)
+        if (index>=0 && index<4)
         {
             //click in foundry
             ItemStack stack = getSlot(index).getItem();
-            moveItemStackTo(stack, 2, 2+36,false);
+            moveItemStackTo(stack, 4, 4+36,false);
         }
-        if (index>=3)
+        if (index>4)
         {
             //click in inventory
             ItemStack stack = getSlot(index).getItem();
-            moveItemStackTo(stack,0,1,false);
+            moveItemStackTo(stack,0,3,false);
         }
         return ItemStack.EMPTY;
     }

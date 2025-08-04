@@ -43,7 +43,6 @@ public class PedestalBlock extends PlinthBlock {
         return SHAPE;
     }
 
-
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -24,7 +24,7 @@ public class EventsForge {
     @SubscribeEvent
     public static void EntityHeal(LivingHealEvent event)
     {
-        //GluttonyEvent.causeHealingExhaustion(event);
+        GluttonyEvent.causeHealingExhaustion(event);
     }
     @SubscribeEvent
     public static void AttributeChange(LivingEquipmentChangeEvent event)

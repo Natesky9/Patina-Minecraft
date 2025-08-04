@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 
 public class ModModelProvider extends ModelProvider {
     ItemModelGenerators gen;
+    //region cauldron
     public static final ModelTemplate CAULDRON_LEVEL1 = ModelTemplates.create(
             Patina.MODID + ":" +
                     "template_cauldron_level1", TextureSlot.CONTENT, TextureSlot.INSIDE,
@@ -68,6 +69,7 @@ public class ModModelProvider extends ModelProvider {
             Patina.MODID + ":" +
                     "template_cauldron_full", TextureSlot.CONTENT, TextureSlot.INSIDE,
             TextureSlot.PARTICLE, TextureSlot.TOP, TextureSlot.BOTTOM, TextureSlot.SIDE);
+    //endregion cauldron
 
     public ModModelProvider(PackOutput output) {
         super(output, Patina.MODID);
@@ -108,6 +110,8 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.IMPERIUM_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.IMPERIUM_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
 
+        itemModels.generateFlatItem(ModItems.RAW_DELTITE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.RAW_BISMUTH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BISMUTH_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PRIME_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);

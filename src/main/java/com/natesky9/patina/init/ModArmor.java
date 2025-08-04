@@ -3,6 +3,7 @@ package com.natesky9.patina.init;
 import com.natesky9.patina.Patina;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -48,14 +49,31 @@ public class ModArmor {
     public static final ArmorMaterial COPPER = new ArmorMaterial(12,
             simple,
             8, SoundEvents.ARMOR_EQUIP_CHAIN, 0, 0, Tags.Items.INGOTS_COPPER,name("copper"));
-    public static final ArmorMaterial CRYSTAL = new ArmorMaterial(20,
+    //
+    public static final ArmorMaterial CRYSTAL_PRIME = new ArmorMaterial(20,
             standard,
             20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0, 0, Tags.Items.GEMS_AMETHYST,
-            name("crystal"));
+            name("crystal_prime"));
+    public static final ArmorMaterial CRYSTAL_ANIMA = new ArmorMaterial(20,
+            standard,
+            20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0, 0, Tags.Items.GEMS_AMETHYST,
+            name("crystal_anima"));
+    public static final ArmorMaterial CRYSTAL_FERUS = new ArmorMaterial(20,
+            standard,
+            20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0, 0, Tags.Items.GEMS_AMETHYST,
+            name("crystal_ferus"));
+    public static final ArmorMaterial CRYSTAL_FORTIS = new ArmorMaterial(20,
+            standard,
+            20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0, 0, Tags.Items.GEMS_AMETHYST,
+            name("crystal_fortis"));
+    public static final ArmorMaterial CRYSTAL_IMPERIUM = new ArmorMaterial(20,
+            standard,
+            20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0, 0, Tags.Items.GEMS_AMETHYST,
+            name("crystal_imperium"));
     //
     static ResourceKey<EquipmentAsset> name(String name)
     {
-        return ResourceKey.create(EquipmentAssets.ROOT_ID, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(Patina.MODID,name));
+        return ResourceKey.create(EquipmentAssets.ROOT_ID, ResourceLocation.fromNamespaceAndPath(Patina.MODID,name));
     }
 
     //enum maps

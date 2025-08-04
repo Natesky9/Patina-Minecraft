@@ -89,7 +89,7 @@ public class ApplianceIceboxBlock extends BaseEntityBlock {
         BlockState state = defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER);
 
-        return pos.getY() < level.getMaxY() - 1
+        return !level.isOutsideBuildHeight(pos.above())
                 && level.getBlockState(pos.above()).canBeReplaced() ? state : null;
     }
 

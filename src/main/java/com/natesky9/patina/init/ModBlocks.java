@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.WaterloggedTransparentBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -35,6 +36,20 @@ public class ModBlocks {
                     .lightLevel((state) -> state.getValue(LiquidBlock.LEVEL))
                     .setId(createBlockKey("essence_fluid"))));
     //endregion fluids
+    //region ores
+    public static final DeferredBlock<Block> PRISMATIC_ORE = BLOCKS.register("prismatic_ore",
+            () -> new WaterloggedTransparentBlock(BlockBehaviour.Properties.of()
+                    .strength(4F).requiresCorrectToolForDrops()
+                    .setId(createBlockKey("prismatic_ore"))));//prismarine
+    public static final DeferredBlock<Block> DELTITE_ORE = BLOCKS.register("deltite_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(5F).requiresCorrectToolForDrops()
+                    .setId(createBlockKey("deltite_ore"))));//uranium
+    public static final DeferredBlock<Block> CHROMATIC_ORE = BLOCKS.register("chromatic_ore",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(5F).requiresCorrectToolForDrops()
+                    .setId(createBlockKey("chromatic_ore"))));//bismuth
+    //endregion ores
     //region arcane machines
     public static final DeferredBlock<Block> MACHINE_UNIFIER =registerBlock("arcane_unifier",
             () -> new ArcaneAdditionBlock(BlockBehaviour.Properties.of()
@@ -65,21 +80,6 @@ public class ModBlocks {
                     .noOcclusion().strength(3F)
                     .setId(createBlockKey("arcane_matrix"))));
     //endregion arcane machines
-    public static final DeferredBlock<Block> APPLIANCE_FLUID_TANK = registerBlock("appliance_fluid_tank",
-            () -> new ApplianceFluidTank(BlockBehaviour.Properties.of()
-                    .noOcclusion().strength(3F)
-                    .setId(createBlockKey("appliance_fluid_tank"))));
-    public static final DeferredBlock<Block> APPLIANCE_PLINTH = registerBlock("appliance_plinth",
-            () -> new PlinthBlock(BlockBehaviour.Properties.of()
-                    .noOcclusion().strength(3F)
-                    .setId(createBlockKey("appliance_plinth"))));
-    public static final DeferredBlock<Block> APPLIANCE_PEDESTAL = registerBlock("appliance_pedestal",
-            () -> new PedestalBlock(BlockBehaviour.Properties.of()
-                    .noOcclusion().strength(3F)
-                    .setId(createBlockKey("appliance_pedestal"))));
-    public static final DeferredBlock<Block> APPLIANCE_ESSENCE_CAULDRON = BLOCKS.register("appliance_essence_cauldron",
-            () -> new ApplianceEssenceCauldronBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
-                    .setId(createBlockKey("appliance_essence_cauldron"))));
     //replaced by block and blockitem
     //public static final DeferredBlock<Block> APPLIANCE_FLUID_TANK = registerBlock("appliance_fluid_tank",
     //        () -> new ApplianceFluidTank(BlockBehaviour.Properties.of()
@@ -154,6 +154,21 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
                     .setId(createBlockKey("appliance_chorus_teleporter"))));
+    public static final DeferredBlock<Block> APPLIANCE_FLUID_TANK = registerBlock("appliance_fluid_tank",
+            () -> new ApplianceFluidTank(BlockBehaviour.Properties.of()
+                    .noOcclusion().strength(3F)
+                    .setId(createBlockKey("appliance_fluid_tank"))));
+    public static final DeferredBlock<Block> APPLIANCE_PLINTH = registerBlock("appliance_plinth",
+            () -> new PlinthBlock(BlockBehaviour.Properties.of()
+                    .noOcclusion().strength(3F)
+                    .setId(createBlockKey("appliance_plinth"))));
+    public static final DeferredBlock<Block> APPLIANCE_PEDESTAL = registerBlock("appliance_pedestal",
+            () -> new PedestalBlock(BlockBehaviour.Properties.of()
+                    .noOcclusion().strength(3F)
+                    .setId(createBlockKey("appliance_pedestal"))));
+    public static final DeferredBlock<Block> APPLIANCE_ESSENCE_CAULDRON = BLOCKS.register("appliance_essence_cauldron",
+            () -> new ApplianceEssenceCauldronBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
+                    .setId(createBlockKey("appliance_essence_cauldron"))));
     //endregion appliances
     //region pipes and cables
     public static final DeferredBlock<Block> CHORUS_CABLE = registerBlock("cable_chorus",

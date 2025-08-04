@@ -99,7 +99,7 @@ public class MachineAlembicEntity extends BlockEntity implements MenuProvider {
 
         if (server.potionBrewing().hasMix(input, output))
         {
-            //replace input to use fractional ingredients through the machine buffer
+            //replace item1 to use fractional ingredients through the machine buffer
             ItemStack brew = server.potionBrewing().mix(output, input);
             output.shrink(1);
             alembic.handler.setStackInSlot(0, brew);

@@ -4,6 +4,7 @@ import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
@@ -35,6 +36,13 @@ public class ModCreativeTabs {
                     .icon(Items.IRON_PICKAXE::getDefaultInstance)
                     .displayItems(((params, output) ->
                     {
+
+                        for (DeferredHolder<Item, ? extends Item> item: ModItems.ITEMS.getEntries())
+                        {
+                            if (item.get() instanceof DiggerItem)
+                                output.accept(item.get().getDefaultInstance());
+                        }
+
                         output.accept(ModItems.COPPER_AXE);
                         output.accept(ModItems.COPPER_PICK);
                         output.accept(ModItems.COPPER_SHOVEL);
@@ -94,7 +102,7 @@ public class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIAL = TABS.register("patina_material",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemgroup.patina.material"))
-                    .icon(Items.GLOWSTONE_DUST::getDefaultInstance)
+                    .icon(ModItems.COPPER_AXE.get()::getDefaultInstance)
                     .displayItems(((params, output) ->
                     {
                         output.accept(ModItems.COPPER_SWORD.get());

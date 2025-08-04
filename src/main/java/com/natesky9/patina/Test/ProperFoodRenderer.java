@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
-import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
@@ -26,11 +25,10 @@ public class ProperFoodRenderer {
     //it overflows the buffer used to send it or something? making the client think
     //it has the default 10 hunger, but does still correctly have the proper food value.
     //but who is going to stack 4x gluttony anyway?
-    public static void shouldRenderHunger(GuiGraphics graphics)
+    public static void renderHunger(GuiGraphics graphics)
     {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
-
 
         AttributeInstance existing = player.getAttribute(ModAttributes.GLUTTONY_BLESSING);
         if (existing == null) return;
@@ -83,6 +81,11 @@ public class ProperFoodRenderer {
             }
 
         }
+    }
+    public static boolean shouldRender()
+    {
+        if (Minecraft.getInstance().gameMode == null) return false;
+        return Minecraft.getInstance().gameMode.canHurtPlayer();
     }
     public static void cancelVanilla(RenderGuiLayerEvent.Pre event)
     {

@@ -2,6 +2,7 @@ package com.natesky9.patina.Blocks.Renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Blocks.ApplianceFluidTankEntity;
 import com.natesky9.patina.Patina;
 import net.minecraft.client.Camera;
@@ -20,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -28,36 +30,38 @@ import net.neoforged.neoforge.client.textures.FluidSpriteCache;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FluidTankRenderer implements BlockEntityRenderer<ApplianceFluidTankEntity> {
-    //TODO:renderers are single instanced! replace lerpFluid with the entity's own lerp
-    private int lerpFluid = 0;
     public FluidTankRenderer(BlockEntityRendererProvider.Context context)
     {
 
     }
     @Override
-    public void render(ApplianceFluidTankEntity applianceFluidTankEntity, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int i1) {
-        if (applianceFluidTankEntity.getLevel() == null) return;
+    public void render(ApplianceFluidTankEntity tank, float partialTick, PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight, int i1) {
+        if (tank.getLevel() == null) return;
 
-        FluidStack fluid = applianceFluidTankEntity.fluidHandler.getFluid();
-        int fluidAmount = applianceFluidTankEntity.fluidHandler.getFluidAmount();
+        if (tank.fluidHandler == null) return;
+
+        if (!tank.dataHolder) return;
+
+        FluidStack fluid = tank.fluidHandler.getFluid();
+        int fluidAmount = tank.fluidHandler.getFluidAmount();
         if (fluid.isEmpty())
         {
-            this.lerpFluid = 0;
+            tank.fluidLevel = 0;
             return;
         }
         FluidState state = fluid.getFluid().defaultFluidState();
         IClientFluidTypeExtensions fluidTypeExtensions = IClientFluidTypeExtensions.of(fluid.getFluid());
 
 
-        TextureAtlasSprite[] atextureatlassprite = FluidSpriteCache.getFluidSprites(applianceFluidTankEntity.getLevel(),
-                applianceFluidTankEntity.getBlockPos(), fluid.getFluid().defaultFluidState());
+        TextureAtlasSprite[] atextureatlassprite = FluidSpriteCache.getFluidSprites(tank.getLevel(),
+                tank.getBlockPos(), fluid.getFluid().defaultFluidState());
         TextureAtlasSprite sprite = atextureatlassprite[0];
 
         int tintColor = fluidTypeExtensions.getTintColor();
         VertexConsumer builder = multiBufferSource.getBuffer(ItemBlockRenderTypes.getRenderLayer(state));
 
-        this.lerpFluid = (int) Mth.lerp(.1F, this.lerpFluid, fluidAmount);
-        float fill = ((float) this.lerpFluid /applianceFluidTankEntity.fluidHandler.getCapacity());
+        tank.fluidLevel = (int) Mth.lerp(.1F, tank.fluidLevel, fluidAmount);
+        float fill = ((float) tank.fluidLevel /tank.fluidHandler.getCapacity());
 
         //p is padding, all around the fluid render
         float p = 1/8F;
@@ -68,7 +72,7 @@ public class FluidTankRenderer implements BlockEntityRenderer<ApplianceFluidTank
         float v = sprite.getV(0);
 
         Entity camera = Minecraft.getInstance().cameraEntity;
-        BlockPos pos = applianceFluidTankEntity.getBlockPos();
+        BlockPos pos = tank.getBlockPos();
 
         boolean eastOf = camera.getX() < pos.getX();
         boolean southOf = camera.getZ() < pos.getZ();

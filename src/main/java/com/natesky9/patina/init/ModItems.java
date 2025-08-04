@@ -44,13 +44,13 @@ public class ModItems {
             () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
                     baseProperties("copper_helmet")));
     public static final DeferredItem<Item> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate",
-            () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.COPPER, ArmorType.CHESTPLATE,
                     baseProperties("copper_chestplate")));
     public static final DeferredItem<Item> COPPER_LEGGINGS = ITEMS.register("copper_leggings",
-            () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.COPPER, ArmorType.LEGGINGS,
                     baseProperties("copper_leggings")));
     public static final DeferredItem<Item> COPPER_BOOTS = ITEMS.register("copper_boots",
-            () -> new ArmorItem(ModArmor.COPPER, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.COPPER, ArmorType.BOOTS,
             baseProperties("copper_boots")));
     //endregion copper tools
     //region crystal
@@ -71,52 +71,53 @@ public class ModItems {
                     baseProperties("crystal_hoe")));
 
     public static final DeferredItem<Item> PRIME_HELMET = ITEMS.register("crystal_prime_helmet",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_PRIME, ArmorType.HELMET,
                     baseProperties("crystal_prime_helmet")));
     public static final DeferredItem<Item> PRIME_CHESTPLATE = ITEMS.register("crystal_prime_chestplate",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
+            () -> new ArmorItem(ModArmor.CRYSTAL_PRIME, ArmorType.CHESTPLATE,
                     baseProperties("crystal_prime_chestplate")));
     public static final DeferredItem<Item> PRIME_LEGGINGS = ITEMS.register("crystal_prime_leggings",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.LEGGINGS,
+            () -> new ArmorItem(ModArmor.CRYSTAL_PRIME, ArmorType.LEGGINGS,
                     baseProperties("crystal_prime_leggings")));
 
     public static final DeferredItem<Item> FERUS_HELMET = ITEMS.register("crystal_ferus_helmet",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FERUS, ArmorType.HELMET,
                     baseProperties("crystal_ferus_helmet")));
     public static final DeferredItem<Item> FERUS_CHESTPLATE = ITEMS.register("crystal_ferus_chestplate",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FERUS, ArmorType.CHESTPLATE,
                     baseProperties("crystal_ferus_chestplate")));
     public static final DeferredItem<Item> FERUS_LEGGINGS = ITEMS.register("crystal_ferus_leggings",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.LEGGINGS,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FERUS, ArmorType.LEGGINGS,
                     baseProperties("crystal_ferus_leggings")));
 
     public static final DeferredItem<Item> ANIMA_HELMET = ITEMS.register("crystal_anima_helmet",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_ANIMA, ArmorType.HELMET,
                     baseProperties("crystal_anima_helmet")));
     public static final DeferredItem<Item> ANIMA_CHESTPLATE = ITEMS.register("crystal_anima_chestplate",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
+            () -> new ArmorItem(ModArmor.CRYSTAL_ANIMA, ArmorType.CHESTPLATE,
                     baseProperties("crystal_anima_chestplate")));
     public static final DeferredItem<Item> ANIMA_LEGGINGS = ITEMS.register("crystal_anima_leggings",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.LEGGINGS,
+            () -> new ArmorItem(ModArmor.CRYSTAL_ANIMA, ArmorType.LEGGINGS,
                     baseProperties("crystal_anima_leggings")));
 
     public static final DeferredItem<Item> FORTIS_HELMET = ITEMS.register("crystal_fortis_helmet",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FORTIS, ArmorType.HELMET,
                     baseProperties("crystal_fortis_helmet")));
     public static final DeferredItem<Item> FORTIS_CHESTPLATE = ITEMS.register("crystal_fortis_chestplate",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FORTIS, ArmorType.CHESTPLATE,
                     baseProperties("crystal_fortis_chestplate")));
     public static final DeferredItem<Item> FORTIS_LEGGINGS = ITEMS.register("crystal_fortis_leggings",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.LEGGINGS,
+            () -> new ArmorItem(ModArmor.CRYSTAL_FORTIS, ArmorType.LEGGINGS,
                     baseProperties("crystal_fortis_leggings")));
+
     public static final DeferredItem<Item> IMPERIUM_HELMET = ITEMS.register("crystal_imperium_helmet",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_IMPERIUM, ArmorType.HELMET,
                     baseProperties("crystal_imperium_helmet")));
     public static final DeferredItem<Item> IMPERIUM_CHESTPLATE = ITEMS.register("crystal_imperium_chestplate",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.CHESTPLATE,
-                    baseProperties("crystal_imperium_helmet")));
+            () -> new ArmorItem(ModArmor.CRYSTAL_IMPERIUM, ArmorType.CHESTPLATE,
+                    baseProperties("crystal_imperium_chestplate")));
     public static final DeferredItem<Item> IMPERIUM_LEGGINGS = ITEMS.register("crystal_imperium_leggings",
-            () -> new ArmorItem(ModArmor.CRYSTAL, ArmorType.HELMET,
+            () -> new ArmorItem(ModArmor.CRYSTAL_IMPERIUM, ArmorType.LEGGINGS,
                     baseProperties("crystal_imperium_leggings")));
     //endregion crystal
 
@@ -151,6 +152,10 @@ public class ModItems {
     public static final DeferredItem<Item> UMBRA = ITEMS.register("umbra",
             () -> new Item(baseProperties("umbra")));
 
+    public static final DeferredItem<Item> RAW_BISMUTH = ITEMS.register("raw_bismuth",
+            () -> new Item(baseProperties("raw_bismuth")));
+    public static final DeferredItem<Item> RAW_DELTITE = ITEMS.register("raw_deltite",
+            () -> new FuelItem(baseProperties("raw_deltite").fireResistant(),16));
     public static final DeferredItem<Item> BISMUTH_INGOT = ITEMS.register("bismuth_ingot",
             () -> new Item(baseProperties("bismuth_ingot")));
     public static final DeferredItem<Item> BISMUTH_NUGGET = ITEMS.register("bismuth_nugget",

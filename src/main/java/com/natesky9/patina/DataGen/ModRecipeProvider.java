@@ -33,7 +33,8 @@ public class ModRecipeProvider extends RecipeProvider {
         //region ore processing
         output.accept(key("ore_raw_to_foundry"),
                 new FoundryRecipe(Items.RAW_IRON.getDefaultInstance(),
-                        Items.IRON_INGOT.getDefaultInstance(),3),
+                        Items.IRON_INGOT.getDefaultInstance(),
+                        stack(Items.IRON_NUGGET,3),false),
                 null);//raw ore to 1.3x
 
         output.accept(key("ore_crushing"),
@@ -43,7 +44,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//raw ore to chunk
         output.accept(key("ore_crushed_foundry"),
                 new FoundryRecipe(ModItems.ORE_CHUNK.toStack(),
-                        Items.IRON_INGOT.getDefaultInstance(),4),
+                        Items.IRON_INGOT.getDefaultInstance(),
+                        stack(Items.IRON_NUGGET,6),false),
                 null);//chunk to 1.6x
 
         output.accept(key("ore_presieve"),
@@ -58,7 +60,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//cobble to clump
         output.accept(key("ore_sieved_foundry"),
                 new FoundryRecipe(ModItems.ORE_CLUMP.toStack(),
-                        Items.IRON_INGOT.getDefaultInstance(), 5),
+                        Items.IRON_INGOT.getDefaultInstance(),
+                        stack(Items.IRON_INGOT),false),
                 null);//clump to 2x
 
         output.accept(key("ore_prewash"),
@@ -77,7 +80,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//pebble to lump
         output.accept(key("ore_washed_foundry"),
                 new FoundryRecipe(ModItems.ORE_LUMP.toStack(),
-                        Items.IRON_INGOT.getDefaultInstance(), 6),
+                        stack(Items.IRON_INGOT,2),
+                        stack(Items.IRON_NUGGET,3),false),
                 null);//lump to 2.3x
 
         output.accept(key("ore_blending"),
@@ -86,7 +90,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//lump to blend
         output.accept(key("ore_slag_smelting"),
                 new FoundryRecipe(ModItems.ORE_BLEND.toStack(),
-                        ModItems.ORE_SLAG.toStack(), 1),
+                        ModItems.ORE_SLAG.toStack(),
+                        Items.FIRE_CHARGE.getDefaultInstance(),true),
                 null);//blend to slag
         output.accept(key("ore_slag_crushing"),
                 new KwernRecipe(ModItems.ORE_SLAG.toStack(),
@@ -100,7 +105,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//mix to hunk
         output.accept(key("ore_slagged_foundry"),
                 new FoundryRecipe(ModItems.ORE_HUNK.toStack(),
-                        Items.IRON_INGOT.getDefaultInstance(), 7),
+                        stack(Items.IRON_INGOT,2),
+                        stack(Items.IRON_NUGGET,6),false),
                 null);//hunk to 2.6x
 
         output.accept(key("ore_predissolve"),
@@ -111,7 +117,8 @@ public class ModRecipeProvider extends RecipeProvider {
         //dissolution and dilution are potions
         output.accept(key("ore_flaked_foundry"),
                 new FoundryRecipe(ModItems.ORE_FLAKE.toStack(),
-                        Items.IRON_INGOT.getDefaultInstance(), 8),
+                        stack(Items.IRON_INGOT,2),
+                        stack(Items.IRON_INGOT),false),
                 null);//flake to 3x
 
 
@@ -127,18 +134,23 @@ public class ModRecipeProvider extends RecipeProvider {
         //region foundry
         output.accept(key("foundry/prime"),
                 new FoundryRecipe(Items.PRISMARINE_CRYSTALS.getDefaultInstance(),
-                        ModItems.PRIME_CRYSTAL.get().getDefaultInstance(),
-                        1),
+                        Items.SANDSTONE.getDefaultInstance(),
+                        ModItems.PRIME_CRYSTAL.get().getDefaultInstance(),true),
                 null);
         output.accept(key("foundry/anima"),
-                new FoundryRecipe(Items.CHORUS_FLOWER.getDefaultInstance(),
-                        ModItems.ANIMA_CRYSTAL.get().getDefaultInstance(),
-                        1),
+                new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
+                        Items.CHORUS_FLOWER.getDefaultInstance(),
+                        ModItems.ANIMA_CRYSTAL.get().getDefaultInstance(),true),
                         null);
-        output.accept(key("foundry/iron"),
-                new FoundryRecipe(Items.RAW_IRON.getDefaultInstance(),
-                        Items.IRON_INGOT.getDefaultInstance(),
-                        1),
+        output.accept(key("foundry/tinted_glass"),
+                new FoundryRecipe(Items.AMETHYST_SHARD.getDefaultInstance(),
+                        Items.GLASS.getDefaultInstance(),
+                        Items.TINTED_GLASS.getDefaultInstance(),true),
+                null);
+        output.accept(key("foundry/netherite"),
+                new FoundryRecipe(stack(Items.NETHERITE_SCRAP),
+                        stack(Items.GOLD_NUGGET),
+                        stack(ModItems.NETHERITE_NUGGET.asItem(),3),true),
                 null);
         //endregion foundry
         //test recipes
@@ -159,6 +171,15 @@ public class ModRecipeProvider extends RecipeProvider {
                 new TextilerRecipe(new ItemStack(Items.WHITE_WOOL,2),
                         Items.WHITE_BANNER.getDefaultInstance()),
                 null);
+    }
+    //------------------------------------
+    ItemStack stack(Item item)
+    {
+        return stack(item,1);
+    }
+    ItemStack stack(Item item, int count)
+    {
+        return new ItemStack(item, count);
     }
 
     public static class Runner extends RecipeProvider.Runner

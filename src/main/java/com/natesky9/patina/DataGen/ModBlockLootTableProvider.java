@@ -4,6 +4,7 @@ import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Blocks.ApplianceWardrobeBlock;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModDataComponents;
+import com.natesky9.patina.init.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -75,6 +76,12 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.MACHINE_EVAPORATOR.get());
         dropSelf(ModBlocks.MACHINE_SIEVE.get());
         dropSelf(ModBlocks.ADDON_SIEVE.get());
+
+        //ores
+        dropOther(ModBlocks.PRISMATIC_ORE.get(),Items.PRISMARINE_CRYSTALS);
+        dropOther(ModBlocks.CHROMATIC_ORE.get(),ModItems.RAW_BISMUTH);
+        dropOther(ModBlocks.DELTITE_ORE.get(),ModItems.RAW_DELTITE);
+
         add(ModBlocks.DEBUG_BARREL.get(), noDrop());
     }
 

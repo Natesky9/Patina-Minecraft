@@ -47,8 +47,8 @@ public record MatrixRecipe(ItemStack input, ItemStack output) implements Recipe<
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<MatrixRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(MatrixRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(MatrixRecipe::output)
+                        ItemStack.CODEC.fieldOf("item1").forGetter(MatrixRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(MatrixRecipe::output)
                 ).apply(builder, MatrixRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, MatrixRecipe> STREAM_CODEC =
                 StreamCodec.composite(ItemStack.STREAM_CODEC,MatrixRecipe::input,ItemStack.STREAM_CODEC, MatrixRecipe::output,

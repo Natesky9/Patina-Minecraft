@@ -1,15 +1,20 @@
 package com.natesky9.patina.Blocks.Enchanting;
 
 import com.mojang.serialization.MapCodec;
+import com.natesky9.patina.Blocks.PlinthBlock;
 import com.natesky9.patina.Blocks.PlinthEntity;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +25,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -71,7 +77,7 @@ public class ArcaneSubtractionBlock extends Block {
         BlockPos inputPos = pos.relative(direction.getOpposite());
         BlockPos outputPos = pos.relative(direction);
 
-        boolean inputValid = level.getBlockState(inputPos).is(ModBlocks.APPLIANCE_PLINTH.get());
+        boolean inputValid = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
         boolean outputValid = FluidUtil.getFluidHandler(level, outputPos,null).isPresent();
 
         //not needed since fluid API
@@ -85,13 +91,12 @@ public class ArcaneSubtractionBlock extends Block {
 
         if (powered && !triggered)
         {
-            ItemStack inputStack = plinth.inventory.getStackInSlot(0);
-            if (EnchantmentHelper.hasAnyEnchantments(inputStack))
-                level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(FACING, direction),2);
+            level.setBlockAndUpdate(pos, state.setValue(TRIGGERED, true).setValue(FACING, direction));
+            level.scheduleTick(pos,this,10);
         }
         if (powered && triggered)
         {
-            level.scheduleTick(pos, this, 8);
+            level.scheduleTick(pos, this, 10);
         }
         if (!powered && triggered)
         {
@@ -123,7 +128,10 @@ public class ArcaneSubtractionBlock extends Block {
         BlockPos inputPos = pos.relative(direction.getOpposite());
         BlockPos outputPos = pos.relative(direction);
 
-        boolean isPlinth = level.getBlockState(inputPos).is(ModBlocks.APPLIANCE_PLINTH.get());
+        if (!level.hasNeighborSignal(pos))
+            level.setBlockAndUpdate(pos,state.setValue(TRIGGERED,false));
+
+        boolean isPlinth = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
         Optional<IFluidHandler> handler = FluidUtil.getFluidHandler(level, outputPos, null);
         boolean outputValid = handler.isPresent();
 
@@ -181,20 +189,54 @@ public class ArcaneSubtractionBlock extends Block {
 
         //process the enchants
         EnchantmentHelper.updateEnchantments(input, (mutable -> mutable.set(first, enchantsLevel-1)));
+
+        //reduce rework
+        int rework = input.getOrDefault(DataComponents.REPAIR_COST,0);
+        input.set(DataComponents.REPAIR_COST,Math.max(rework-1,0));
+
         //convert empty books
         if (input.is(Items.ENCHANTED_BOOK) && !EnchantmentHelper.hasAnyEnchantments(input))
         {
             plinth.inventory.setStackInSlot(0, Items.BOOK.getDefaultInstance());
             level.setBlock(pos, state.setValue(TRIGGERED, false), 2);
-            plinth.setActive(true);
         }
         //
         //think this is for updating the BER
         level.sendBlockUpdated(inputPos, plinth.getBlockState(), plinth.getBlockState(), 3);
-        level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1, 1);
 
-        if (level.hasNeighborSignal(pos))
+        if (level.hasNeighborSignal(pos) && EnchantmentHelper.hasAnyEnchantments(input))
             level.scheduleTick(pos, this, 8);
+        if (!EnchantmentHelper.hasAnyEnchantments(input))
+        {
+            level.setBlockAndUpdate(pos,state.setValue(TRIGGERED,false));
+            level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, .1f, .5f);
+            plinth.setActive(true);
+        }
         //ExperienceOrb.award(level, pos.relative(direction).getCenter(), 10);
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        boolean triggered = state.getValue(TRIGGERED);
+        if (!triggered) return;
+
+        Direction direction = state.getValue(FACING);
+        BlockPos inputPos = pos.relative(direction.getOpposite());
+        BlockPos outputPos = pos.relative(direction);
+        boolean inputValid = level.getBlockState(inputPos).getBlock() instanceof PlinthBlock;
+        boolean outputValid = FluidUtil.getFluidHandler(level,outputPos,null).isPresent();
+        if (!inputValid || !outputValid) return;
+
+        if (!(level.getBlockEntity(inputPos) instanceof PlinthEntity plinth)) return;
+        ItemStack stack = plinth.inventory.getStackInSlot(0);
+        if (stack.isEmpty() || !EnchantmentHelper.hasAnyEnchantments(stack)) return;
+
+        float xrand = inputPos.getX()+.4f + random.nextFloat()*.2f;
+        float zrand = inputPos.getZ()+.4f + random.nextFloat()*.2f;
+        level.addParticle(ParticleTypes.FALLING_OBSIDIAN_TEAR,xrand,inputPos.getY()+1.5,zrand,
+                0,0,0);
+        level.addParticle(ParticleTypes.GLOW,xrand,inputPos.getY()+1.5,zrand,
+                0,.1,0);
+        level.playLocalSound(pos,SoundEvents.BOTTLE_FILL_DRAGONBREATH,SoundSource.BLOCKS,.1f,.1f,false);
     }
 }

@@ -50,8 +50,8 @@ public record KwernRecipe(ItemStack input, ItemStack output, int every) implemen
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<KwernRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(KwernRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(KwernRecipe::output),
+                        ItemStack.CODEC.fieldOf("item1").forGetter(KwernRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(KwernRecipe::output),
                         ExtraCodecs.POSITIVE_INT.fieldOf("every").forGetter(KwernRecipe::every)
                 ).apply(builder, KwernRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, KwernRecipe> STREAM_CODEC =

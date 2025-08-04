@@ -53,7 +53,7 @@ public class FoundryCategory implements IRecipeCategory<FoundryRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, FoundryRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34).add(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 34).add(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34).add(recipe.item1());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 34).add(recipe.item3());
     }
 }

@@ -31,9 +31,9 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("plinth",
                     () -> new BlockEntityType<>(PlinthEntity::new,
                             ModBlocks.APPLIANCE_PLINTH.get()));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<PlinthEntity>> PEDESTAL_ENTITY =
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<? extends PlinthEntity>> PEDESTAL_ENTITY =
             BLOCK_ENTITIES.register("pedestal",
-                    () -> new BlockEntityType<>(PlinthEntity::new,
+                    () -> new BlockEntityType<>(PedestalEntity::new,
                             ModBlocks.APPLIANCE_PEDESTAL.get()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<ArcaneMatrixEntity>> MATRIX_ENTITY =
             BLOCK_ENTITIES.register("matrix",

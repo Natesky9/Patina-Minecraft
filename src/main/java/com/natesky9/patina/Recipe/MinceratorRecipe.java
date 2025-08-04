@@ -47,8 +47,8 @@ public record MinceratorRecipe(ItemStack input, ItemStack output) implements Rec
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<MinceratorRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(MinceratorRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(MinceratorRecipe::output)
+                        ItemStack.CODEC.fieldOf("item1").forGetter(MinceratorRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(MinceratorRecipe::output)
                 ).apply(builder, MinceratorRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, MinceratorRecipe> STREAM_CODEC =
                 StreamCodec.composite(ItemStack.STREAM_CODEC,MinceratorRecipe::input,ItemStack.STREAM_CODEC, MinceratorRecipe::output,

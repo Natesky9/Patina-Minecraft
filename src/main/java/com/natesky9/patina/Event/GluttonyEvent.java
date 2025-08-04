@@ -43,7 +43,6 @@ public class GluttonyEvent {
             attributeValue -= collectFrom.stream().findAny().get().amount();
         if (!collectTo.isEmpty())
             attributeValue += collectTo.stream().findAny().get().amount();
-        System.out.println(attributeValue);
 
         //that might cause issues, verify
 
@@ -55,14 +54,12 @@ public class GluttonyEvent {
             newData.setSaturation(data.getSaturationLevel());
             newData.setMaxFoodLevel((int) attributeValue);
             player.foodData = newData;
-            System.out.println("food max: " + newData.getMaxFoodLevel());
         }
     }
     public static void causeHealingExhaustion(LivingHealEvent event)
     {
 
         if (!(event.getEntity() instanceof Player player)) return;
-
         AttributeInstance existing = player.getAttribute(ModAttributes.GLUTTONY);
         if (existing == null) return;
         int value = (int) player.getAttributeValue(ModAttributes.GLUTTONY) - 1;

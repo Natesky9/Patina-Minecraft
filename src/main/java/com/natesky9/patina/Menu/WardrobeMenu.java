@@ -52,6 +52,7 @@ public class WardrobeMenu extends ModContainerMenu {
             if (item.isEmpty()) return ItemStack.EMPTY;
             int row = index/5;
             int armorIndex = 20+row;
+
             ItemStack equipped = getSlot(armorIndex).getItem();
             //prevent curse of binding...for now
             if (EnchantmentHelper.has(item, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))

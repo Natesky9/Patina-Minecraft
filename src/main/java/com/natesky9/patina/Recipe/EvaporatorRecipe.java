@@ -47,8 +47,8 @@ public record EvaporatorRecipe(ItemStack input, ItemStack output) implements Rec
         //TODO:replace itemstack/itemstack with better recipe arguments
         public static final MapCodec<EvaporatorRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
-                        ItemStack.CODEC.fieldOf("input").forGetter(EvaporatorRecipe::input),
-                        ItemStack.CODEC.fieldOf("output").forGetter(EvaporatorRecipe::output)
+                        ItemStack.CODEC.fieldOf("item1").forGetter(EvaporatorRecipe::input),
+                        ItemStack.CODEC.fieldOf("item3").forGetter(EvaporatorRecipe::output)
                 ).apply(builder, EvaporatorRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, EvaporatorRecipe> STREAM_CODEC =
                 StreamCodec.composite(ItemStack.STREAM_CODEC,EvaporatorRecipe::input,ItemStack.STREAM_CODEC, EvaporatorRecipe::output,
