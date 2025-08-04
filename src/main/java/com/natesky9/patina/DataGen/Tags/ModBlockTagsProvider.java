@@ -1,4 +1,4 @@
-package com.natesky9.patina.DataGen;
+package com.natesky9.patina.DataGen.Tags;
 
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModBlocks;

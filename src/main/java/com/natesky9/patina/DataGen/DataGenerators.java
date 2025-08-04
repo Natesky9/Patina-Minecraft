@@ -1,5 +1,6 @@
 package com.natesky9.patina.DataGen;
 
+import com.natesky9.patina.DataGen.Tags.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -21,7 +22,7 @@ public class DataGenerators {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(true, new AdvancementProvider(packOutput, lookupProvider, List.of(new ModAdvancementProvider())));
-        event.createBlockAndItemTags(ModBlockTagsProvider::new,ModItemTagsProvider::new);
+        event.createBlockAndItemTags(ModBlockTagsProvider::new, ModItemTagsProvider::new);
         event.createProvider(ModEntityTypeTagsProvider::new);
         event.createProvider(ModFluidTagsProvider::new);
         event.createProvider(ModEnchantmentTagsProvider::new);

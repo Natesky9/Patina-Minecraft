@@ -42,7 +42,7 @@ public class MachineFoundryBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING).add(MODE);
     }
 
     @Override
@@ -68,5 +68,17 @@ public class MachineFoundryBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return createTickerHelper(blockEntityType, ModBlockEntities.FOUNDRY_ENTITY.get(), MachineFoundryEntity::tick);
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (state.getBlock() == newState.getBlock())
+        {
+            super.onRemove(state,level,pos,newState,movedByPiston);
+            return;
+        }
+
+        if (level.getBlockEntity(pos) instanceof MachineFoundryEntity foundry)
+            foundry.drops();
     }
 }

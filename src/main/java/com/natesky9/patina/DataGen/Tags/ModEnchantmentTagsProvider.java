@@ -1,4 +1,4 @@
-package com.natesky9.patina.DataGen;
+package com.natesky9.patina.DataGen.Tags;
 
 import com.natesky9.patina.init.ModEnchantments;
 import com.natesky9.patina.init.ModTags;
@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.neoforged.neoforge.common.Tags;
 
 import java.util.concurrent.CompletableFuture;
 

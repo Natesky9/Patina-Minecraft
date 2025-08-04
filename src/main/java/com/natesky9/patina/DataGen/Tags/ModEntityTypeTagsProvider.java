@@ -1,4 +1,4 @@
-package com.natesky9.patina.DataGen;
+package com.natesky9.patina.DataGen.Tags;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

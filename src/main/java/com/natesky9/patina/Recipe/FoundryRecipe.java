@@ -19,9 +19,9 @@ import static net.minecraft.world.item.ItemStack.STREAM_CODEC;
 public record FoundryRecipe(ItemStack item1, ItemStack item2, ItemStack item3, boolean alloy) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
-        if (!alloy && recipeInput instanceof AlloyRecipeInput)
+        if (!alloy && recipeInput instanceof SingleRecipeInput)
             return item1.is(recipeInput.getItem(0).getItem());
-        if (alloy && recipeInput instanceof AlloyRecipeInput)
+        if (!alloy && recipeInput instanceof AlloyRecipeInput)
             return item1.is(recipeInput.getItem(0).getItem()) &&
                     item2.is(recipeInput.getItem(1).getItem());
         return false;

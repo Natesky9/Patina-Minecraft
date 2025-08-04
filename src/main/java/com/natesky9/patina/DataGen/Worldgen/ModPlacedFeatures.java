@@ -23,7 +23,7 @@ public class ModPlacedFeatures {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, OVERWORLD_PRISMATIC_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_PRISMARINE_CRYSTALS),
-                commonOrePlacement(8,HeightRangePlacement.uniform(VerticalAnchor.absolute(32),VerticalAnchor.absolute(48))));
+                commonOrePlacement(8,HeightRangePlacement.uniform(VerticalAnchor.absolute(8),VerticalAnchor.absolute(48))));
         register(context, NETHER_DELTITE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BASALT_DELTA_DELTITE),
                 commonOrePlacement(16,HeightRangePlacement.uniform(VerticalAnchor.absolute(32),VerticalAnchor.absolute(120))));
         register(context, END_CHROMATIC_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.END_CHROMATIC_ORE),

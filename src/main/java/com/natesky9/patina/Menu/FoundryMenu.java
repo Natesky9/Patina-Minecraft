@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class FoundryMenu extends ModContainerMenu {
-    MachineFoundryEntity foundry;
+    public MachineFoundryEntity foundry;
     public FoundryMenu(int containerId, Inventory inv, FriendlyByteBuf buf)
     {
         this(containerId, inv, inv.player.level().getBlockEntity(buf.readBlockPos()));
@@ -22,11 +22,13 @@ public class FoundryMenu extends ModContainerMenu {
         super(ModMenuTypes.FOUNDRY_MENU.get(), containerId);
         inventory = inv;
         foundry = (MachineFoundryEntity) entity;
-        addSlot(new SlotItemHandler(foundry.handler, 0, 80, 30));
-        addSlot(new SlotItemHandler(foundry.handler, 1, 96, 30));
-        addSlot(new SlotItemHandler(foundry.handler,2,112,30));
+        addSlot(new SlotItemHandler(foundry.handler, 0, 80, 10));
+        addSlot(new SlotItemHandler(foundry.handler, 1, 96, 10));
+        addSlot(new SlotItemHandler(foundry.handler,2,112,10));
         addSlot(new SlotItemHandler(foundry.handler,3,8,60));
-        addPlayerInventory(inventory);
+        addStandardInventorySlots(inventory,8,94);
+        addInventoryHotbarSlots(inventory,8,152);
+        //addPlayerInventory(inventory);
     }
     @Override
     public ItemStack quickMoveStack(Player player, int index) {

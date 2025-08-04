@@ -39,11 +39,13 @@ public class ModBlocks {
     //region ores
     public static final DeferredBlock<Block> PRISMATIC_ORE = BLOCKS.register("prismatic_ore",
             () -> new WaterloggedTransparentBlock(BlockBehaviour.Properties.of()
-                    .strength(4F).requiresCorrectToolForDrops()
+                    .strength(4F).lightLevel(state -> 9)
+                    .requiresCorrectToolForDrops()
                     .setId(createBlockKey("prismatic_ore"))));//prismarine
     public static final DeferredBlock<Block> DELTITE_ORE = BLOCKS.register("deltite_ore",
             () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(5F).requiresCorrectToolForDrops()
+                    .strength(5F).lightLevel(state -> 5)
+                    .requiresCorrectToolForDrops()
                     .setId(createBlockKey("deltite_ore"))));//uranium
     public static final DeferredBlock<Block> CHROMATIC_ORE = BLOCKS.register("chromatic_ore",
             () -> new Block(BlockBehaviour.Properties.of()

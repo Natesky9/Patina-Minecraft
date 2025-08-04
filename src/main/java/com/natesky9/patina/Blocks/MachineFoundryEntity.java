@@ -6,9 +6,13 @@ import com.natesky9.patina.Recipe.FoundryRecipe;
 import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +31,7 @@ public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
     public final RecipeManager.CachedCheck<RecipeInput, ? extends FoundryRecipe> quickCheck;
     public MachineFoundryEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.FOUNDRY_ENTITY.get(), pos, blockState);
-        handler = new ItemStackHandler(2)
+        handler = new ItemStackHandler(4)
         {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
@@ -91,5 +95,32 @@ public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
                 foundry.handler.insertItem(2,output2,false);
             }
         }
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        handler.deserializeNBT(registries, tag.getCompound("inventory"));
+        if (handler.getSlots() != 4)
+        {
+            System.out.println("Slots do not match! Correcting now");
+            handler.setSize(4);
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        tag.put("inventory", handler.serializeNBT(registries));
+        super.saveAdditional(tag, registries);
+    }
+
+    public void drops()
+    {
+        SimpleContainer container = new SimpleContainer(handler.getSlots());
+        for (int i=0; i<handler.getSlots(); i++)
+        {
+            container.setItem(i,handler.getStackInSlot(i));
+        }
+        Containers.dropContents(level,worldPosition,container);
     }
 }

@@ -35,10 +35,11 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.Nullable;
 
 
-@EventBusSubscriber(modid = Patina.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Patina.MODID)
 public class EventsMod {
     //
     @SubscribeEvent
@@ -164,5 +165,10 @@ public class EventsMod {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
         event.registerLayerDefinition(CopperArmorModel.LAYER_LOCATION, CopperArmorModel::createBodyLayer);
+    }
+    @SubscribeEvent
+    public static void registerPackets(RegisterPayloadHandlersEvent event)
+    {
+        PacketsEvent.process(event);
     }
 }

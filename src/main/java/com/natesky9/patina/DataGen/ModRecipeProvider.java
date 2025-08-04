@@ -90,8 +90,8 @@ public class ModRecipeProvider extends RecipeProvider {
                 null);//lump to blend
         output.accept(key("ore_slag_smelting"),
                 new FoundryRecipe(ModItems.ORE_BLEND.toStack(),
-                        ModItems.ORE_SLAG.toStack(),
-                        Items.FIRE_CHARGE.getDefaultInstance(),true),
+                        Items.FIRE_CHARGE.getDefaultInstance(),
+                        ModItems.ORE_SLAG.toStack(),true),
                 null);//blend to slag
         output.accept(key("ore_slag_crushing"),
                 new KwernRecipe(ModItems.ORE_SLAG.toStack(),
