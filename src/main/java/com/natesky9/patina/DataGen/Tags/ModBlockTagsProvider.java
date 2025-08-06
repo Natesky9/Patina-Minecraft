@@ -36,6 +36,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.DELTITE_ORE.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL).remove(Blocks.IRON_ORE);
+        tag(Tags.Blocks.NEEDS_GOLD_TOOL).add(Blocks.COPPER_ORE).add(Blocks.DEEPSLATE_COPPER_ORE);
         tag(BlockTags.INCORRECT_FOR_STONE_TOOL).add(Blocks.IRON_ORE);
         tag(Tags.Blocks.NEEDS_GOLD_TOOL).add(Blocks.IRON_ORE);
     }

@@ -74,11 +74,13 @@ public class MachineFoundryBlock extends BaseEntityBlock {
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() == newState.getBlock())
         {
-            super.onRemove(state,level,pos,newState,movedByPiston);
             return;
         }
 
         if (level.getBlockEntity(pos) instanceof MachineFoundryEntity foundry)
+        {
             foundry.drops();
+            super.onRemove(state,level,pos,newState,movedByPiston);
+        }
     }
 }

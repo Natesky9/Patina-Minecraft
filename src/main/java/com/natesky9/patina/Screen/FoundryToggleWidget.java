@@ -1,6 +1,7 @@
 package com.natesky9.patina.Screen;
 
 import com.natesky9.patina.Blocks.MachineFoundryBlock;
+import com.natesky9.patina.Blocks.MachineFoundryEntity;
 import com.natesky9.patina.Event.packets.FoundryTogglePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -29,19 +30,21 @@ public class FoundryToggleWidget extends AbstractButton {
     @Override
     public void onPress() {
         SoundManager manager = Minecraft.getInstance().getSoundManager();
+        MachineFoundryEntity foundry = screen.getMenu().foundry;
+        boolean mode = foundry.mode();
+
         manager.play(SimpleSoundInstance.forUI(SoundEvents.LEVER_CLICK,1F));
         PacketDistributor.sendToServer(new FoundryTogglePacket(pos));
+        screen.getMenu().toggleSlot.x = mode?96:69;
     }
 
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int i, int i1, float v) {
-        Level level = screen.getMenu().foundry.getLevel();
-        BlockPos pos = screen.getMenu().foundry.getBlockPos();
-        boolean mode = level.getBlockState(pos).getValue(MachineFoundryBlock.MODE);
+        MachineFoundryEntity foundry = screen.getMenu().foundry;
+        boolean mode = foundry.mode();
         guiGraphics.blitSprite(RenderType::guiTextured, SPRITES.get(mode, this.isHoveredOrFocused()),
                 this.getX(), this.getY(), this.getWidth(), this.getHeight(), ARGB.white(this.alpha));
-
     }
 
     @Override
