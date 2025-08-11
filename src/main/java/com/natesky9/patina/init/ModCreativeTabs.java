@@ -1,15 +1,17 @@
 package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.List;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Patina.MODID);
@@ -97,6 +99,33 @@ public class ModCreativeTabs {
                     }))
                     .build());
     //endregion combat tab
+    //region ore
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> PROCESSING = TABS.register("patina_processing",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemgroup.patina.material"))
+                    .icon(ModItems.COPPER_AXE.get()::getDefaultInstance)
+                    .displayItems(((params, output) ->
+                    {
+                        List<Holder<Item>> ingredients = List.of(ModItems.ORE_COBBLE,ModItems.ORE_FLAKE,
+                                ModItems.ORE_PEBBLE,ModItems.ORE_BLEND,ModItems.ORE_CHUNK,ModItems.ORE_CLUMP,
+                                ModItems.ORE_GRAVEL,ModItems.ORE_GRIT,ModItems.ORE_HUNK,ModItems.ORE_MIX,
+                                ModItems.ORE_SLAG,ModItems.ORE_LUMP);
+                        List<Item> ores = List.of(Items.RAW_COPPER,Items.RAW_IRON,Items.RAW_GOLD);
+
+                        for (Item ore:ores)
+                        {
+                            for (Holder<Item> item:ingredients)
+                            {
+                                ItemStack stack = new ItemStack(item);
+                                List<ItemStack> stored = List.of(ore.getDefaultInstance());
+                                stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(stored));
+                                output.accept(stack);
+                            }
+                        }
+                    }))
+                    .build());
+    //endregion ore
 
     //region material tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MATERIAL = TABS.register("patina_material",
@@ -122,6 +151,7 @@ public class ModCreativeTabs {
 
                         output.accept(ModItems.BISMUTH_NUGGET);
                         output.accept(ModItems.BISMUTH_INGOT);
+                        output.accept(ModItems.COPPER_NUGGET);
                         output.accept(ModItems.BRON_INGOT);
                     }))
                     .build());

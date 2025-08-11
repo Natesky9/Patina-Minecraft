@@ -9,6 +9,7 @@ import com.natesky9.patina.Patina;
 import com.natesky9.patina.Screen.*;
 import com.natesky9.patina.Test.ProperFoodRenderer;
 import com.natesky9.patina.init.*;
+import com.natesky9.patina.misc.ItemColorTintSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -21,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -101,5 +103,11 @@ public class EventsClient {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event)
     {
         event.registerLayerDefinition(CopperArmorModel.LAYER_LOCATION, CopperArmorModel::createBodyLayer);
+    }
+    @SubscribeEvent
+    public static void registerTintSources(RegisterColorHandlersEvent.ItemTintSources event)
+    {
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Patina.MODID,"item_tint");
+        event.register(location, ItemColorTintSource.MAP_CODEC);
     }
 }

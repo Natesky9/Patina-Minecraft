@@ -40,17 +40,29 @@ public class ModRecipeProvider extends RecipeProvider {
         HolderLookup.RegistryLookup<Item> getter = registries.lookupOrThrow(Registries.ITEM);
         //
         //region ore processing
-        output.accept(key("ore_raw_to_foundry"),
-                new FoundryRecipe(Items.RAW_IRON.getDefaultInstance(),
-                        Items.IRON_INGOT.getDefaultInstance(),
-                        stack(Items.IRON_NUGGET,3),false),
-                null);//raw ore to 1.3x
+        output.accept(key("raw_copper_to_foundry"),
+                new FoundryRecipe(stack(Items.RAW_COPPER),
+                        stack(Items.COPPER_INGOT),
+                        stack(ModItems.COPPER_NUGGET.get(),3),false), null);
+        output.accept(key("raw_iron_to_foundry"),
+                new FoundryRecipe(stack(Items.RAW_IRON),
+                        stack(Items.IRON_INGOT),
+                        stack(Items.IRON_NUGGET,3),false), null);//raw ore to 1.3x
+        output.accept(key("raw_gold_to_foundry"),
+                new FoundryRecipe(stack(Items.RAW_GOLD),
+                        stack(Items.GOLD_INGOT),
+                        stack(Items.GOLD_NUGGET,3),false), null);
 
-        output.accept(key("ore_crushing"),
+        output.accept(key("raw_copper_crushing"),
+                new KwernRecipe(stack(Items.RAW_COPPER),
+                        stack(ModItems.ORE_CHUNK.get()),3), null);
+        output.accept(key("raw_iron_crushing"),
                 new KwernRecipe(Items.RAW_IRON.getDefaultInstance(),
-                        ModItems.ORE_CHUNK.toStack(),
-                        3),
-                null);//raw ore to chunk
+                        ModItems.ORE_CHUNK.toStack(), 3), null);//raw ore to chunk
+        output.accept(key("raw_gold_crushing"),
+                new KwernRecipe(stack(Items.RAW_GOLD),
+                        stack(ModItems.ORE_CHUNK.get()),3), null);
+        //from here on, all the outputs are generic, and only the quantity counts
         output.accept(key("ore_crushed_foundry"),
                 new FoundryRecipe(ModItems.ORE_CHUNK.toStack(),
                         Items.IRON_INGOT.getDefaultInstance(),
@@ -225,27 +237,27 @@ public class ModRecipeProvider extends RecipeProvider {
         output.accept(key("foundry/anima"),
                 new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
                         Items.CHORUS_FLOWER.getDefaultInstance(),
-                        ModItems.ANIMA_CRYSTAL.toStack(2),true),
+                        ModItems.ANIMA_CRYSTAL.toStack(1),true),
                         null);
         output.accept(key("foundry/ferus"),
                 new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
                         Items.GOAT_HORN.getDefaultInstance(),
-                        ModItems.FERUS_CRYSTAL.toStack(2),true),
+                        ModItems.FERUS_CRYSTAL.toStack(1),true),
                 null);
         output.accept(key("foundry/fortis"),
                 new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
                         Items.NETHERITE_SCRAP.getDefaultInstance(),
-                        ModItems.FORTIS_CRYSTAL.toStack(2),true),
+                        ModItems.FORTIS_CRYSTAL.toStack(1),true),
                 null);
         output.accept(key("foundry/regima"),
                 new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
                         Items.GOLD_BLOCK.getDefaultInstance(),
-                        ModItems.REGIMA_CRYSTAL.toStack(2),true),
+                        ModItems.REGIMA_CRYSTAL.toStack(1),true),
                 null);
         output.accept(key("foundry/eterna"),
                 new FoundryRecipe(ModItems.PRIME_CRYSTAL.toStack(),
                         Items.NETHER_STAR.getDefaultInstance(),
-                        ModItems.PERPETUUM_CRYSTAL.toStack(2),true),
+                        ModItems.PERPETUUM_CRYSTAL.toStack(1),true),
                 null);
         output.accept(key("foundry/tinted_glass"),
                 new FoundryRecipe(Items.AMETHYST_SHARD.getDefaultInstance(),

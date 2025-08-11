@@ -32,7 +32,7 @@ public class ModBiomeModifiers {
         context.register(ADD_DELTITE_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.BASALT_DELTAS)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.NETHER_DELTITE_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION
+                GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         context.register(ADD_CHROMATIC_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.END_BARRENS)),

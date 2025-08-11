@@ -1,5 +1,6 @@
 package com.natesky9.patina.Items;
 
+import com.natesky9.patina.init.ModItems;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CrystalFlaskItem extends Item {
     public CrystalFlaskItem(Properties properties) {
@@ -46,56 +48,47 @@ public class CrystalFlaskItem extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         if (getUses(stack) <= 0)
             return stack;
-        apply(livingEntity,stack);
+        PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS,PotionContents.EMPTY);
+        contents.onConsume(level,livingEntity,stack,null);
         setUses(stack, getUses(stack)-1);
 
         return stack;
     }
 
-    public static void apply(LivingEntity entity, ItemStack stack)
-    {
-        if (!((entity.level()) instanceof ServerLevel server)) return;
-        PotionContents potion = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
-
-        if (!potion.hasEffects()) return;
-
-        potion.getAllEffects().forEach(
-                (mobEffectInstance ->
-                {
-                    if (mobEffectInstance.getEffect().value().isInstantenous())
-                        mobEffectInstance.getEffect().value().applyInstantenousEffect(server,entity,
-                                entity,entity, mobEffectInstance.getAmplifier(),1);
-                    else entity.addEffect(new MobEffectInstance(mobEffectInstance));
-                }));
-    }
-
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
         if (!(action == ClickAction.SECONDARY)) return false;
-        //not necessary since we handle that
-        //if (!other.is(Items.POTION) && !(other.getItem() instanceof CrystalFlaskItem)) return false;
         PotionContents contents = stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
         PotionContents contentsOther = other.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+
+
         if (getUses(stack) >= stack.getMaxDamage()) return true;
         if (contentsOther.potion().isEmpty()) return true;
-        if (contents == PotionContents.EMPTY || contents.is(contentsOther.potion().get()))
+        boolean same = contents.is(contentsOther.potion().get()) || contents == PotionContents.EMPTY;
+        System.out.println(same);
+
+        if (same || contents.potion().isEmpty())
         {
-            if (other.is(Items.POTION))
+            boolean special = stack.getItem() instanceof PluviaFlaskItem;
+            boolean otherSpecial = other.getItem() instanceof PluviaFlaskItem;
+            if (other.is(Items.POTION) && stack.getDamageValue() <= stack.getMaxDamage() - (special?3:1))
             {
                 stack.set(DataComponents.POTION_CONTENTS, contentsOther);
-                setUses(stack, getUses(stack)+1);
+                setUses(stack, getUses(stack) + (special?3:1));
                 access.set(new ItemStack(Items.GLASS_BOTTLE));
                 player.level().playSound(player, player, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1, 1);
                 return true;
             }
             if (other.getItem() instanceof CrystalFlaskItem)
             {
-                int current = getUses(stack);
-                int currentOther = getUses(other);
-                int transfer = Math.min(stack.getMaxDamage()-current, currentOther);
+                int current = getUses(stack) * (special?1:3);
+                int currentOther = getUses(other) * (otherSpecial?1:3);
+                int transfer = Math.min(stack.getMaxDamage() * (special?1:3)-current, currentOther);
+                if (special != otherSpecial)
+                    transfer = transfer / 3 * 3;
                 stack.set(DataComponents.POTION_CONTENTS, new PotionContents(contentsOther.potion().get()));
-                setUses(stack, current+transfer);
-                setUses(other, currentOther-transfer);
+                setUses(stack, (current+transfer) / (special?1:3));
+                setUses(other, (currentOther-transfer) / (otherSpecial?1:3));
                 player.level().playSound(player, player, SoundEvents.BOTTLE_FILL, SoundSource.PLAYERS, 1, 1);
                 return true;
             }
@@ -125,15 +118,5 @@ public class CrystalFlaskItem extends Item {
     @Override
     public int getBarWidth(ItemStack stack) {
         return (int)((getUses(stack)/(float)stack.getMaxDamage())*14);
-    }
-
-    @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        return 24;
-    }
-
-    @Override
-    public ItemUseAnimation getUseAnimation(ItemStack stack) {
-        return ItemUseAnimation.DRINK;
     }
 }

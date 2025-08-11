@@ -1,5 +1,6 @@
 package com.natesky9.patina.Blocks;
 
+import com.natesky9.patina.Items.OreProcessItem;
 import com.natesky9.patina.Menu.FoundryContainerData;
 import com.natesky9.patina.Menu.FoundryMenu;
 import com.natesky9.patina.Recipe.AlloyRecipeInput;
@@ -8,6 +9,7 @@ import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -28,14 +30,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
     public final ItemStackHandler handler;
     public final FoundryContainerData data;
     public final RecipeManager.CachedCheck<RecipeInput, ? extends FoundryRecipe> quickCheck;
+    int mult = 8;
     public int progress;
-    public int progressMax = 1000;
+    public int progressMax = 250*mult;
     public int heat;
     public int heatMax = 4000;
     public int burn;
@@ -123,34 +127,69 @@ public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
         int burnTime = fuel.getBurnTime(ModRecipeTypes.FOUNDRY_RECIPE.get(),level.fuelValues());
         if (burnTime > 0 && foundry.burn == 0)
         {
-            foundry.burn += burnTime*4;
-            foundry.handler.extractItem(3,1,false);
+            foundry.burn += burnTime* foundry.mult;
+            ItemStack stack = foundry.handler.extractItem(3,1,false);
+            if (!stack.getCraftingRemainder().isEmpty())
+            {
+                //case for fuel like buckets to return the remainder
+                foundry.handler.insertItem(3,stack.getCraftingRemainder(),false);
+            }
+
         }
     }
     static void craftRecipe(MachineFoundryEntity foundry, RecipeHolder<? extends FoundryRecipe> valid, boolean alloy)
     {
+        ServerLevel level = (ServerLevel)foundry.level;
         if (foundry.progress < foundry.progressMax) return;
+        boolean special = foundry.handler.getStackInSlot(0).getItem() instanceof OreProcessItem;
+        List<ItemStack> outputs = List.of();
+        ItemStack output1;
+        ItemStack output2;
+        if (special)
+            outputs = foundry.handler.getStackInSlot(0).get(DataComponents.CONTAINER).stream().toList();
 
         if (alloy)
         {
+            if (special)
+            {
+                SingleRecipeInput smelt = new SingleRecipeInput(outputs.getFirst());
+                ItemStack smelted = level.recipeAccess().getRecipeFor(RecipeType.SMELTING, smelt, level)
+                        .get().value().assemble(smelt,level.registryAccess());
+                output1 = new ItemStack(smelted.getItem(),valid.value().item3().getCount());
+            }
+            else
+                output1 = valid.value().item3().copy();
             if (!foundry.handler.insertItem(2,valid.value().item3(), true).isEmpty())
                 return;
-
             //we have space, now move it
             foundry.handler.extractItem(0,1,false);
             foundry.handler.extractItem(1,1,false);
-            ItemStack output = valid.value().item3().copy();
-            foundry.handler.insertItem(2,output,false);
+            foundry.handler.insertItem(2,output1,false);
         }
         else
         {
+            if (special)
+            {
+                SingleRecipeInput smelt = new SingleRecipeInput(outputs.getFirst());
+                ItemStack smelted = level.recipeAccess().getRecipeFor(RecipeType.SMELTING, smelt, level)
+                        .get().value().assemble(smelt,level.registryAccess());
+                output1 = new ItemStack(smelted.getItem(),valid.value().item2().getCount());
+                CraftingInput craft = CraftingInput.of(1,1,List.of(output1));
+                ItemStack crafted = level.recipeAccess().getRecipeFor(RecipeType.CRAFTING,craft,level)
+                        .get().value().assemble(craft,level.registryAccess());
+                output2 = new ItemStack(crafted.getItem(),valid.value().item3().getCount());
+            }
+            else
+            {
+                output1 = valid.value().item2().copy();
+                output2 = valid.value().item3().copy();
+            }
             if (!foundry.handler.insertItem(1,valid.value().item2(), true).isEmpty()
                     || !foundry.handler.insertItem(2,valid.value().item3(),true).isEmpty())
                 return;
             //we have space, move it
+
             foundry.handler.extractItem(0,1,false);
-            ItemStack output1 = valid.value().item2().copy();
-            ItemStack output2 = valid.value().item3().copy();
             foundry.handler.insertItem(1,output1,false);
             foundry.handler.insertItem(2,output2,false);
         }
@@ -166,11 +205,15 @@ public class MachineFoundryEntity extends BlockEntity implements MenuProvider {
             System.out.println("Slots do not match! Correcting now");
             handler.setSize(4);
         }
+        heat = tag.getInt("heat");
+        progress = tag.getInt("progress");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         tag.put("inventory", handler.serializeNBT(registries));
+        tag.putInt("heat",heat);
+        tag.putInt("progress",progress);
         super.saveAdditional(tag, registries);
     }
 

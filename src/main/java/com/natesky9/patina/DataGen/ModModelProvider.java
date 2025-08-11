@@ -5,6 +5,9 @@ import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModItems;
+import com.natesky9.patina.misc.ItemColorTintSource;
+import net.minecraft.client.color.item.ItemTintSource;
+import net.minecraft.client.color.item.ItemTintSources;
 import net.minecraft.client.color.item.Potion;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -80,20 +83,20 @@ public class ModModelProvider extends ModelProvider {
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         //region items
         gen = itemModels;
-        itemModels.generateFlatItem(ModItems.COPPER_AXE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_SWORD.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_PICK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_HOE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_HELMET.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_BOOTS.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CRYSTAL_AXE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CRYSTAL_SWORD.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CRYSTAL_SHOVEL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CRYSTAL_PICK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.CRYSTAL_HOE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_PICK.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_HELMET.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_CHESTPLATE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_LEGGINGS.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_BOOTS.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.CRYSTAL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.CRYSTAL_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.CRYSTAL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.CRYSTAL_PICK.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.CRYSTAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ModItems.PRIME_HELMET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PRIME_CHESTPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PRIME_LEGGINGS.get(), ModelTemplates.FLAT_ITEM);
@@ -113,6 +116,7 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.RAW_DELTITE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.RAW_BISMUTH.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BISMUTH_INGOT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_NUGGET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.BRON_INGOT.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PRIME_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.ANIMA_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
@@ -133,21 +137,33 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.ESSENCE_BUCKET.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(ModItems.CRAB_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-        itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.DRAGON_CLAW.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+        itemModels.generateFlatItem(ModItems.DRAGON_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
-        itemModels.generateFlatItem(ModItems.ORE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_CLUMP.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_LUMP.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_HUNK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_FLAKE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_COBBLE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_GRAVEL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_PEBBLE.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_BLEND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_SLAG.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_MIX.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(ModItems.ORE_GRIT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.itemModelOutput.accept(ModItems.ORE_CHUNK.get(), generateOreItem(ModItems.ORE_CHUNK.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_CLUMP.get(), generateOreItem(ModItems.ORE_CLUMP.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_LUMP.get(), generateOreItem(ModItems.ORE_LUMP.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_HUNK.get(), generateOreItem(ModItems.ORE_HUNK.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_FLAKE.get(), generateOreItem(ModItems.ORE_FLAKE.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_COBBLE.get(), generateOreItem(ModItems.ORE_COBBLE.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_GRAVEL.get(), generateOreItem(ModItems.ORE_GRAVEL.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_PEBBLE.get(), generateOreItem(ModItems.ORE_PEBBLE.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_BLEND.get(), generateOreItem(ModItems.ORE_BLEND.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_SLAG.get(), generateOreItem(ModItems.ORE_SLAG.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_MIX.get(), generateOreItem(ModItems.ORE_MIX.get()));
+        itemModels.itemModelOutput.accept(ModItems.ORE_GRIT.get(), generateOreItem(ModItems.ORE_GRIT.get()));
+        //itemModels.generateFlatItem(ModItems.ORE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_CLUMP.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_LUMP.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_HUNK.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_FLAKE.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_COBBLE.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_GRAVEL.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_PEBBLE.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_BLEND.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_SLAG.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_MIX.get(), ModelTemplates.FLAT_ITEM);
+        //itemModels.generateFlatItem(ModItems.ORE_GRIT.get(), ModelTemplates.FLAT_ITEM);
 
         //this is done better below
         //ResourceLocation location = itemModels.generateLayeredItem(ModItems.FLASK_CRYSTAL.get(),
@@ -187,7 +203,6 @@ public class ModModelProvider extends ModelProvider {
         Item eterna = ModItems.FLASK_ETERNA.get();
         itemModels.itemModelOutput.accept(eterna, ItemModelUtils.rangeSelect(new Damage(false), 1,
                 ItemModelUtils.plainModel(itemModels.createFlatItemModel(eterna, ModelTemplates.FLAT_HANDHELD_ITEM)),
-                ItemModelUtils.override(generateFlaskBottle(eterna, "_fluid_0"),0),
                 ItemModelUtils.override(generateFlaskBottle(eterna, "_fluid_1"),1)));
         Item pluvia = ModItems.FLASK_PLUVIA.get();
         itemModels.itemModelOutput.accept(pluvia, ItemModelUtils.rangeSelect(new Damage(false), 0.5F,
@@ -267,6 +282,11 @@ public class ModModelProvider extends ModelProvider {
         ResourceLocation flask = ModelLocationUtils.getModelLocation(item);
         ResourceLocation fluid = flask.withSuffix(suffix);
         return ItemModelUtils.tintedModel(gen.generateLayeredItem(fluid, fluid, flask),new Potion(-13083194));
+    }
+    ItemModel.Unbaked generateOreItem(Item item)
+    {
+        ResourceLocation location = ModelTemplates.FLAT_ITEM.create(item, TextureMapping.layer0(item), gen.modelOutput);
+        return ItemModelUtils.tintedModel(location, new ItemColorTintSource(0));
     }
 
     @Override

@@ -25,7 +25,8 @@ public class KwernMenu extends ModContainerMenu {
         kwern = (MachineKwernEntity) entity;
         addSlot(new SlotItemHandler(kwern.handler, 0, 62, 34));
         addSlot(new SlotItemHandler(kwern.handler, 1, 136, 34));
-        addSlot(new SlotItemHandler(kwern.handler, 2, 6, 62));
+        addSlot(new SlotItemHandler(kwern.handler,2,150, 34));
+        addSlot(new SlotItemHandler(kwern.handler, 3, 6, 62));
         addPlayerInventory(inv);
     }
 

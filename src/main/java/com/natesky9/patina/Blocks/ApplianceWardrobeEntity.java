@@ -3,6 +3,8 @@ package com.natesky9.patina.Blocks;
 import com.natesky9.patina.Menu.WardrobeMenu;
 import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,5 +56,21 @@ public class ApplianceWardrobeEntity extends BlockEntity implements MenuProvider
             if (stack.getPopTime() == 0) continue;
             stack.setPopTime(stack.getPopTime()-1);
         }
+    }
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        handler.deserializeNBT(registries, tag.getCompound("inventory"));
+        if (handler.getSlots() != 20)
+        {
+            System.out.println("Slots do not match! Correcting now");
+            handler.setSize(20);
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        tag.put("inventory", handler.serializeNBT(registries));
+        super.saveAdditional(tag, registries);
     }
 }

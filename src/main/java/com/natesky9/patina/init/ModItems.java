@@ -2,6 +2,7 @@ package com.natesky9.patina.init;
 
 import com.natesky9.patina.Items.*;
 import com.natesky9.patina.Patina;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.bus.api.IEventBus;
@@ -158,6 +160,8 @@ public class ModItems {
             () -> new FuelItem(baseProperties("raw_deltite").fireResistant(),16));
     public static final DeferredItem<Item> BISMUTH_INGOT = ITEMS.register("bismuth_ingot",
             () -> new Item(baseProperties("bismuth_ingot")));
+    public static final DeferredItem<Item> COPPER_NUGGET = ITEMS.register("copper_nugget",
+            () -> new Item(baseProperties("copper_nugget")));
     public static final DeferredItem<Item> BISMUTH_NUGGET = ITEMS.register("bismuth_nugget",
             () -> new Item(baseProperties("bismuth_nugget")));
     public static final DeferredItem<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget",
@@ -169,55 +173,64 @@ public class ModItems {
     //endregion materials
     //region ore processing
     public static final DeferredItem<Item> ORE_CHUNK = ITEMS.register("ore_chunk",
-            () -> new Item(baseProperties("ore_chunk")));//1.3x
+            () -> new OreProcessItem(baseProperties("ore_chunk")));//1.3x
     public static final DeferredItem<Item> ORE_CLUMP = ITEMS.register("ore_clump",
-            () -> new Item(baseProperties("ore_clump")));//1.6x
+            () -> new OreProcessItem(baseProperties("ore_clump")));//1.6x
     public static final DeferredItem<Item> ORE_LUMP = ITEMS.register("ore_lump",
-            () -> new Item(baseProperties("ore_lump")));
+            () -> new OreProcessItem(baseProperties("ore_lump")));
     public static final DeferredItem<Item> ORE_HUNK = ITEMS.register("ore_hunk",
-            () -> new Item(baseProperties("ore_hunk")));
+            () -> new OreProcessItem(baseProperties("ore_hunk")));
     public static final DeferredItem<Item> ORE_FLAKE = ITEMS.register("ore_flake",
-            () -> new Item(baseProperties("ore_flake")));
+            () -> new OreProcessItem(baseProperties("ore_flake")));
     //transit items
     public static final DeferredItem<Item> ORE_COBBLE = ITEMS.register("ore_cobble",
-            () -> new Item(baseProperties("ore_cobble")));
+            () -> new OreProcessItem(baseProperties("ore_cobble")));
 
     public static final DeferredItem<Item> ORE_GRAVEL = ITEMS.register("ore_gravel",
-            () -> new Item(baseProperties("ore_gravel")));
+            () -> new OreProcessItem(baseProperties("ore_gravel")));
     public static final DeferredItem<Item> ORE_PEBBLE = ITEMS.register("ore_pebble",
-            () -> new Item(baseProperties("ore_pebble")));
+            () -> new OreProcessItem(baseProperties("ore_pebble")));
 
     public static final DeferredItem<Item> ORE_BLEND = ITEMS.register("ore_blend",
-            () -> new Item(baseProperties("ore_blend")));
+            () -> new OreProcessItem(baseProperties("ore_blend")));
     public static final DeferredItem<Item> ORE_SLAG = ITEMS.register("ore_slag",
-            () -> new Item(baseProperties("ore_slag")));
+            () -> new OreProcessItem(baseProperties("ore_slag")));
     public static final DeferredItem<Item> ORE_MIX = ITEMS.register("ore_mix",
-            () -> new Item(baseProperties("ore_mix")));
+            () -> new OreProcessItem(baseProperties("ore_mix")));
 
     public static final DeferredItem<Item> ORE_GRIT = ITEMS.register("ore_grit",
-            () -> new Item(baseProperties("ore_grit")));
+            () -> new OreProcessItem(baseProperties("ore_grit")));
 
     //endregion ore processing
 
     //region tools
     public static final DeferredItem<Item> FLASK_CRYSTAL = ITEMS.register("flask_crystal",
             () -> new CrystalFlaskItem(baseProperties("flask_crystal")
-                    .stacksTo(1).durability(3)));
+                    .stacksTo(1).durability(3)
+                    .component(DataComponents.CONSUMABLE,Consumables.defaultDrink()
+                            .consumeSeconds(3).build())));
     public static final DeferredItem<Item> FLASK_PUGNA = ITEMS.register("flask_pugna",
             () -> new CrystalFlaskItem(baseProperties("flask_pugna")
-                    .stacksTo(1).durability(4)));
+                    .stacksTo(1).durability(4)
+                    .component(DataComponents.CONSUMABLE,Consumables.defaultDrink()
+                            .consumeSeconds(2).build())));
     public static final DeferredItem<Item> FLASK_VITA = ITEMS.register("flask_vita",
             () -> new CrystalFlaskItem(baseProperties("flask_vita")
-                    .stacksTo(1).durability(4)));
+                    .stacksTo(1).durability(4)
+                    .component(DataComponents.CONSUMABLE,Consumables.defaultDrink()
+                            .consumeSeconds(2).build())));
     public static final DeferredItem<Item> FLASK_MAGNA = ITEMS.register("flask_magna",
             () -> new MagnaFlaskItem(baseProperties("flask_magna")
-                    .stacksTo(1).durability(6)));
+                    .stacksTo(1).durability(6)
+                    .component(DataComponents.CONSUMABLE,Consumables.defaultDrink()
+                            .consumeSeconds(1.5F).build())));
     public static final DeferredItem<Item> FLASK_PLUVIA = ITEMS.register("flask_pluvia",
             () -> new PluviaFlaskItem(baseProperties("flask_pluvia")
                     .stacksTo(1).durability(16)));
     public static final DeferredItem<Item> FLASK_ETERNA = ITEMS.register("flask_eterna",
             () -> new EternaFlaskItem(baseProperties("flask_eterna")
-                    .stacksTo(1).durability(Integer.MAX_VALUE)));
+                    .stacksTo(1).durability(1)
+                    .component(DataComponents.CONSUMABLE,Consumables.defaultDrink().build())));
 
     static ItemAttributeModifiers small_claw = ItemAttributeModifiers.builder()
             .add(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(name("reach"),1, AttributeModifier.Operation.ADD_VALUE),

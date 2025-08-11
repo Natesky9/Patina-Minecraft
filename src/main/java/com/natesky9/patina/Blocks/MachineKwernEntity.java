@@ -33,11 +33,13 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
     public final ItemStackHandler handler;
     private RecipeHolder<? extends KwernRecipe> recipe;
     int secondaryCount;
-    int secondaryMax;
+    int secondaryMax = 4;
     int progress;
+    int progressMax = 20;
+    int heat;
     public MachineKwernEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.KWERN_ENTITY.get(), pos, blockState);
-        handler = new ItemStackHandler(3)
+        handler = new ItemStackHandler(4)
         {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
@@ -56,11 +58,12 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
                 Optional<? extends RecipeHolder<? extends KwernRecipe>> valid =
                         server.recipeAccess().getRecipeFor(ModRecipeTypes.KWERN_RECIPE.get(), recipeInput, server);
 
-                if (recipe == null && valid.isPresent())
+                if (valid.isPresent() && valid.get() != recipe)
                 {
                     recipe = valid.get();
                     secondaryCount = 0;
-                    secondaryMax = valid.get().value().every();
+                    secondaryMax = 4;
+                    return;
                 }
             }
         };
@@ -91,32 +94,55 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
 
         if (kwern.recipe != null)
         {
-            KwernRecipe setting = kwern.recipe.value();
-            ItemStack result = setting.assemble(recipeInput, level.registryAccess());
-            boolean secondaryReady = kwern.secondaryCount >= kwern.secondaryMax;
-            boolean secondaryFits = kwern.handler.insertItem(1, result, true).isEmpty();
-            boolean room = kwern.handler.insertItem(1, result, true).isEmpty();
-            boolean match = kwern.handler.getStackInSlot(0).is(setting.input().getItem());
+            KwernRecipe activeRecipe = kwern.recipe.value();
+            boolean match = kwern.handler.getStackInSlot(0).is(activeRecipe.input().getItem());
+            ItemStack fail = kwern.handler.getStackInSlot(0).copyWithCount(1);
+            ItemStack pass = activeRecipe.assemble(recipeInput, level.registryAccess());
+            boolean failFits = kwern.handler.insertItem(2,fail,true).isEmpty();
+            boolean passFits = kwern.handler.insertItem(1, pass, true).isEmpty();
+            boolean work = kwern.progress < kwern.progressMax;
 
-            if (secondaryReady
-                    && secondaryFits)
-            {//push secondary to item3
-                kwern.handler.insertItem(1, result, false);
-                kwern.secondaryCount -= kwern.secondaryMax;
+            if (match && passFits && failFits && work)
+            {
+                kwern.progress++;
+                kwern.heat--;
             }
-
-            if (room && match && !secondaryReady)
-                kwern.progress++;//general tick
             else
-                kwern.progress = 0;//reset tick
-
-            if (kwern.progress >= 20 && room && match)
-            {//process
                 kwern.progress = 0;
+
+            if (!work)
+            {
+                kwern.handler.extractItem(0,1,false);
                 kwern.secondaryCount++;
-                kwern.handler.insertItem(1, result, false);
-                kwern.handler.extractItem(0, 1, false);
+                boolean passReady = kwern.secondaryCount >= kwern.secondaryMax;
+                if (passReady)
+                {
+                    kwern.secondaryCount -= kwern.secondaryMax;
+                    kwern.handler.insertItem(1,pass,false);
+                }
+                else
+                {
+                    kwern.handler.insertItem(2,fail,false);
+                }
+                kwern.progress = 0;
             }
+            //
+            //if (passReady
+            //        && passFits)
+            //{//push secondary to item3
+            //    kwern.handler.insertItem(2, pass, false);
+            //}
+            //if (passFits && match && !passReady)
+            //    kwern.progress++;//general tick
+            //else
+            //    kwern.progress = 0;//reset tick
+            //if (kwern.progress >= 20 && passFits && match)
+            //{//process
+            //    kwern.progress = 0;
+            //    kwern.secondaryCount++;
+            //    kwern.handler.insertItem(1, fail, false);
+            //    kwern.handler.extractItem(0, 1, false);
+            //}
         }
     }
 
