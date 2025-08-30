@@ -53,7 +53,9 @@ public class MinceratorCategory implements IRecipeCategory<MinceratorRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, MinceratorRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34).add(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 34).add(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34).add(recipe.input1());
+        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34+18).add(recipe.input2());
+        builder.addSlot(RecipeIngredientRole.INPUT, 54, 34+18+18).add(recipe.input3());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 34+18).add(recipe.output());
     }
 }

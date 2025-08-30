@@ -1,9 +1,7 @@
-package com.natesky9.patina.Menu;
+package com.natesky9.patina.Menu.ContainerData;
 
 import com.natesky9.patina.Blocks.MachineFoundryEntity;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
 
 public class FoundryContainerData implements ContainerData {
     MachineFoundryEntity foundry;

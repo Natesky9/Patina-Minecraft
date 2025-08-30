@@ -1,9 +1,9 @@
 package com.natesky9.patina.init;
 
+import com.natesky9.patina.Blocks.Research.ResearchMenu;
 import com.natesky9.patina.Menu.*;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -34,6 +34,8 @@ public class ModMenuTypes {
             () -> IMenuTypeExtension.create(IceboxMenu::new));
     public static final Supplier<MenuType<WardrobeMenu>> WARDROBE_MENU = MENU_TYPES.register("wardrobe",
             () -> IMenuTypeExtension.create(WardrobeMenu::new));
+    public static final Supplier<MenuType<ResearchMenu>> RESEARCH_MENU = MENU_TYPES.register("research",
+            () -> IMenuTypeExtension.create(ResearchMenu::new));
     //
     public static void register(IEventBus eventBus)
     {

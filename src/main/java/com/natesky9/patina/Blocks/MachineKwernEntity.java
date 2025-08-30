@@ -1,19 +1,22 @@
 package com.natesky9.patina.Blocks;
 
+import com.natesky9.patina.Menu.ContainerData.KwernContainerData;
 import com.natesky9.patina.Menu.KwernMenu;
+import com.natesky9.patina.Recipe.FoundryRecipe;
 import com.natesky9.patina.Recipe.KwernRecipe;
 import com.natesky9.patina.init.ModBlockEntities;
 import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -31,18 +34,29 @@ import java.util.Optional;
 
 public class MachineKwernEntity extends BlockEntity implements MenuProvider {
     public final ItemStackHandler handler;
-    private RecipeHolder<? extends KwernRecipe> recipe;
+    public final KwernContainerData data;
+    private RecipeHolder<KwernRecipe> recipe;
+
     int secondaryCount;
     int secondaryMax = 4;
-    int progress;
-    int progressMax = 20;
-    int heat;
+    public int progress;
+    public int progressMax = 20;
+    public int heat;
+    public int heatMax;
     public MachineKwernEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.KWERN_ENTITY.get(), pos, blockState);
         handler = new ItemStackHandler(4)
         {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
+                if (!(level instanceof ServerLevel server)) return false;
+                if (slot == 0)
+                {
+
+                    RecipeInput recipeInput = new SingleRecipeInput(stack);
+                    Optional<RecipeHolder<KwernRecipe>> recipe = server.recipeAccess().getRecipeFor(ModRecipeTypes.KWERN_RECIPE.get(),recipeInput,level);
+                    return recipe.isPresent();
+                }
                 return super.isItemValid(slot, stack);
             }
 
@@ -55,22 +69,23 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
                 ItemStack input = handler.getStackInSlot(0);
                 RecipeInput recipeInput = new SingleRecipeInput(input);
 
-                Optional<? extends RecipeHolder<? extends KwernRecipe>> valid =
+                Optional<RecipeHolder<KwernRecipe>> valid =
                         server.recipeAccess().getRecipeFor(ModRecipeTypes.KWERN_RECIPE.get(), recipeInput, server);
 
                 if (valid.isPresent() && valid.get() != recipe)
                 {
                     recipe = valid.get();
                     secondaryCount = 0;
-                    secondaryMax = 4;
+                    progress = 0;
                     return;
+                }
+                if (valid.isEmpty())
+                {
+                    progress = 0;
                 }
             }
         };
-        recipe = null;
-        secondaryCount = 0;
-        secondaryMax = 0;
-        progress = 0;
+        data = new KwernContainerData(this);
     }
 
     @Override
@@ -91,18 +106,19 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
         ItemStack output = kwern.handler.getStackInSlot(1);
 
         RecipeInput recipeInput = new SingleRecipeInput(input);
+        Optional<? extends RecipeHolder<? extends FoundryRecipe>> valid;
+        valid = server.recipeAccess().getRecipeFor(ModRecipeTypes.FOUNDRY_RECIPE.get(),recipeInput,server);
 
-        if (kwern.recipe != null)
+        if (valid.isPresent())
         {
             KwernRecipe activeRecipe = kwern.recipe.value();
-            boolean match = kwern.handler.getStackInSlot(0).is(activeRecipe.input().getItem());
             ItemStack fail = kwern.handler.getStackInSlot(0).copyWithCount(1);
             ItemStack pass = activeRecipe.assemble(recipeInput, level.registryAccess());
             boolean failFits = kwern.handler.insertItem(2,fail,true).isEmpty();
             boolean passFits = kwern.handler.insertItem(1, pass, true).isEmpty();
             boolean work = kwern.progress < kwern.progressMax;
 
-            if (match && passFits && failFits && work)
+            if (passFits && failFits && work)
             {
                 kwern.progress++;
                 kwern.heat--;
@@ -168,5 +184,15 @@ public class MachineKwernEntity extends BlockEntity implements MenuProvider {
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    public void drops()
+    {
+        SimpleContainer container = new SimpleContainer(handler.getSlots());
+        for (int i=0; i<handler.getSlots(); i++)
+        {
+            container.setItem(i,handler.getStackInSlot(i));
+        }
+        Containers.dropContents(level,worldPosition,container);
     }
 }

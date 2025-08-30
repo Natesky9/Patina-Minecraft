@@ -1,6 +1,5 @@
 package com.natesky9.patina.Screen;
 
-import com.natesky9.patina.Blocks.MachineFoundryBlock;
 import com.natesky9.patina.Menu.FoundryMenu;
 import com.natesky9.patina.Patina;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;
 
@@ -21,6 +19,8 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryMenu> {
         super(menu, playerInventory, title);
         imageWidth = 176;
         imageHeight = 176;
+        titleLabelX = 26;
+        titleLabelY = 6;
     }
 
     @Override
@@ -45,22 +45,23 @@ public class FoundryScreen extends AbstractContainerScreen<FoundryMenu> {
 
         int heat = getHeat();
         int heatMax = getHeatMax();
+        int progress = getProgress();
+        int progressMax = getProgressMax();
         int barHeight = (int)Math.clamp(Math.ceil(heat/(float)heatMax*36),0,36);
+        int barWidth = (int)Math.clamp(Math.ceil(progress/(float)progressMax*54),0,54);
         int startY = topPos+6+36-barHeight;
+
         guiGraphics.blit(RenderType::guiTextured,TEXTURE,leftPos+6,startY,176,0,16,barHeight,256,256);
+        guiGraphics.blit(RenderType::guiTextured,TEXTURE,leftPos+67,topPos+57,101,176,barWidth,15,256,256);
 
     }
 
     @Override
-    public void render(GuiGraphics graphics, int p_283661_, int p_281248_, float p_281886_) {
-        super.render(graphics, p_283661_, p_281248_, p_281886_);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float p_281886_) {
+        super.render(graphics, mouseX, mouseY, p_281886_);
         //graphics.drawString(font,heat + "/" + heatMax, leftPos,topPos+32, ARGB.white(1));
-        graphics.drawString(font,(int)((float)getProgress()/(float)getProgressMax()*100) + "%",leftPos,topPos+64,ARGB.white(1));
-    }
-
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, 26, 6, 4210752, false);
+        //graphics.drawString(font,(int)((float)getProgress()/(float)getProgressMax()*100) + "%",leftPos,topPos+64,ARGB.white(1));
+        renderTooltip(graphics,mouseX,mouseY);
     }
 
     int getHeat()

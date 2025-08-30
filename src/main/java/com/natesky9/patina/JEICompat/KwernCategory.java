@@ -12,12 +12,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +35,7 @@ public class KwernCategory implements IRecipeCategory<KwernRecipe> {
     @Override
     public void draw(KwernRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
-        guiGraphics.drawString(Minecraft.getInstance().font, "1.3x",104,32, -1);
+        //guiGraphics.drawString(Minecraft.getInstance().font, "1.3x",104,32, -1);
     }
 
     @Override
@@ -64,7 +61,7 @@ public class KwernCategory implements IRecipeCategory<KwernRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, KwernRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 62, 34).add(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 136, 34).add(recipe.output());
+        builder.addSlot(RecipeIngredientRole.INPUT, 71, 22).add(recipe.input());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 71, 56).add(recipe.output());
     }
 }

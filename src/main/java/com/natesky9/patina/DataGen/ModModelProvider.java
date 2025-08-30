@@ -5,9 +5,7 @@ import com.natesky9.patina.Blocks.ApplianceFluidTank;
 import com.natesky9.patina.Patina;
 import com.natesky9.patina.init.ModBlocks;
 import com.natesky9.patina.init.ModItems;
-import com.natesky9.patina.misc.ItemColorTintSource;
-import net.minecraft.client.color.item.ItemTintSource;
-import net.minecraft.client.color.item.ItemTintSources;
+import net.minecraft.client.color.item.Constant;
 import net.minecraft.client.color.item.Potion;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -17,14 +15,14 @@ import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.*;
 import net.minecraft.client.renderer.item.properties.numeric.Damage;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.neoforged.neoforge.client.extensions.ITexturedModelExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.stream.Stream;
@@ -140,18 +138,42 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.COPPER_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
         itemModels.generateFlatItem(ModItems.DRAGON_CLAW.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
-        itemModels.itemModelOutput.accept(ModItems.ORE_CHUNK.get(), generateOreItem(ModItems.ORE_CHUNK.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_CLUMP.get(), generateOreItem(ModItems.ORE_CLUMP.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_LUMP.get(), generateOreItem(ModItems.ORE_LUMP.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_HUNK.get(), generateOreItem(ModItems.ORE_HUNK.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_FLAKE.get(), generateOreItem(ModItems.ORE_FLAKE.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_COBBLE.get(), generateOreItem(ModItems.ORE_COBBLE.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_GRAVEL.get(), generateOreItem(ModItems.ORE_GRAVEL.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_PEBBLE.get(), generateOreItem(ModItems.ORE_PEBBLE.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_BLEND.get(), generateOreItem(ModItems.ORE_BLEND.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_SLAG.get(), generateOreItem(ModItems.ORE_SLAG.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_MIX.get(), generateOreItem(ModItems.ORE_MIX.get()));
-        itemModels.itemModelOutput.accept(ModItems.ORE_GRIT.get(), generateOreItem(ModItems.ORE_GRIT.get()));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_CHUNK.get(), generateOreItem(ModItems.COPPER_CHUNK.get(),itemType.CHUNK));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_CLUMP.get(), generateOreItem(ModItems.COPPER_CLUMP.get(),itemType.CLUMP));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_LUMP.get(), generateOreItem(ModItems.COPPER_LUMP.get(),itemType.LUMP));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_HUNK.get(), generateOreItem(ModItems.COPPER_HUNK.get(),itemType.HUNK));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_FLAKE.get(), generateOreItem(ModItems.COPPER_FLAKE.get(),itemType.FLAKE));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_COBBLE.get(), generateOreItem(ModItems.COPPER_COBBLE.get(),itemType.COBBLE));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_GRAVEL.get(), generateOreItem(ModItems.COPPER_GRAVEL.get(),itemType.GRAVEL));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_PEBBLE.get(), generateOreItem(ModItems.COPPER_PEBBLE.get(),itemType.PEBBLE));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_BLEND.get(), generateOreItem(ModItems.COPPER_BLEND.get(),itemType.BLEND));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_SLAG.get(), generateOreItem(ModItems.COPPER_SLAG.get(),itemType.SLAG));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_MIX.get(), generateOreItem(ModItems.COPPER_MIX.get(),itemType.MIX));
+        itemModels.itemModelOutput.accept(ModItems.COPPER_GRIT.get(), generateOreItem(ModItems.COPPER_GRIT.get(),itemType.GRIT));
+        itemModels.itemModelOutput.accept(ModItems.IRON_CHUNK.get(), generateOreItem(ModItems.IRON_CHUNK.get(),itemType.CHUNK));
+        itemModels.itemModelOutput.accept(ModItems.IRON_CLUMP.get(), generateOreItem(ModItems.IRON_CLUMP.get(),itemType.CLUMP));
+        itemModels.itemModelOutput.accept(ModItems.IRON_LUMP.get(), generateOreItem(ModItems.IRON_LUMP.get(),itemType.LUMP));
+        itemModels.itemModelOutput.accept(ModItems.IRON_HUNK.get(), generateOreItem(ModItems.IRON_HUNK.get(),itemType.HUNK));
+        itemModels.itemModelOutput.accept(ModItems.IRON_FLAKE.get(), generateOreItem(ModItems.IRON_FLAKE.get(),itemType.FLAKE));
+        itemModels.itemModelOutput.accept(ModItems.IRON_COBBLE.get(), generateOreItem(ModItems.IRON_COBBLE.get(),itemType.COBBLE));
+        itemModels.itemModelOutput.accept(ModItems.IRON_GRAVEL.get(), generateOreItem(ModItems.IRON_GRAVEL.get(),itemType.GRAVEL));
+        itemModels.itemModelOutput.accept(ModItems.IRON_PEBBLE.get(), generateOreItem(ModItems.IRON_PEBBLE.get(),itemType.PEBBLE));
+        itemModels.itemModelOutput.accept(ModItems.IRON_BLEND.get(), generateOreItem(ModItems.IRON_BLEND.get(),itemType.BLEND));
+        itemModels.itemModelOutput.accept(ModItems.IRON_SLAG.get(), generateOreItem(ModItems.IRON_SLAG.get(),itemType.SLAG));
+        itemModels.itemModelOutput.accept(ModItems.IRON_MIX.get(), generateOreItem(ModItems.IRON_MIX.get(),itemType.MIX));
+        itemModels.itemModelOutput.accept(ModItems.IRON_GRIT.get(), generateOreItem(ModItems.IRON_GRIT.get(),itemType.GRIT));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_CHUNK.get(), generateOreItem(ModItems.GOLD_CHUNK.get(),itemType.CHUNK));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_CLUMP.get(), generateOreItem(ModItems.GOLD_CLUMP.get(),itemType.CLUMP));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_LUMP.get(), generateOreItem(ModItems.GOLD_LUMP.get(),itemType.LUMP));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_HUNK.get(), generateOreItem(ModItems.GOLD_HUNK.get(),itemType.HUNK));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_FLAKE.get(), generateOreItem(ModItems.GOLD_FLAKE.get(),itemType.FLAKE));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_COBBLE.get(), generateOreItem(ModItems.GOLD_COBBLE.get(),itemType.COBBLE));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_GRAVEL.get(), generateOreItem(ModItems.GOLD_GRAVEL.get(),itemType.GRAVEL));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_PEBBLE.get(), generateOreItem(ModItems.GOLD_PEBBLE.get(),itemType.PEBBLE));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_BLEND.get(), generateOreItem(ModItems.GOLD_BLEND.get(),itemType.BLEND));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_SLAG.get(), generateOreItem(ModItems.GOLD_SLAG.get(),itemType.SLAG));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_MIX.get(), generateOreItem(ModItems.GOLD_MIX.get(),itemType.MIX));
+        itemModels.itemModelOutput.accept(ModItems.GOLD_GRIT.get(), generateOreItem(ModItems.GOLD_GRIT.get(),itemType.GRIT));
         //itemModels.generateFlatItem(ModItems.ORE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
         //itemModels.generateFlatItem(ModItems.ORE_CLUMP.get(), ModelTemplates.FLAT_ITEM);
         //itemModels.generateFlatItem(ModItems.ORE_LUMP.get(), ModelTemplates.FLAT_ITEM);
@@ -283,10 +305,58 @@ public class ModModelProvider extends ModelProvider {
         ResourceLocation fluid = flask.withSuffix(suffix);
         return ItemModelUtils.tintedModel(gen.generateLayeredItem(fluid, fluid, flask),new Potion(-13083194));
     }
-    ItemModel.Unbaked generateOreItem(Item item)
+    enum itemType{
+        CHUNK,
+        CLUMP,
+        LUMP,
+        HUNK,
+        FLAKE,
+        COBBLE,
+        GRAVEL,
+        PEBBLE,
+        BLEND,
+        SLAG,
+        MIX,
+        GRIT
+    }
+    ResourceLocation oreTexture(itemType type)
     {
-        ResourceLocation location = ModelTemplates.FLAT_ITEM.create(item, TextureMapping.layer0(item), gen.modelOutput);
-        return ItemModelUtils.tintedModel(location, new ItemColorTintSource(0));
+        String string = "item/crab_claw";
+        switch (type)
+        {
+            case CHUNK -> string = "item/ore_chunk";
+            case CLUMP -> string = "item/ore_clump";
+            case LUMP -> string = "item/ore_lump";
+            case HUNK -> string = "item/ore_hunk";
+            case FLAKE -> string = "item/ore_flake";
+            case COBBLE -> string = "item/ore_cobble";
+            case GRAVEL -> string = "item/ore_gravel";
+            case PEBBLE -> string = "item/ore_pebble";
+            case BLEND -> string = "item/ore_blend";
+            case SLAG -> string = "item/ore_slag";
+            case MIX -> string = "item/ore_mix";
+            case GRIT -> string = "item/ore_grit";
+        }
+        return ResourceLocation.fromNamespaceAndPath(Patina.MODID,string);
+    }
+    public int oreColor(Item item)
+    {
+        String string = BuiltInRegistries.ITEM.getKey(item).getPath();
+        if (string.contains("copper"))
+            return ARGB.opaque(13196853);
+        if (string.contains("iron"))
+            return ARGB.opaque(11505271);
+        if (string.contains("gold"))
+            return ARGB.opaque(16237617);
+        return ARGB.opaque(0);
+    }
+    ItemModel.Unbaked generateOreItem(Item item, itemType type)
+    {
+        ResourceLocation texture = oreTexture(type);
+        int color = oreColor(item);
+        TextureMapping mapping = new TextureMapping().put(TextureSlot.LAYER0, texture);
+        ResourceLocation location = ModelTemplates.FLAT_ITEM.create(item, mapping, gen.modelOutput);
+        return ItemModelUtils.tintedModel(location, new Constant(color));
     }
 
     @Override

@@ -8,10 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -19,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,11 +69,23 @@ public class MachineFoundryBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (!(level.getBlockEntity(pos) instanceof MachineFoundryEntity foundry)) return;
+
+        int neighbors = 0;
+        for (Direction direction:Direction.Plane.HORIZONTAL.stream().toList())
+        {
+            BlockPos adjacent = pos.relative(direction);
+            if (level.getBlockState(adjacent).is(Blocks.BLAST_FURNACE))
+                neighbors++;
+        }
+        foundry.heatMax = 1000+neighbors*1000;
+    }
+
+    @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() == newState.getBlock())
-        {
             return;
-        }
 
         if (level.getBlockEntity(pos) instanceof MachineFoundryEntity foundry)
         {

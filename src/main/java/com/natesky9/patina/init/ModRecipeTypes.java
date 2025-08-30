@@ -19,11 +19,11 @@ public class ModRecipeTypes {
     public static final DeferredHolder<RecipeType<?>,RecipeType<TextilerRecipe>> TEXTILER_RECIPE = create("textiler");
     public static final DeferredHolder<RecipeType<?>,RecipeType<KwernRecipe>> KWERN_RECIPE = create("kwern");
     public static final DeferredHolder<RecipeType<?>,RecipeType<SieveRecipe>> SIEVE_RECIPE = create("sieve");
-    public static final DeferredHolder<RecipeType<?>,RecipeType<MinceratorRecipe>> MATRIX_RECIPE = create("matrix");
+    public static final DeferredHolder<RecipeType<?>,RecipeType<MatrixRecipe>> MATRIX_RECIPE = create("matrix");
     //
     static <T extends Recipe<?>> DeferredHolder<RecipeType<?>,RecipeType<T>> create(String id)
     {
-        return RECIPE_TYPES.register(id, () -> new RecipeType<T>() {
+        return RECIPE_TYPES.register(id, () -> new RecipeType<>() {
             @Override
             public String toString() {
                 return id;

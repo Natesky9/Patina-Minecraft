@@ -63,6 +63,7 @@ public class EventsClient {
 
         event.register(ModMenuTypes.ICEBOX_MENU.get(), IceboxScreen::new);
         event.register(ModMenuTypes.WARDROBE_MENU.get(), WardrobeScreen::new);
+        event.register(ModMenuTypes.RESEARCH_MENU.get(), ResearchDeskScreen::new);
     }
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event)

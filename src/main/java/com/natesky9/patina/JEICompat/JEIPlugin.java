@@ -12,7 +12,6 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeAccess;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -64,15 +63,15 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(KwernScreen.class, 70, 30, 25, 20,
+        registration.addRecipeClickArea(KwernScreen.class, 94, 24, 15, 22,
                 KwernCategory.KWERN_RECIPE_RECIPE_TYPE);
         registration.addRecipeClickArea(EvaporatorScreen.class, 70, 30, 25, 20,
                 EvaporatorCategory.EVAPORATOR_RECIPE_RECIPE_TYPE);
-        registration.addRecipeClickArea(FoundryScreen.class, 70, 30, 25, 20,
+        registration.addRecipeClickArea(FoundryScreen.class, 67, 57, 54, 15,
                 FoundryCategory.FOUNDRY_RECIPE_RECIPE_TYPE);
-        registration.addRecipeClickArea(MinceratorScreen.class, 70, 30, 25, 20,
+        registration.addRecipeClickArea(MinceratorScreen.class, 67, 57, 25, 20,
                 MinceratorCategory.MINCERATOR_RECIPE_RECIPE_TYPE);
-        registration.addRecipeClickArea(SieveScreen.class, 70, 30, 25, 20,
+        registration.addRecipeClickArea(SieveScreen.class, 94, 24, 15, 22,
                 SieveCategory.SIEVE_RECIPE_RECIPE_TYPE);
     }
 

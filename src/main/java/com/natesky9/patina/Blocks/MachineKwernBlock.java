@@ -5,14 +5,10 @@ import com.natesky9.patina.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -62,10 +58,15 @@ public class MachineKwernBlock extends BaseEntityBlock {
     protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
         if (!(level.getBlockEntity(pos) instanceof MachineKwernEntity kwern)) return;
 
+        int neighbors = 0;
         for (Direction direction:Direction.Plane.HORIZONTAL.stream().toList())
         {
-
+            BlockPos adjacent = pos.relative(direction);
+            if (level.getBlockState(adjacent).is(Blocks.PISTON))
+                neighbors++;
         }
+        kwern.secondaryMax = 4-neighbors;
+        System.out.println("kwern: " + kwern.secondaryMax);
     }
 
     @Nullable
@@ -83,11 +84,13 @@ public class MachineKwernBlock extends BaseEntityBlock {
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (state.getBlock() == newState.getBlock())
-        {
             return;
-        }
 
-        Containers.dropContentsOnDestroy(state, newState, level, pos);
+        if (level.getBlockEntity(pos) instanceof MachineKwernEntity kwern)
+        {
+            kwern.drops();
+            super.onRemove(state,level,pos,newState,movedByPiston);
+        }
         super.onRemove(state,level,pos,newState,movedByPiston);
     }
 }

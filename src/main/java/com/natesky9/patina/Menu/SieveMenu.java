@@ -11,7 +11,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class SieveMenu extends ModContainerMenu {
     Inventory inventory;
-    MachineSieveEntity sieve;
+    public MachineSieveEntity sieve;
     public SieveMenu(int containerId, Inventory inv, FriendlyByteBuf buf) {
         this(containerId, inv, inv.player.level().getBlockEntity(buf.readBlockPos()));
     }
@@ -21,24 +21,24 @@ public class SieveMenu extends ModContainerMenu {
         inventory = inv;
         sieve = (MachineSieveEntity) entity;
         addSlot(new SlotItemHandler(sieve.handler, 0, 62, 16));
-        addSlot(new SlotItemHandler(sieve.handler, 0, 136, 34));
-        addSlot(new SlotItemHandler(sieve.handler, 0, 136, 55));
-        addSlot(new SlotItemHandler(sieve.handler, 0, 6, 62));
-        addPlayerInventory(inv);
+        addSlot(new SlotItemHandler(sieve.handler, 1, 136, 34));
+        addSlot(new SlotItemHandler(sieve.handler, 3, 6, 62));
+        addInventoryExtendedSlots(inv,8,94);
+        addInventoryHotbarSlots(inv,8,152);
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        if (index>=0 && index<4)
+        if (index>=0 && index<3)
         {
             ItemStack stack = getSlot(index).getItem();
-            moveItemStackTo(stack, 4, 4+36, false);
+            moveItemStackTo(stack, 3, 3+36, false);
         }
-        if (index>=4)
+        if (index>=3)
         {
             //click in inventory
             ItemStack stack = getSlot(index).getItem();
-            moveItemStackTo(stack,0,0,false);
+            moveItemStackTo(stack,3,3+36,false);
         }
         return ItemStack.EMPTY;
     }

@@ -2,26 +2,16 @@ package com.natesky9.patina.Recipe;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.natesky9.patina.Items.OreProcessItem;
 import com.natesky9.patina.init.ModRecipeSerializers;
 import com.natesky9.patina.init.ModRecipeTypes;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.ticks.ContainerSingleItem;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
-import java.util.List;
-
-public record KwernRecipe(ItemStack input, ItemStack output, int every) implements Recipe<RecipeInput> {
+public record KwernRecipe(ItemStack input, ItemStack output) implements Recipe<RecipeInput> {
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
         return input.is(recipeInput.getItem(0).getItem());
@@ -29,16 +19,8 @@ public record KwernRecipe(ItemStack input, ItemStack output, int every) implemen
 
     @Override
     public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider provider) {
-        boolean special = input.getItem() instanceof OreProcessItem;
-        List<ItemStack> outputs;
-        ItemStack stack = output.copy();
 
-        if (special && input.has(DataComponents.CONTAINER))
-            outputs = input.get(DataComponents.CONTAINER).nonEmptyStream().toList();
-        else
-            outputs = List.of(new ItemStack(recipeInput.getItem(0).getItem()));
-        stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(outputs));
-        return stack;
+        return output.copy();
     }
 
     @Override
@@ -67,14 +49,12 @@ public record KwernRecipe(ItemStack input, ItemStack output, int every) implemen
         public static final MapCodec<KwernRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 builder -> builder.group(
                         ItemStack.CODEC.fieldOf("item1").forGetter(KwernRecipe::input),
-                        ItemStack.CODEC.fieldOf("item3").forGetter(KwernRecipe::output),
-                        ExtraCodecs.POSITIVE_INT.fieldOf("every").forGetter(KwernRecipe::every)
+                        ItemStack.CODEC.fieldOf("item3").forGetter(KwernRecipe::output)
                 ).apply(builder, KwernRecipe::new));
         public static final StreamCodec<RegistryFriendlyByteBuf, KwernRecipe> STREAM_CODEC =
                 StreamCodec.composite(
                         ItemStack.STREAM_CODEC,KwernRecipe::input,
                         ItemStack.STREAM_CODEC, KwernRecipe::output,
-                        ByteBufCodecs.INT, KwernRecipe::every,
                         KwernRecipe::new);
         @Override
         public MapCodec<KwernRecipe> codec() {

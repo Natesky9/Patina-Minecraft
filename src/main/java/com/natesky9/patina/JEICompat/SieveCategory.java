@@ -6,11 +6,14 @@ import com.natesky9.patina.init.ModBlocks;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +31,15 @@ public class SieveCategory implements IRecipeCategory<SieveRecipe> {
     public SieveCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 176, 84);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.MACHINE_SIEVE.get()));
+    }
+
+    @Override
+    public void draw(SieveRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+        if (recipe.water())
+        {
+            guiGraphics.blit(RenderType::guiTextured,TEXTURE,41,57,176,0,12,19,256,256);
+        }
     }
 
     @Override
@@ -53,8 +65,7 @@ public class SieveCategory implements IRecipeCategory<SieveRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SieveRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 62, 16).add(recipe.input());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 136, 34).add(recipe.output());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 136, 55).add(recipe.secondary());
+        builder.addSlot(RecipeIngredientRole.INPUT, 72, 22).add(recipe.input());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 72, 56).add(recipe.output());
     }
 }

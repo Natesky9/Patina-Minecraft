@@ -2,11 +2,9 @@ package com.natesky9.patina.init;
 
 import com.natesky9.patina.Patina;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -103,26 +101,30 @@ public class ModCreativeTabs {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> PROCESSING = TABS.register("patina_processing",
             () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemgroup.patina.material"))
-                    .icon(ModItems.COPPER_AXE.get()::getDefaultInstance)
+                    .title(Component.translatable("itemgroup.patina.processing"))
+                    .icon(Items.IRON_ORE::getDefaultInstance)
                     .displayItems(((params, output) ->
                     {
-                        List<Holder<Item>> ingredients = List.of(ModItems.ORE_COBBLE,ModItems.ORE_FLAKE,
-                                ModItems.ORE_PEBBLE,ModItems.ORE_BLEND,ModItems.ORE_CHUNK,ModItems.ORE_CLUMP,
-                                ModItems.ORE_GRAVEL,ModItems.ORE_GRIT,ModItems.ORE_HUNK,ModItems.ORE_MIX,
-                                ModItems.ORE_SLAG,ModItems.ORE_LUMP);
-                        List<Item> ores = List.of(Items.RAW_COPPER,Items.RAW_IRON,Items.RAW_GOLD);
-
-                        for (Item ore:ores)
-                        {
-                            for (Holder<Item> item:ingredients)
-                            {
-                                ItemStack stack = new ItemStack(item);
-                                List<ItemStack> stored = List.of(ore.getDefaultInstance());
-                                stack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(stored));
-                                output.accept(stack);
-                            }
-                        }
+                        //region items
+                        List<Holder<Item>> copper = List.of(ModItems.COPPER_COBBLE,ModItems.COPPER_FLAKE,
+                                ModItems.COPPER_PEBBLE,ModItems.COPPER_BLEND,ModItems.COPPER_CHUNK,ModItems.COPPER_CLUMP,
+                                ModItems.COPPER_GRAVEL,ModItems.COPPER_GRIT,ModItems.COPPER_HUNK,ModItems.COPPER_MIX,
+                                ModItems.COPPER_SLAG,ModItems.COPPER_LUMP);
+                        List<Holder<Item>> iron = List.of(ModItems.IRON_COBBLE,ModItems.IRON_FLAKE,
+                                ModItems.IRON_PEBBLE,ModItems.IRON_BLEND,ModItems.IRON_CHUNK,ModItems.IRON_CLUMP,
+                                ModItems.IRON_GRAVEL,ModItems.IRON_GRIT,ModItems.IRON_HUNK,ModItems.IRON_MIX,
+                                ModItems.IRON_SLAG,ModItems.IRON_LUMP);
+                        List<Holder<Item>> gold = List.of(ModItems.GOLD_COBBLE,ModItems.GOLD_FLAKE,
+                                ModItems.GOLD_PEBBLE,ModItems.GOLD_BLEND,ModItems.GOLD_CHUNK,ModItems.GOLD_CLUMP,
+                                ModItems.GOLD_GRAVEL,ModItems.GOLD_GRIT,ModItems.GOLD_HUNK,ModItems.GOLD_MIX,
+                                ModItems.GOLD_SLAG,ModItems.GOLD_LUMP);
+                        //endregion items
+                        for (Holder<Item> item:copper)
+                            output.accept(item.value());
+                        for (Holder<Item> item:iron)
+                            output.accept(item.value());
+                        for (Holder<Item> item:gold)
+                            output.accept(item.value());
                     }))
                     .build());
     //endregion ore

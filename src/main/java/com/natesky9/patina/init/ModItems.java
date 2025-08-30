@@ -172,34 +172,92 @@ public class ModItems {
             () -> new Item(baseProperties("chromatic_scale")));
     //endregion materials
     //region ore processing
-    public static final DeferredItem<Item> ORE_CHUNK = ITEMS.register("ore_chunk",
-            () -> new OreProcessItem(baseProperties("ore_chunk")));//1.3x
-    public static final DeferredItem<Item> ORE_CLUMP = ITEMS.register("ore_clump",
-            () -> new OreProcessItem(baseProperties("ore_clump")));//1.6x
-    public static final DeferredItem<Item> ORE_LUMP = ITEMS.register("ore_lump",
-            () -> new OreProcessItem(baseProperties("ore_lump")));
-    public static final DeferredItem<Item> ORE_HUNK = ITEMS.register("ore_hunk",
-            () -> new OreProcessItem(baseProperties("ore_hunk")));
-    public static final DeferredItem<Item> ORE_FLAKE = ITEMS.register("ore_flake",
-            () -> new OreProcessItem(baseProperties("ore_flake")));
+    public static final DeferredItem<Item> COPPER_CHUNK = ITEMS.register("copper_chunk",
+            () -> new OreProcessItem(baseProperties("copper_chunk")));//1.3x
+    public static final DeferredItem<Item> COPPER_CLUMP = ITEMS.register("copper_clump",
+            () -> new OreProcessItem(baseProperties("copper_clump")));//1.6x
+    public static final DeferredItem<Item> COPPER_LUMP = ITEMS.register("copper_lump",
+            () -> new OreProcessItem(baseProperties("copper_lump")));
+    public static final DeferredItem<Item> COPPER_HUNK = ITEMS.register("copper_hunk",
+            () -> new OreProcessItem(baseProperties("copper_hunk")));
+    public static final DeferredItem<Item> COPPER_FLAKE = ITEMS.register("copper_flake",
+            () -> new OreProcessItem(baseProperties("copper_flake")));
     //transit items
-    public static final DeferredItem<Item> ORE_COBBLE = ITEMS.register("ore_cobble",
-            () -> new OreProcessItem(baseProperties("ore_cobble")));
+    public static final DeferredItem<Item> COPPER_COBBLE = ITEMS.register("copper_cobble",
+            () -> new OreProcessItem(baseProperties("copper_cobble")));
 
-    public static final DeferredItem<Item> ORE_GRAVEL = ITEMS.register("ore_gravel",
-            () -> new OreProcessItem(baseProperties("ore_gravel")));
-    public static final DeferredItem<Item> ORE_PEBBLE = ITEMS.register("ore_pebble",
-            () -> new OreProcessItem(baseProperties("ore_pebble")));
+    public static final DeferredItem<Item> COPPER_GRAVEL = ITEMS.register("copper_gravel",
+            () -> new OreProcessItem(baseProperties("copper_gravel")));
+    public static final DeferredItem<Item> COPPER_PEBBLE = ITEMS.register("copper_pebble",
+            () -> new OreProcessItem(baseProperties("copper_pebble")));
 
-    public static final DeferredItem<Item> ORE_BLEND = ITEMS.register("ore_blend",
-            () -> new OreProcessItem(baseProperties("ore_blend")));
-    public static final DeferredItem<Item> ORE_SLAG = ITEMS.register("ore_slag",
-            () -> new OreProcessItem(baseProperties("ore_slag")));
-    public static final DeferredItem<Item> ORE_MIX = ITEMS.register("ore_mix",
-            () -> new OreProcessItem(baseProperties("ore_mix")));
+    public static final DeferredItem<Item> COPPER_BLEND = ITEMS.register("copper_blend",
+            () -> new OreProcessItem(baseProperties("copper_blend")));
+    public static final DeferredItem<Item> COPPER_SLAG = ITEMS.register("copper_slag",
+            () -> new OreProcessItem(baseProperties("copper_slag")));
+    public static final DeferredItem<Item> COPPER_MIX = ITEMS.register("copper_mix",
+            () -> new OreProcessItem(baseProperties("copper_mix")));
 
-    public static final DeferredItem<Item> ORE_GRIT = ITEMS.register("ore_grit",
-            () -> new OreProcessItem(baseProperties("ore_grit")));
+    public static final DeferredItem<Item> COPPER_GRIT = ITEMS.register("copper_grit",
+            () -> new OreProcessItem(baseProperties("copper_grit")));
+    //
+    public static final DeferredItem<Item> IRON_CHUNK = ITEMS.register("iron_chunk",
+            () -> new OreProcessItem(baseProperties("iron_chunk")));//1.3x
+    public static final DeferredItem<Item> IRON_CLUMP = ITEMS.register("iron_clump",
+            () -> new OreProcessItem(baseProperties("iron_clump")));//1.6x
+    public static final DeferredItem<Item> IRON_LUMP = ITEMS.register("iron_lump",
+            () -> new OreProcessItem(baseProperties("iron_lump")));
+    public static final DeferredItem<Item> IRON_HUNK = ITEMS.register("iron_hunk",
+            () -> new OreProcessItem(baseProperties("iron_hunk")));
+    public static final DeferredItem<Item> IRON_FLAKE = ITEMS.register("iron_flake",
+            () -> new OreProcessItem(baseProperties("iron_flake")));
+    //transit items
+    public static final DeferredItem<Item> IRON_COBBLE = ITEMS.register("iron_cobble",
+            () -> new OreProcessItem(baseProperties("iron_cobble")));
+
+    public static final DeferredItem<Item> IRON_GRAVEL = ITEMS.register("iron_gravel",
+            () -> new OreProcessItem(baseProperties("iron_gravel")));
+    public static final DeferredItem<Item> IRON_PEBBLE = ITEMS.register("iron_pebble",
+            () -> new OreProcessItem(baseProperties("iron_pebble")));
+
+    public static final DeferredItem<Item> IRON_BLEND = ITEMS.register("iron_blend",
+            () -> new OreProcessItem(baseProperties("iron_blend")));
+    public static final DeferredItem<Item> IRON_SLAG = ITEMS.register("iron_slag",
+            () -> new OreProcessItem(baseProperties("iron_slag")));
+    public static final DeferredItem<Item> IRON_MIX = ITEMS.register("iron_mix",
+            () -> new OreProcessItem(baseProperties("iron_mix")));
+
+    public static final DeferredItem<Item> IRON_GRIT = ITEMS.register("iron_grit",
+            () -> new OreProcessItem(baseProperties("iron_grit")));
+    //
+    public static final DeferredItem<Item> GOLD_CHUNK = ITEMS.register("gold_chunk",
+            () -> new OreProcessItem(baseProperties("gold_chunk")));//1.3x
+    public static final DeferredItem<Item> GOLD_CLUMP = ITEMS.register("gold_clump",
+            () -> new OreProcessItem(baseProperties("gold_clump")));//1.6x
+    public static final DeferredItem<Item> GOLD_LUMP = ITEMS.register("gold_lump",
+            () -> new OreProcessItem(baseProperties("gold_lump")));
+    public static final DeferredItem<Item> GOLD_HUNK = ITEMS.register("gold_hunk",
+            () -> new OreProcessItem(baseProperties("gold_hunk")));
+    public static final DeferredItem<Item> GOLD_FLAKE = ITEMS.register("gold_flake",
+            () -> new OreProcessItem(baseProperties("gold_flake")));
+    //transit items
+    public static final DeferredItem<Item> GOLD_COBBLE = ITEMS.register("gold_cobble",
+            () -> new OreProcessItem(baseProperties("gold_cobble")));
+
+    public static final DeferredItem<Item> GOLD_GRAVEL = ITEMS.register("gold_gravel",
+            () -> new OreProcessItem(baseProperties("gold_gravel")));
+    public static final DeferredItem<Item> GOLD_PEBBLE = ITEMS.register("gold_pebble",
+            () -> new OreProcessItem(baseProperties("gold_pebble")));
+
+    public static final DeferredItem<Item> GOLD_BLEND = ITEMS.register("gold_blend",
+            () -> new OreProcessItem(baseProperties("gold_blend")));
+    public static final DeferredItem<Item> GOLD_SLAG = ITEMS.register("gold_slag",
+            () -> new OreProcessItem(baseProperties("gold_slag")));
+    public static final DeferredItem<Item> GOLD_MIX = ITEMS.register("gold_mix",
+            () -> new OreProcessItem(baseProperties("gold_mix")));
+
+    public static final DeferredItem<Item> GOLD_GRIT = ITEMS.register("gold_grit",
+            () -> new OreProcessItem(baseProperties("gold_grit")));
 
     //endregion ore processing
 

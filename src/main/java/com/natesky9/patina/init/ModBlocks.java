@@ -3,6 +3,7 @@ package com.natesky9.patina.init;
 import com.natesky9.patina.Blocks.*;
 import com.natesky9.patina.Blocks.Enchanting.*;
 import com.natesky9.patina.Blocks.MachineSieveBlock;
+import com.natesky9.patina.Blocks.Research.ApplianceResearchDeskBlock;
 import com.natesky9.patina.Patina;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -141,7 +142,7 @@ public class ModBlocks {
                     .strength(2F)
                     .setId(createBlockKey("appliance_icebox"))));
     public static final DeferredBlock<Block> APPLIANCE_RESEARCH_DESK = registerBlock("appliance_research_desk",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new ApplianceResearchDeskBlock(BlockBehaviour.Properties.of()
                     .noOcclusion().strength(3F)
                     .setId(createBlockKey("appliance_research_desk"))));
     public static final DeferredBlock<Block> APPLIANCE_BENCHMARK = registerBlock("appliance_benchmark",
